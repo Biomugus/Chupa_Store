@@ -1,0 +1,47 @@
+.iconWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+}
+
+.iconSkeleton {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 255, 255, 0.08)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+  opacity: 1;
+}
+
+.iconWrapper[data-loaded='true'] .iconSkeleton {
+  opacity: 0;
+  animation: none;
+}
+
+.logoSvg {
+  width: 40px;
+  height: 40px;
+}
+
+.cartSvg {
+  width: 26px;
+  height: 26px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

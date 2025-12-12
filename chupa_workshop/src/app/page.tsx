@@ -5,7 +5,9 @@ export default function Home() {
     <div className={styles.page}>
       <main className={styles.main}>
         <div className={styles.intro}>
-          <h1>Hello! This is Chupa Workshop! From Russia - with love.</h1>
+          <h1>
+            Мастерская Чупы! <br /> Из России - с любовью.
+          </h1>
         </div>
       </main>
     </div>
