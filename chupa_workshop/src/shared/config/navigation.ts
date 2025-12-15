@@ -11,5 +11,5 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'Другое', href: '/other' },
 ];
 
-export const BRAND_NAME = 'Chupa Store';
+export const BRAND_NAME = 'МАСТЕРСКАЯ ЧУПЫ';
 export const HOME_LABEL = 'На главную';
