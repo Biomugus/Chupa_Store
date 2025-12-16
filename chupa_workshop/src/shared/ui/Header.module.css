@@ -1,8 +1,10 @@
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 20;
-  background: #0c0d0f;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: #00000080;
   color: #f4f5f7;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
@@ -10,12 +12,12 @@
 
 .inner {
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: 100%;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 1rem;
-  padding: 0.9rem 1.25rem;
+  padding: 0.9rem 2.25rem;
 }
 
 .nav {

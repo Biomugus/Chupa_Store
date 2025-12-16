@@ -166,7 +166,7 @@ export function Footer() {
                 <WhatsappIcon className={styles.badgeIcon} />
               </a>
               <a
-                href="https://t.me/+79997101148"
+                href="https://t.me/chupa_workshop"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.badge}

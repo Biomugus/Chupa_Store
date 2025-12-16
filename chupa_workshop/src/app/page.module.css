@@ -25,7 +25,7 @@
   align-items: center;
   justify-content: space-between;
   background-color: var(--foreground);
-  padding: 60px 40px;
+  gap: 32px;
 }
 
 .intro {
