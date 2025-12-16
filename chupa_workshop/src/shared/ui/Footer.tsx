@@ -121,7 +121,7 @@ export function Footer() {
 
             <div className={styles.devRow}>
               <span className={styles.pill}>
-                Приложение разработал Чупахин Сергей
+                Приложение разработано - ИП Чупахин С. А.
               </span>
 
               <div className={styles.devIcons}>

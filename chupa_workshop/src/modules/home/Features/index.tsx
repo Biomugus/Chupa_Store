@@ -1,10 +1,10 @@
 import styles from './features.module.css';
 
 const features = [
-    { id: 1, title: 'Огорченный котяй', desc: 'наши котики не грустят', url: 'https://www.sostav.ru/images/news/2019/04/01/9iithyjt_md.jpg' },
-    { id: 2, title: 'Малыш', desc: 'работаем даже с малышами', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRoAZdIrRGPp-TeJe6bNP5OC9uDBrtiKxs_Q&s' },
-    { id: 3, title: 'Братва', desc: 'Всегда создаем компанию)', url: 'https://cs11.pikabu.ru/post_img/2019/02/04/12/1549312329147951618.jpg' },
-    { id: 4, title: 'Голубоглазка', desc: 'Красивые питомцы', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfP-Q1puhZEgaZQRXCnz3tMS_Z61v0ttxs8w&s' },
+    { id: 1, title: 'Качество', desc: 'Держит проверку возрастом :D', url: 'https://gunszip.org/images/g/241/orig/5923945.jpg' },
+    { id: 2, title: 'Красота', desc: 'работаем даже с музеями', url: 'https://cs12.pikabu.ru/post_img/big/2021/11/06/9/163621193212445206.jpg' },
+    { id: 3, title: 'История', desc: 'Используется много лет', url: 'https://topwar.ru/uploads/posts/2012-12/1356729396_pm_md_63_65_90-3.jpg' },
+    { id: 4, title: 'Эстетика', desc: 'Ну красиво же', url: 'https://www.airsoftstore.ru/components/com_virtuemart/shop_image/product/_________________522c21de47907.jpg' },
 ];
 
 function Features() {
