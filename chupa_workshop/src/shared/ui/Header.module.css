@@ -4,10 +4,16 @@
   left: 0;
   right: 0;
   z-index: 9999;
-  background: #00000080;
+  background: #19110b;
   color: #f4f5f7;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  transition: border-bottom-color 450ms ease;
+}
+
+.header:has(.navLink:hover),
+.header:has(.navLink:focus-visible) {
+  border-bottom-color: #eec075ab;
 }
 
 .inner {
@@ -55,8 +61,7 @@
 
 .navLink:hover,
 .navLink:focus-visible {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+  color: #9b7e4b;
 }
 
 .logo {
@@ -86,26 +91,22 @@
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  padding: 0.55rem 0.7rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 10px 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
   color: inherit;
   cursor: pointer;
-  transition:
-    background-color 150ms ease,
-    border-color 150ms ease,
-    transform 120ms ease;
+  transition: color 150ms ease;
 }
 
 .cartButton:hover,
 .cartButton:focus-visible {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.2);
+  color: #9b7e4b;
 }
 
 .cartButton:active {
-  transform: translateY(1px);
+  transform: translateY(2px);
 }
 
 .menuToggle {
@@ -165,7 +166,7 @@
 @media (max-width: 767px) {
   .inner {
     grid-template-columns: auto 1fr auto;
-    align-items: start;
+    align-items: self-end;
   }
 
   .menuToggle {

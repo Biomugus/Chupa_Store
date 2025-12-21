@@ -6,9 +6,11 @@ type NavItem = {
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Каталог', href: '/catalog' },
   { label: 'Цевья', href: '/forearms' },
+  { label: 'Рукоятки', href: '/handgurds' },
   { label: 'Приклады', href: '/stocks' },
-  { label: 'Аксессуары', href: '/accessories' },
-  { label: 'Другое', href: '/other' },
+  { label: 'Mlok-комплектующие', href: '/mlok' },
+  { label: 'Кастомные проекты', href: '/customs' },
+  { label: 'О Мастерской', href: '/about' },
 ];
 
 export const BRAND_NAME = 'МАСТЕРСКАЯ ЧУПЫ';

@@ -107,7 +107,6 @@ export function Footer() {
           <aside className={styles.brandColumn} aria-label="Информация о бренде">
             <div className={styles.brandLogo}>
               <LogoMark ready={iconsReady} />
-              <span className={styles.brandName}>{BRAND_NAME}</span>
             </div>
 
             <p className={styles.brandText}>Сделано в России</p>

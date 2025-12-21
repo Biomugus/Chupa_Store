@@ -59,7 +59,6 @@ function Header() {
 
           <Link href="/" className={styles.logo} aria-label={HOME_LABEL} prefetch={false}>
             <LogoMark ready={iconsReady} />
-            <span className={styles.logoText}>{BRAND_NAME}</span>
           </Link>
 
           <div className={styles.actions}>
@@ -73,7 +72,8 @@ function Header() {
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <p style={{ margin: 0, fontSize: '1.125rem', lineHeight: '1.6', textAlign: 'center' }}>
-          Раздел ещё на стадии разработки :)
+          Раздел ещё на стадии разработки, пока что можете ознакомиться с каталогом
+          перейдя по ссылке в шапке сайта либо по кнопкам на главной странице 😊
         </p>
       </Modal>
     </>
