@@ -1,6 +1,8 @@
+'use client'
+
 import { Suspense } from 'react';
 
-import ProductCard from '@/modules/catalog/components/ProductCard';
+import ProductCard from '@/modules/catalog/components/ProductCard/ProductCard';
 import { useProduct } from '@/modules/catalog/hooks/useProduct';
 
 type CatalogSlugPageProps = {

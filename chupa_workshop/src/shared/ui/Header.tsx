@@ -21,7 +21,7 @@ function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href === '/') {
+    if (href === '/' || href === '/catalog') {
       return;
     }
     e.preventDefault();

@@ -1,4 +1,5 @@
 import styles from './hero.module.css';
+import Link from 'next/link';
 
 function Hero() {
     return (
@@ -13,7 +14,9 @@ function Hero() {
                     Под АК серию на Airsoft и огнестрел (гладкоствольное и нарезное). Под ваш неповторимый стиль. Закажите превосходство..</p>
 
                 <div className={styles.actions}>
-                    <button className={styles.primary}>Каталог</button>
+                    <Link href='/catalog'>
+                        <button className={styles.primary}>Каталог</button>
+                    </Link>
                     <button className={styles.secondary}>О Мастерской</button>
                 </div>
             </div>

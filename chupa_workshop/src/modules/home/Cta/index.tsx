@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './cta.module.css';
 
 function Cta() {
@@ -12,7 +13,9 @@ function Cta() {
                     </p>
                 </div>
                 <div className={styles.actions}>
-                    <button className={styles.primary}>Перейти в каталог</button>
+                    <Link href='/catalog'>
+                        <button className={styles.primary}>Перейти в каталог</button>
+                    </Link>
                     <button className={styles.secondary}>Уточнить детали</button>
                 </div>
             </div>

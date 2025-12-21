@@ -1,6 +1,6 @@
-import CatalogList from '@/modules/catalog/components/CatalogList';
+import CatalogPage from '@/modules/catalog/components/CatalogPage/CatalogPage';
 
-export default function CatalogPage() {
-  return <CatalogList />;
+export default function Page() {
+  return <CatalogPage />;
 }
 

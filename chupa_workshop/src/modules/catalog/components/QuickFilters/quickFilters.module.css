@@ -1,0 +1,210 @@
+.filters {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 32px;
+    background-image: url('/images/quick_filterBg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.filters::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.filters>* {
+    position: relative;
+    z-index: 1;
+}
+
+.preview {
+    color: #f4f5f7;
+    text-align: center;
+}
+
+.preview h3 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 32px 0;
+    color: #f4f5f7;
+    line-height: 1.2;
+}
+
+.preview p {
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: 0.8px;
+    margin: 0;
+    color: rgba(244, 245, 247, 0.9);
+    max-width: 800px;
+}
+
+.content {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filterGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 160px;
+}
+
+.label {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(244, 245, 247, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.select,
+.input {
+    padding: 10px 14px;
+    background: linear-gradient(135deg, rgba(18, 18, 18, 0.95), rgba(12, 12, 12, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    color: #f4f5f7;
+    font-size: 12px;
+    font-weight: 500;
+    transition: border-color 0.15s ease, background 0.15s ease;
+    outline: none;
+}
+
+.select:focus,
+.input:focus {
+    border-color: rgba(155, 126, 75, 0.6);
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(18, 18, 18, 0.9));
+}
+
+.select:hover,
+.input:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.select option {
+    background: #1a1a1a;
+    color: #f4f5f7;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.priceGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.priceInputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.priceInputs .input {
+    width: 100px;
+}
+
+.priceSeparator {
+    color: rgba(244, 245, 247, 0.7);
+    font-weight: 500;
+}
+
+.resetButton,
+.applyButton {
+    padding: 10px 24px;
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+    border: 1px solid rgba(155, 126, 75, 0.4);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease,
+        border-color 0.15s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.resetButton {
+    color: rgba(244, 245, 247, 0.7);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.resetButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #161616, #222222);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: rgba(244, 245, 247, 0.9);
+}
+
+.resetButton:active {
+    transform: translateY(0);
+}
+
+.applyButton {
+    color: #9b7e4b;
+}
+
+.applyButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #161616, #222222);
+    border-color: rgba(155, 126, 75, 0.6);
+}
+
+.applyButton:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 767px) {
+    .filters {
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .preview h3 {
+        font-size: 22px;
+    }
+
+    .preview p {
+        font-size: 14px;
+    }
+
+    .content {
+        gap: 12px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filterGroup,
+    .priceGroup {
+        min-width: 100%;
+    }
+
+    .priceInputs .input {
+        flex: 1;
+    }
+
+    .resetButton,
+    .applyButton {
+        width: 100%;
+    }
+}
