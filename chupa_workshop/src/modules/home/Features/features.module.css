@@ -96,6 +96,10 @@
     text-align: start;
 }
 
+.rowReversed .rowImage {
+    transform: scaleX(-1);
+}
+
 .rowTitle {
     font-size: 22px;
     font-weight: 700;
