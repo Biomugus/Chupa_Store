@@ -73,6 +73,12 @@
     width: 100%;
 }
 
+.priceInputs .input::-webkit-inner-spin-button,
+.priceInputs .input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .priceSeparator {
     color: rgba(244, 245, 247, 0.7);
     font-weight: 500;

@@ -1,7 +1,8 @@
 import styles from './filtersSidebar.module.css'
 import { CatalogFilters } from '../../types/CatalogFilters';
 import { useState } from 'react';
-import { AK_MODELS, MATERIALS, PRODUCT_TYPES } from '../../lib/filterOptions';
+import { PLATFORM, MATERIALS, PRODUCT_TYPE } from '../../lib/filterOptions';
+import DropdownFilter from './DropdownFilter';
 
 type FiltersSidebarProps = {
     filters: CatalogFilters;
@@ -44,48 +45,33 @@ function FiltersSidebar({ filters, onFiltersChange }: FiltersSidebarProps) {
 
             <form className={styles.form} onSubmit={(event) => event.preventDefault()}>
                 <div className={styles.filterGroup}>
-                    <label className={styles.label}>Модель АК</label>
-                    <select
-                        className={styles.select}
-                        value={localFilters.model || ''}
-                        onChange={(event) => handleChange('model', event.target.value)}
-                    >
-                        {AK_MODELS.map(option => (
-                            <option key={option.value} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
+                    <DropdownFilter
+                        label="Платформа"
+                        options={PLATFORM}
+                        placeholder="Выберите платформу"
+                        value={localFilters.model ?? ''}
+                        onChange={(value) => handleChange('model', value ?? '')}
+                    />
                 </div>
 
                 <div className={styles.filterGroup}>
-                    <label className={styles.label}>Изделие</label>
-                    <select
-                        className={styles.select}
-                        value={localFilters.productType || ''}
-                        onChange={(event) => handleChange('productType', event.target.value)}
-                    >
-                        {PRODUCT_TYPES.map(option => (
-                            <option key={option.value} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
+                    <DropdownFilter
+                        label="Тип Изделия"
+                        options={PRODUCT_TYPE}
+                        placeholder="Выберите тип изделия"
+                        value={localFilters.productType ?? ''}
+                        onChange={(value) => handleChange('productType', value ?? '')}
+                    />
                 </div>
 
                 <div className={styles.filterGroup}>
-                    <label className={styles.label}>Материал</label>
-                    <select
-                        className={styles.select}
-                        value={localFilters.material || ''}
-                        onChange={(event) => handleChange('material', event.target.value)}
-                    >
-                        {MATERIALS.map(option => (
-                            <option key={option.value} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
+                    <DropdownFilter
+                        label="Материал"
+                        options={MATERIALS}
+                        placeholder="Выберите материал"
+                        value={localFilters.material ?? ''}
+                        onChange={(value) => handleChange('material', value ?? '')}
+                    />
                 </div>
 
                 <div className={styles.priceGroup}>

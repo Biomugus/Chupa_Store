@@ -5,28 +5,23 @@ export type FilterOption = {
 
 // TODO: значения value сейчас моковые. Синхронизировать с контрактом бэкенда/URL, когда он будет готов.
 
-export const AK_MODELS: FilterOption[] = [
-    { value: '', label: 'Все модели' },
-    { value: 'airsoft', label: 'Страйкбольный' },
-    { value: 'firearm', label: 'Огнестрел' },
-    { value: 'carbine', label: 'Карабин на базе АК' },
+export const PLATFORM: FilterOption[] = [
+    { value: 'AK series', label: 'АК' },
+    { value: 'AR series', label: 'AR' },
+    { value: 'Hekler & Coch', label: 'HK' },
+    { value: 'Others', label: 'Другие платформы' },
 ];
 
-export const PRODUCT_TYPES: FilterOption[] = [
-    { value: '', label: 'Все изделия' },
-    { value: 'handguard', label: 'Цевье' },
-    { value: 'stock', label: 'Приклад' },
-    { value: 'grips', label: 'Накладки' },
-    { value: 'handle', label: 'Рукоять' },
-    { value: 'cut', label: 'Перепилы' },
+export const PRODUCT_TYPE: FilterOption[] = [
+    { value: 'handguard', label: 'Цевья' },
+    { value: 'stock', label: 'Приклады' },
+    { value: 'handle', label: 'Рукоятки' },
+    { value: 'cut', label: 'Mlok-фурнитруа' },
 ];
 
 export const MATERIALS: FilterOption[] = [
-    { value: '', label: 'Все материалы' },
-    { value: 'bakelite', label: 'Бакелит' },
-    { value: 'oak', label: 'Дуб' },
-    { value: 'birch', label: 'Береза' },
-    { value: 'walnut', label: 'Орех' },
+    { value: 'bakelite', label: 'Бакелитовая фанера' },
+    { value: 'oak', label: 'Орех' },
 ];
 
 
