@@ -10,7 +10,7 @@ function CatalogLayout({ sidebar, quickFilters, children }: CatalogLayoutProps) 
     return (
         <div className={styles.container}>
             {quickFilters && (
-                <div className={styles.quickFilters}>
+                <div className={styles.heroPreview}>
                     {quickFilters}
                 </div>
             )}

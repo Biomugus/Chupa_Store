@@ -3,7 +3,7 @@
 import styles from './catalogPage.module.css'
 
 import CatalogLayout from '../CatalogLayout/CatalogLayout'
-import QuickFilters from '../QuickFilters/QuickFilters'
+import CatalogHero from '../QuickFilters/CatalogHero'
 import FiltersSidebar from '../FiltersSidebar/FiltersSidebar'
 import CatalogList from '../CatalogList/CatalogList'
 import { useCatalogFilters } from '../../hooks/useCatalogFilters'
@@ -18,12 +18,7 @@ function CatalogPage() {
                 <div>Подождите, каталог загружается...</div>
             ) : (
                 <CatalogLayout
-                    quickFilters={
-                        <QuickFilters
-                            filters={filters}
-                            onFiltersChange={updateFilters}
-                        />
-                    }
+                    quickFilters={<CatalogHero />}
                     sidebar={
                         <FiltersSidebar
                             filters={filters}
