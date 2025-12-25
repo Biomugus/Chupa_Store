@@ -4,6 +4,7 @@ export interface CatalogItem {
   price: number;
   slug: string;
   image?: string;
+  images?: string[];
   description?: string;
 }
 

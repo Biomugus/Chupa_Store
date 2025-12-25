@@ -7,6 +7,12 @@ const nextConfig = {
         hostname: 'main-cdn.sbermegamarket.ru',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'i.pinimg.com',
+        pathname: '/**',
+      },
+      
     ],
   },
 };

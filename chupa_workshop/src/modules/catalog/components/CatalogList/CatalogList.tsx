@@ -3,7 +3,6 @@
 import Filters from '../Filters/Filters';
 import ProductCard from '../ProductCard/ProductCard';
 
-import { useCatalog } from '../../hooks/useCatalog';
 import { CatalogItem } from '../../types/CatalogItem';
 
 import styles from './catalogList.module.css'
