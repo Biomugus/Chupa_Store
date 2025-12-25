@@ -12,7 +12,26 @@ const nextConfig = {
         hostname: 'i.pinimg.com',
         pathname: '/**',
       },
-      
+      {
+        protocol: 'https',
+        hostname: 'sun9-33.userapi.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'sun9-66.userapi.com', 
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'sun9-41.userapi.com', 
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'sun9-15.userapi.com', 
+        pathname: '/**'
+      }
     ],
   },
 };

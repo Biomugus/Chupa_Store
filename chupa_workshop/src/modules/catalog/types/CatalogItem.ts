@@ -6,5 +6,7 @@ export interface CatalogItem {
   image?: string;
   images?: string[];
   description?: string;
+  equipment?: string;
+  characteristics?: string
 }
 

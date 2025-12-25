@@ -28,6 +28,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className={styles.header}>
           <h3 className={styles.title}>{product.title}</h3>
           <p className={styles.description}>{product.description}</p>
+          <p className={styles.description}>{product.equipment}</p>
+          <p className={styles.description}>{product.characteristics}</p>
         </div>
 
         <div className={styles.meta}>
