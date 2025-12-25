@@ -1,5 +1,5 @@
-export function formatPrice(value: number, currency = 'USD') {
-  return new Intl.NumberFormat('en-US', {
+export function formatPrice(value: number, currency = 'RUB') {
+  return new Intl.NumberFormat('ru-RU', {
     style: 'currency',
     currency,
   }).format(value);
