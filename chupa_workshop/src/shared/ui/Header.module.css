@@ -111,11 +111,11 @@
 
 .menuToggle {
   display: none;
-  width: 42px;
-  height: 42px;
+  width: 50px;
+  height: 50px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.04);
+  background: #9b7e4b;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -129,7 +129,7 @@
 
 .menuToggle:hover,
 .menuToggle:focus-visible {
-  background: rgba(255, 255, 255, 0.1);
+  background: #d9b56f;
   border-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -152,21 +152,42 @@
   border: 0;
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
   .inner {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: 
+      'nav nav nav'
+      'logo . cart'
+    ;
+    align-items: center;
     gap: 0.75rem;
   }
 
   .navList {
     gap: 0.5rem;
   }
+
+  .nav {
+    grid-area: nav;
+  }
+  
+  .logo {
+    grid-area: logo;
+  }
+  
+  .actions {
+    grid-area: cart;
+  }
+  
+  .actions {
+    justify-content: center;
+  }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .inner {
-    grid-template-columns: auto 1fr auto;
-    align-items: self-end;
+    
   }
 
   .menuToggle {

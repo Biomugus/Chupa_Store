@@ -213,14 +213,14 @@
      height: 20px;
  }
 
- @media (max-width: 1023px) {
+ @media (max-width: 1024px) {
      .columns {
-         grid-template-columns: repeat(2, minmax(0, 1fr));
-         row-gap: 1.75rem;
+         grid-template-columns: repeat(4, minmax(0, 1fr));
+         gap: 1.5rem;
      }
  }
 
- @media (max-width: 767px) {
+ @media (max-width: 768px) {
      .inner {
          padding-top: 2rem;
          padding-bottom: 1.75rem;
@@ -268,7 +268,7 @@
      }
 
      .brandColumn {
-         padding-top: 0.5rem;
+         padding-top: 1.5rem;
          align-items: center;
      }
 
@@ -284,6 +284,10 @@
 
      .devRow {
          flex-direction: column;
+     }
+
+     .columns {
+
      }
  }
 

@@ -113,10 +113,12 @@
     filter: brightness(0.98);
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
     .card {
+        flex-direction: column-reverse;
         padding: 14px;
         gap: 12px;
+        min-height: 50rem;
     }
 
     .left {
@@ -138,9 +140,15 @@
     .price {
         font-size: 20px;
     }
+
+    .left {
+        flex-shrink: 1;
+        width: 100%;
+        height: 100%;
+    }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .card {
         flex-direction: column;
         padding: 12px;

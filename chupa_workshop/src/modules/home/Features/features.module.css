@@ -113,6 +113,12 @@
     max-width: 420px;
 }
 
+@media (max-width: 1024px) {
+    .rowDesc {
+        max-width: 300px;
+    }
+}
+
 @media (max-width: 768px) {
     .features {
         padding: 24px 16px;
@@ -125,8 +131,24 @@
     }
 
     .rowContent {
+        align-items: center;
         clip-path: none;
         margin: 0;
         padding: 24px 20px;
+    }
+
+    .rowDesc {
+        text-align: center;
+        max-width: 70%;
+    }
+
+    .rowReversed .rowContent {
+        margin-right: 0;
+    
+        align-items: center;
+    }
+    
+    .rowReversed .rowDesc {
+        text-align: center;
     }
 }

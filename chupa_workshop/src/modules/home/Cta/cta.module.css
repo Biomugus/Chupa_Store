@@ -92,6 +92,19 @@
     background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(18, 18, 18, 0.9));
 }
 
+@media (max-width: 1024px) {
+    .inner {
+        padding: 0 32px;
+        top: 10rem;
+        flex-direction: column;
+        max-width: 70%;
+    }
+
+    .texts {
+        text-align: center;
+    }
+}
+
 @media (max-width: 768px) {
     .inner {
         flex-direction: column;

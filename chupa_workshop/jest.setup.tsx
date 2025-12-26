@@ -1,8 +1,13 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import { configure } from '@testing-library/react';
+import { configure, cleanup } from '@testing-library/react';
 
 configure({ asyncUtilTimeout: 3000 });
+
+afterEach(() => {
+  cleanup();
+  jest.clearAllMocks();
+})
 
 jest.mock('next/image', () => {
   const React = require('react');
