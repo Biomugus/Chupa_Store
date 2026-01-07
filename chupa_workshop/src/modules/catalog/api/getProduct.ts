@@ -6,4 +6,3 @@ import { Product } from '../types/Product';
 export async function getProduct(slug: string): Promise<Product> {
   return httpClient<Product>(`${endpoints.catalog}/${slug}`);
 }
-

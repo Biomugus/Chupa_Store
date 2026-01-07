@@ -4,4 +4,3 @@ export function formatPrice(value: number, currency = 'RUB') {
     currency,
   }).format(value);
 }
-

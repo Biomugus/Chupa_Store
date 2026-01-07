@@ -4,4 +4,3 @@ export const endpoints = {
   cart: '/api/cart',
   constructor: '/api/constructor',
 };
-

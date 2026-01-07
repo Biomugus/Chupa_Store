@@ -11,4 +11,3 @@ export function useFilters(initial: FiltersState = { query: '' }) {
 
   return { filters, setFilters };
 }
-

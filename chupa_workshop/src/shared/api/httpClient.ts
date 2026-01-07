@@ -10,4 +10,3 @@ export async function httpClient<T>(url: string, init?: RequestInit): Promise<T>
 
   return response.json() as Promise<T>;
 }
-

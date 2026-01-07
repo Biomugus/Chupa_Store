@@ -10,4 +10,3 @@ export default function ProductTabs({ description }: ProductTabsProps) {
     </section>
   );
 }
-

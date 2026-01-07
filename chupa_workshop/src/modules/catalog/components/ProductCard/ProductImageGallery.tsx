@@ -27,28 +27,34 @@ export default function ProductImageGallery({ images, alt }: ProductImageGallery
     setCurrentIndex((i) => (i === images.length - 1 ? 0 : i + 1));
   }, [hasMultiple, images.length]);
 
-  const goTo = useCallback((index: number) => {
-    if (hasMultiple) setCurrentIndex(index);
-  }, [hasMultiple]);
+  const goTo = useCallback(
+    (index: number) => {
+      if (hasMultiple) setCurrentIndex(index);
+    },
+    [hasMultiple]
+  );
 
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    if (!hasMultiple) return;
-    const touch = e.touches[0].clientX;
-    let startX = touch;
-    let endX: number;
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      if (!hasMultiple) return;
+      const touch = e.touches[0].clientX;
+      let startX = touch;
+      let endX: number;
 
-    const move = (ev: TouchEvent) => (endX = ev.touches[0].clientX);
-    const end = () => {
-      if (!endX) return;
-      const diff = startX - endX;
-      if (Math.abs(diff) > 50) diff > 0 ? next() : prev();
-      document.removeEventListener('touchmove', move);
-      document.removeEventListener('touchend', end);
-    };
+      const move = (ev: TouchEvent) => (endX = ev.touches[0].clientX);
+      const end = () => {
+        if (!endX) return;
+        const diff = startX - endX;
+        if (Math.abs(diff) > 50) diff > 0 ? next() : prev();
+        document.removeEventListener('touchmove', move);
+        document.removeEventListener('touchend', end);
+      };
 
-    document.addEventListener('touchmove', move);
-    document.addEventListener('touchend', end);
-  }, [hasMultiple, next, prev]);
+      document.addEventListener('touchmove', move);
+      document.addEventListener('touchend', end);
+    },
+    [hasMultiple, next, prev]
+  );
 
   useEffect(() => {
     if (trackRef.current) {
@@ -62,12 +68,7 @@ export default function ProductImageGallery({ images, alt }: ProductImageGallery
   }, []);
 
   return (
-    <div
-      className={styles.gallery}
-      onTouchStart={handleTouchStart}
-      aria-live="polite"
-      tabIndex={0}
-    >
+    <div className={styles.gallery} onTouchStart={handleTouchStart} aria-live="polite" tabIndex={0}>
       <div className={styles.media}>
         <div ref={trackRef} className={styles.track}>
           {validImages.map((src, idx) => {
@@ -106,7 +107,13 @@ export default function ProductImageGallery({ images, alt }: ProductImageGallery
             aria-label="Предыдущее изображение"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </button>
 
@@ -117,7 +124,13 @@ export default function ProductImageGallery({ images, alt }: ProductImageGallery
             aria-label="Следующее изображение"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M9 18L15 12L9 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </button>
 
@@ -128,7 +141,7 @@ export default function ProductImageGallery({ images, alt }: ProductImageGallery
                 type="button"
                 className={`${styles.indicator} ${i === currentIndex ? styles.indicatorActive : ''}`}
                 onClick={() => goTo(i)}
-                aria-label={`Перейти к изображению ${i + 1}`}                
+                aria-label={`Перейти к изображению ${i + 1}`}
                 aria-current={i === currentIndex}
               />
             ))}

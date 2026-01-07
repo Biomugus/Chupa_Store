@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 
 import { BRAND_NAME } from '../config/navigation';
@@ -17,24 +18,39 @@ type FooterSectionId = 'shop' | 'support' | 'workshop';
 type FooterSectionConfig = {
   id: FooterSectionId;
   title: string;
-  items: string[];
+  items: FooterItem[];
 };
 
 const FOOTER_SECTIONS: FooterSectionConfig[] = [
   {
     id: 'shop',
     title: 'Магазин',
-    items: ['Каталог', 'Цевья', 'Рукоятки', 'Приклады', 'Mlok-комплектующие', 'Кастомные проекты'],
+    items: [
+      { label: 'Каталог', href: '/catalog' },
+      { label: 'Цевья', href: '/grips' },
+      { label: 'Рукоятки', href: '/forearm' },
+      { label: 'Приклады', href: '/stocks' },
+      { label: 'Mlok-комплектующие', href: '/mlok' },
+      { label: 'Кастомные проекты', href: '/customs' },
+    ],
   },
   {
     id: 'support',
     title: 'Помощь',
-    items: ['Связаться с нами', 'Сообщить о браке', 'Для партнеров'],
+    items: [
+      { label: 'Связаться с нами', href: '/contacts' },
+      { label: 'Сообщить о браке', href: '/issues' },
+      { label: 'Для партнеров', href: '/forPartners' },
+    ],
   },
   {
     id: 'workshop',
     title: 'Мастерская',
-    items: ['История', 'Миссия', 'О процессе работы'],
+    items: [
+      { label: 'История', href: '/history' },
+      { label: 'Миссия', href: '/mission' },
+      { label: 'О процессе работы', href: '/process' },
+    ],
   },
 ];
 
@@ -44,16 +60,23 @@ type FooterSectionProps = {
   onToggle: () => void;
 };
 
+type FooterItem = {
+  label: string;
+  href: string;
+};
+
 function FooterSection({ config, isOpen, onToggle }: FooterSectionProps) {
-  const items = config.items.map((label, index) => (
-    <li key={index} className={styles.sectionItem}>
-      {label}
+  const items = config.items.map((item) => (
+    <li key={item.href} className={styles.sectionItem}>
+      <Link href={item.href} className={styles.footerLink}>
+        {item.label}
+      </Link>
     </li>
   ));
 
   return (
     <section
-      className={`${styles.section} ${isOpen ? styles.sectionOpen ?? '' : ''}`}
+      className={`${styles.section} ${isOpen ? (styles.sectionOpen ?? '') : ''}`}
       aria-label={config.title}
     >
       <button
@@ -71,7 +94,7 @@ function FooterSection({ config, isOpen, onToggle }: FooterSectionProps) {
 
       <div
         id={`${config.id}-content`}
-        className={`${styles.sectionBody} ${isOpen ? styles.sectionBodyOpen ?? '' : ''}`}
+        className={`${styles.sectionBody} ${isOpen ? (styles.sectionBodyOpen ?? '') : ''}`}
       >
         <ul className={styles.sectionList}>{items}</ul>
       </div>
@@ -119,12 +142,12 @@ export function Footer() {
 
         <div className={styles.bottomBar}>
           <div className={styles.bottomLeft}>
-            <span>© {currentYear} {BRAND_NAME}</span>
+            <span>
+              © {currentYear} {BRAND_NAME}
+            </span>
 
             <div className={styles.devRow}>
-              <span className={styles.pill}>
-                Приложение разработано - ИП Чупахин С. А.
-              </span>
+              <span className={styles.pill}>Приложение разработано - ИП Чупахин С. А.</span>
 
               <div className={styles.devIcons}>
                 <a

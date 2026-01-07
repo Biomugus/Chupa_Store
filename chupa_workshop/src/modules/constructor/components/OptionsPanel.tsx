@@ -15,13 +15,9 @@ export default function OptionsPanel({ options, onChange }: OptionsPanelProps) {
       {entries.map(([key, value]) => (
         <label key={key}>
           {key}
-          <input
-            value={value}
-            onChange={(event) => onChange(key, event.target.value)}
-          />
+          <input value={value} onChange={(event) => onChange(key, event.target.value)} />
         </label>
       ))}
     </div>
   );
 }
-

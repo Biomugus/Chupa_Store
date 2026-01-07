@@ -8,7 +8,7 @@ import { CartIcon } from '../icons/Carticon';
 import { LogoMark } from '../icons/LogoMark';
 
 import { useState } from 'react';
-import { BRAND_NAME, HOME_LABEL, NAV_ITEMS } from '../config/navigation';
+import { HOME_LABEL, NAV_ITEMS } from '../config/navigation';
 import styles from './Header.module.css';
 import { MenuToggle } from './MenuToggle';
 import Modal from './Modal';
@@ -72,8 +72,8 @@ function Header() {
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <p style={{ margin: 0, fontSize: '1.125rem', lineHeight: '1.6', textAlign: 'center' }}>
-          Раздел ещё на стадии разработки, пока что можете ознакомиться с каталогом
-          перейдя по ссылке в шапке сайта либо по кнопкам на главной странице 😊
+          Раздел ещё на стадии разработки, пока что можете ознакомиться с каталогом перейдя по
+          ссылке в шапке сайта либо по кнопкам на главной странице 😊
         </p>
       </Modal>
     </>
