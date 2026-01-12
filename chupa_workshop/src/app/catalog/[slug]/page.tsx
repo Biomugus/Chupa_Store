@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Suspense } from 'react';
 
@@ -30,4 +30,3 @@ export default function CatalogSlugPage({ params }: CatalogSlugPageProps) {
     </Suspense>
   );
 }
-

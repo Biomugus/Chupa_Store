@@ -27,4 +27,3 @@ export function useProduct(slug: string) {
 
   return { product, loading };
 }
-

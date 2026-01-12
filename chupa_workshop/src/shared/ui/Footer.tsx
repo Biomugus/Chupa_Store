@@ -53,7 +53,7 @@ function FooterSection({ config, isOpen, onToggle }: FooterSectionProps) {
 
   return (
     <section
-      className={`${styles.section} ${isOpen ? styles.sectionOpen ?? '' : ''}`}
+      className={`${styles.section} ${isOpen ? (styles.sectionOpen ?? '') : ''}`}
       aria-label={config.title}
     >
       <button
@@ -71,7 +71,7 @@ function FooterSection({ config, isOpen, onToggle }: FooterSectionProps) {
 
       <div
         id={`${config.id}-content`}
-        className={`${styles.sectionBody} ${isOpen ? styles.sectionBodyOpen ?? '' : ''}`}
+        className={`${styles.sectionBody} ${isOpen ? (styles.sectionBodyOpen ?? '') : ''}`}
       >
         <ul className={styles.sectionList}>{items}</ul>
       </div>
@@ -119,12 +119,12 @@ export function Footer() {
 
         <div className={styles.bottomBar}>
           <div className={styles.bottomLeft}>
-            <span>© {currentYear} {BRAND_NAME}</span>
+            <span>
+              © {currentYear} {BRAND_NAME}
+            </span>
 
             <div className={styles.devRow}>
-              <span className={styles.pill}>
-                Приложение разработано - ИП Чупахин С. А.
-              </span>
+              <span className={styles.pill}>Приложение разработано - ИП Чупахин С. А.</span>
 
               <div className={styles.devIcons}>
                 <a

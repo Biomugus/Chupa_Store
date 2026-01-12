@@ -9,4 +9,3 @@ export interface Product {
   slug?: string;
   image?: string;
 }
-

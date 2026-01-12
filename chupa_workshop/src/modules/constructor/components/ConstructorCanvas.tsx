@@ -10,4 +10,3 @@ export default function ConstructorCanvas({ layers }: ConstructorCanvasProps) {
     </div>
   );
 }
-

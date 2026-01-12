@@ -1,117 +1,121 @@
 .cta {
-    position: relative;
-    width: 100%;
-    min-height: 60vh;
-    overflow: hidden;
-    
-    color: white;
-    border-top: 2px solid #9b7e4b;
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  overflow: hidden;
+
+  color: white;
+  border-top: 2px solid #9b7e4b;
 }
 
 .cta::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(0deg, #ffffff66, #00000096),
-        url('/images/cta1.jpg') center / cover no-repeat;
-    z-index: 0;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, #ffffff66, #00000096),
+    url('/images/cta1.jpg') center / cover no-repeat;
+  z-index: 0;
 }
 
 .inner {
-    display: flex;
-    align-items: center;
-    gap: 32px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
 
-    position: relative;
-    top: 22rem;
-    max-width: 1080px;
-    margin: 0 auto;
+  position: relative;
+  top: 22rem;
+  max-width: 1080px;
+  margin: 0 auto;
 
-    z-index: 1;
+  z-index: 1;
 }
 
 .texts {
-    flex: 1 1 0;
+  flex: 1 1 0;
 }
 
 .texts h2 {
-    font-size: clamp(28px, 4vw, 36px);
-    margin-bottom: 10px;
-    font-weight: 700;
+  font-size: clamp(28px, 4vw, 36px);
+  margin-bottom: 10px;
+  font-weight: 700;
 }
 
 .texts p {
-    color: white;
+  color: white;
 }
 
 .actions {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    flex: 0 0 auto;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  flex: 0 0 auto;
 }
 
 .primary,
 .secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 20px;
-    border-radius: 12px;
-    border: 1px solid transparent;
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease,
-        border-color 0.15s ease, color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .primary {
-    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-    color: #9b7e4b;
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  color: #9b7e4b;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
 }
 
 .primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.45);
-    background: linear-gradient(135deg, #161616, #222222);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.45);
+  background: linear-gradient(135deg, #161616, #222222);
 }
 
 .secondary {
-    background: linear-gradient(135deg, rgba(18, 18, 18, 0.9), rgba(12, 12, 12, 0.85));
-    border-color: rgba(255, 255, 255, 0.08);
-    color: #9b7e4b;
+  background: linear-gradient(135deg, rgba(18, 18, 18, 0.9), rgba(12, 12, 12, 0.85));
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #9b7e4b;
 }
 
 .secondary:hover {
-    transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.16);
-    background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(18, 18, 18, 0.9));
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.16);
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(18, 18, 18, 0.9));
 }
 
 @media (max-width: 1024px) {
-    .inner {
-        padding: 0 32px;
-        top: 10rem;
-        flex-direction: column;
-        max-width: 70%;
-    }
+  .inner {
+    padding: 0 32px;
+    top: 10rem;
+    flex-direction: column;
+    max-width: 70%;
+  }
 
-    .texts {
-        text-align: center;
-    }
+  .texts {
+    text-align: center;
+  }
 }
 
 @media (max-width: 768px) {
-    .inner {
-        flex-direction: column;
-        gap: 16px;
-    }
+  .inner {
+    flex-direction: column;
+    gap: 16px;
+  }
 
-    .actions {
-        justify-content: flex-start;
-    }
+  .actions {
+    justify-content: flex-start;
+  }
 }

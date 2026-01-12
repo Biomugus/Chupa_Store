@@ -7,6 +7,5 @@ export interface CatalogItem {
   images?: string[];
   description?: string;
   equipment?: string;
-  characteristics?: string
+  characteristics?: string;
 }
-

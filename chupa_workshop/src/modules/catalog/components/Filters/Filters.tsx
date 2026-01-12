@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import styles from './filters.module.css'
+import styles from './filters.module.css';
 
 import { CatalogFilters } from '../../types/CatalogFilters';
 
@@ -16,7 +16,6 @@ export default function Filters({ filters, onFiltersChange }: FiltersProps) {
     onFiltersChange({ limit });
   };
 
-
   return (
     <div className={styles.filters}>
       <span className={styles.label}>Показывать по:</span>
@@ -24,14 +23,12 @@ export default function Filters({ filters, onFiltersChange }: FiltersProps) {
         <button
           key={limit}
           type="button"
-          className={`${styles.limitButton} ${filters.limit === limit ? styles.active : ''
-            }`}
+          className={`${styles.limitButton} ${filters.limit === limit ? styles.active : ''}`}
           onClick={() => handleLimitChange(limit)}
         >
           {limit}
         </button>
       ))}
     </div>
-  )
+  );
 }
-

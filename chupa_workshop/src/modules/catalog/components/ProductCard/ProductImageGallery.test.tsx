@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -158,7 +158,7 @@ describe('ProductImageGallery', () => {
         fireEvent.touchStart(gallery, { touches: [{ clientX: 100, clientY: 0 }] });
         fireEvent.touchMove(gallery, { touches: [{ clientX: 200, clientY: 0 }] });
         fireEvent.touchEnd(gallery, { touches: [] });
-      }  
+      }
 
       await waitFor(() => {
         expect(screen.getByAltText(`${defaultAlt} - фото 3`)).toBeInTheDocument();
@@ -171,8 +171,8 @@ describe('ProductImageGallery', () => {
       const gallery = container.querySelector('[class*="gallery"]');
       if (gallery) {
         fireEvent.touchStart(gallery, { touches: [{ clientX: 200, clientY: 0 }] });
-      fireEvent.touchMove(gallery, { touches: [{ clientX: 180, clientY: 0 }] });
-      fireEvent.touchEnd(gallery, { touches: [] });
+        fireEvent.touchMove(gallery, { touches: [{ clientX: 180, clientY: 0 }] });
+        fireEvent.touchEnd(gallery, { touches: [] });
       }
 
       expect(screen.getByAltText(`${defaultAlt} - фото 1`)).toBeInTheDocument();
@@ -184,27 +184,26 @@ describe('ProductImageGallery', () => {
       const images = ['/image1.jpg', '/image2.jpg', '/image3.jpg', '/image4.jpg'];
       const { container } = render(<ProductImageGallery images={images} alt={defaultAlt} />);
       const gallery = container.querySelector('[class*="gallery"]');
-  
+
       if (!gallery) return;
-  
+
       fireEvent.touchStart(gallery, { touches: [{ clientX: 200, clientY: 0 }] });
       fireEvent.touchMove(gallery, { touches: [{ clientX: 100, clientY: 0 }] });
       fireEvent.touchEnd(gallery, { touches: [] });
-  
+
       fireEvent.touchStart(gallery, { touches: [{ clientX: 200, clientY: 0 }] });
       fireEvent.touchMove(gallery, { touches: [{ clientX: 100, clientY: 0 }] });
       fireEvent.touchEnd(gallery, { touches: [] });
-  
+
       fireEvent.touchStart(gallery, { touches: [{ clientX: 100, clientY: 0 }] });
       fireEvent.touchMove(gallery, { touches: [{ clientX: 200, clientY: 0 }] });
       fireEvent.touchEnd(gallery, { touches: [] });
-  
+
       await waitFor(() => {
         expect(screen.getByAltText(`${defaultAlt} - фото 3`)).toBeInTheDocument();
       });
     });
   });
-  
 
   describe('Пограничные случаи', () => {
     it('обрабатывает массив с одним изображением', () => {
@@ -229,7 +228,10 @@ describe('ProductImageGallery', () => {
 
     it('синхронизирует индекс при изменении массива изображений', () => {
       const { rerender } = render(
-        <ProductImageGallery images={['/image1.jpg', '/image2.jpg', '/image3.jpg']} alt={defaultAlt} />
+        <ProductImageGallery
+          images={['/image1.jpg', '/image2.jpg', '/image3.jpg']}
+          alt={defaultAlt}
+        />
       );
 
       rerender(<ProductImageGallery images={['/image1.jpg', '/image2.jpg']} alt={defaultAlt} />);
@@ -238,7 +240,10 @@ describe('ProductImageGallery', () => {
 
     it('сбрасывает индекс при уменьшении массива', () => {
       const { rerender } = render(
-        <ProductImageGallery images={['/image1.jpg', '/image2.jpg', '/image3.jpg']} alt={defaultAlt} />
+        <ProductImageGallery
+          images={['/image1.jpg', '/image2.jpg', '/image3.jpg']}
+          alt={defaultAlt}
+        />
       );
 
       const indicator3 = screen.getByLabelText('Перейти к изображению 3');
@@ -254,7 +259,7 @@ describe('ProductImageGallery', () => {
       const images = ['/invalid-image.jpg'];
       render(<ProductImageGallery images={images} alt={defaultAlt} />);
       const image = screen.getByTestId('image-0');
-      
+
       await act(async () => {
         fireEvent.error(image);
       });
@@ -307,10 +312,10 @@ describe('ProductImageGallery', () => {
     it('галерея имеет tabIndex для фокуса', async () => {
       const images = ['/image1.jpg', '/image2.jpg'];
       const { container } = render(<ProductImageGallery images={images} alt={defaultAlt} />);
-      
+
       await waitFor(() => {
         expect(container.querySelector('[tabindex="0"]')).toBeInTheDocument();
-      });      
+      });
     });
 
     it('кнопки навигации имеют правильные aria-label', () => {

@@ -9,4 +9,3 @@ export const mapProductDTO = (dto: any): Product => ({
   slug: dto?.slug,
   image: dto?.image,
 });
-

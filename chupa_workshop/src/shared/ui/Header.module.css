@@ -156,10 +156,9 @@
   .inner {
     grid-template-columns: 1fr auto 1fr;
     grid-template-rows: auto auto;
-    grid-template-areas: 
+    grid-template-areas:
       'nav nav nav'
-      'logo . cart'
-    ;
+      'logo . cart';
     align-items: center;
     gap: 0.75rem;
   }
@@ -171,15 +170,15 @@
   .nav {
     grid-area: nav;
   }
-  
+
   .logo {
     grid-area: logo;
   }
-  
+
   .actions {
     grid-area: cart;
   }
-  
+
   .actions {
     justify-content: center;
   }
@@ -187,7 +186,6 @@
 
 @media (max-width: 768px) {
   .inner {
-    
   }
 
   .menuToggle {

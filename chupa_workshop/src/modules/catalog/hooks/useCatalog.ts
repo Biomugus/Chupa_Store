@@ -25,4 +25,3 @@ export function useCatalog() {
 
   return { items, loading };
 }
-

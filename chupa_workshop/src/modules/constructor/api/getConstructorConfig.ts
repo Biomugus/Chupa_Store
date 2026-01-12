@@ -6,4 +6,3 @@ import { ConstructorConfig } from '../types/ConstructorConfig';
 export async function getConstructorConfig(): Promise<ConstructorConfig> {
   return httpClient<ConstructorConfig>(endpoints.constructor);
 }
-

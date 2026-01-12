@@ -6,4 +6,3 @@ import { Product } from '../types/Product';
 export async function getProductById(id: string): Promise<Product> {
   return httpClient<Product>(endpoints.product(id));
 }
-

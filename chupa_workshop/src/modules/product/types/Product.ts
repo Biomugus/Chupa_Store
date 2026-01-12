@@ -5,4 +5,3 @@ export interface Product {
   description: string;
   images: string[];
 }
-

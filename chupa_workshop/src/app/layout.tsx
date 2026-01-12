@@ -3,6 +3,8 @@ import Header from '@/shared/ui/Header';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import './globals.css';
+import { ModalRoot } from '@/shared/ui/ModalRoot';
+import { ModalProvider } from '@/shared/ui/ModalContext';
 
 export const metadata: Metadata = {
   title: 'Мастерская Чупы',
@@ -14,9 +16,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ru">
       <body>
-        <Header />
-        {children}
-        <Footer />
+        <ModalProvider>
+          <Header />
+          {children}
+          <ModalRoot />
+          <Footer />
+        </ModalProvider>
       </body>
     </html>
   );

@@ -17,4 +17,3 @@ export async function addToCart(item: CartItem): Promise<CartItem[]> {
 export async function removeFromCart(id: string): Promise<CartItem[]> {
   return httpClient<CartItem[]>(`${endpoints.cart}/${id}`, { method: 'DELETE' });
 }
-

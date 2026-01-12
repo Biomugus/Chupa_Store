@@ -22,11 +22,8 @@ export function useConstructor() {
   }, []);
 
   const updateOption = (key: string, value: string) => {
-    setConfig((prev) =>
-      prev ? { ...prev, options: { ...prev.options, [key]: value } } : prev,
-    );
+    setConfig((prev) => (prev ? { ...prev, options: { ...prev.options, [key]: value } } : prev));
   };
 
   return { config, loading, updateOption };
 }
-

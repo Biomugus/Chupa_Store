@@ -1,302 +1,301 @@
- .footer {
-     background: #08090b;
-     color: #f4f5f7;
-     border-top: 1px solid rgba(255, 255, 255, 0.06);
- }
+.footer {
+  background: #08090b;
+  color: #f4f5f7;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
 
- .inner {
-     margin: 0 auto;
-     max-width: 1200px;
-     padding: 2.5rem 1.25rem 2rem;
-     display: flex;
-     flex-direction: column;
-     gap: 2rem;
- }
+.inner {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 2.5rem 1.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 
- .columns {
-     display: grid;
-     grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.3fr);
-     gap: 2.5rem;
-     align-items: flex-start;
- }
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.3fr);
+  gap: 2.5rem;
+  align-items: flex-start;
+}
 
- .section {
-     display: flex;
-     flex-direction: column;
-     gap: 0.75rem;
- }
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
 
- .sectionHeader {
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     gap: 0.75rem;
-     padding: 0;
-     border: none;
-     background: none;
-     color: inherit;
-     font: inherit;
-     text-align: left;
-     cursor: default;
- }
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: default;
+}
 
- .sectionTitle {
-     font-size: 0.95rem;
-     letter-spacing: 0.13em;
-     text-transform: uppercase;
-     font-weight: 700;
- }
+.sectionTitle {
+  font-size: 0.95rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
 
- .sectionChevron {
-     display: none;
-     width: 18px;
-     height: 18px;
-     border-radius: 999px;
-     border: 1px solid rgba(255, 255, 255, 0.18);
-     align-items: center;
-     justify-content: center;
-     flex-shrink: 0;
- }
+.sectionChevron {
+  display: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
 
- .chevronIcon {
-     width: 8px;
-     height: 8px;
-     border-right: 2px solid currentColor;
-     border-bottom: 2px solid currentColor;
-     transform: rotate(45deg);
-     transition: transform 150ms ease;
- }
+.chevronIcon {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 150ms ease;
+}
 
- .sectionBody {
-     margin: 0;
- }
+.sectionBody {
+  margin: 0;
+}
 
- .sectionList {
-     list-style: none;
-     margin: 0;
-     padding: 0;
-     display: flex;
-     flex-direction: column;
-     gap: 0.65rem;
- }
+.sectionList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
 
- .sectionItem {
-     font-size: 0.9rem;
-     color: rgba(244, 245, 247, 0.86);
- }
+.sectionItem {
+  font-size: 0.9rem;
+  color: rgba(244, 245, 247, 0.86);
+}
 
- .brandColumn {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     gap: 1rem;
- }
+.brandColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
 
- .brandLogo {
-     display: inline-flex;
-     align-items: center;
-     gap: 0.6rem;
- }
+.brandLogo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
 
- .brandName {
-     font-weight: 800;
-     letter-spacing: 0.14em;
-     text-transform: uppercase;
-     font-size: 0.9rem;
- }
+.brandName {
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
 
- .brandText {
-     font-size: 0.9rem;
-     color: rgba(244, 245, 247, 0.8);
-     max-width: 20rem;
- }
+.brandText {
+  font-size: 0.9rem;
+  color: rgba(244, 245, 247, 0.8);
+  max-width: 20rem;
+}
 
- .bottomBar {
-     display: flex;
-     align-items: baseline;
-     justify-content: space-between;
-     gap: 1.5rem;
-     padding-top: 1.25rem;
-     border-top: 1px solid rgba(255, 255, 255, 0.08);
-     font-size: 0.8rem;
-     color: rgba(244, 245, 247, 0.7);
-     flex-wrap: wrap;
- }
+.bottomBar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.8rem;
+  color: rgba(244, 245, 247, 0.7);
+  flex-wrap: wrap;
+}
 
- .bottomLeft {
-     display: flex;
-     flex-direction: column;
-     align-items: flex-start;
-     gap: 0.4rem;
- }
+.bottomLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
 
- .bottomRight {
-     display: flex;
-     align-items: center;
-     gap: 0.75rem;
-     flex-wrap: wrap;
- }
+.bottomRight {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
 
- .pill {
-     padding: 0.3rem 0.7rem;
-     border-radius: 999px;
-     border: 1px solid rgba(255, 255, 255, 0.18);
-     background: rgba(0, 0, 0, 0.25);
- }
+.pill {
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.25);
+}
 
- .badgeRow {
-     display: flex;
-     align-items: center;
-     gap: 0.5rem;
- }
+.badgeRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 
- .badge {
-     width: 40px;
-     height: 40px;
-     border-radius: 999px;
-     background: rgba(255, 255, 255, 0.08);
-     display: inline-flex;
-     align-items: center;
-     justify-content: center;
-     transition:
-         background-color 120ms ease,
-         transform 120ms ease;
- }
+.badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 120ms ease,
+    transform 120ms ease;
+}
 
- .badge:hover,
- .badge:focus-visible {
-     background: rgba(255, 255, 255, 0.16);
-     transform: translateY(-1px);
- }
+.badge:hover,
+.badge:focus-visible {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-1px);
+}
 
- .badgeIcon {
-     width: 36px;
-     height: 36px;
- }
+.badgeIcon {
+  width: 36px;
+  height: 36px;
+}
 
- .phoneLink {
-     color: inherit;
-     text-decoration: underline;
-     text-decoration-thickness: 1px;
-     text-underline-offset: 2px;
-     white-space: nowrap;
-     padding-left: 10px;
- }
+.phoneLink {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+  padding-left: 10px;
+}
 
- .devRow {
-     display: flex;
-     align-items: center;
-     gap: 0.6rem;
-     flex-wrap: wrap;
-     padding-top: 10px;
- }
+.devRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  padding-top: 10px;
+}
 
- .devIcons {
-     display: flex;
-     align-items: center;
-     gap: 0.35rem;
+.devIcons {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
 
-     padding: 0.3rem 0.7rem;
-     border-radius: 999px;
-     border: 1px solid rgba(255, 255, 255, 0.18);
-     background: rgba(0, 0, 0, 0.25);
- }
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.25);
+}
 
- .devIcons a {
-     display: inline-flex;
-     align-items: center;
-     justify-content: center;
- }
+.devIcons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
- .devIcon {
-     width: 20px;
-     height: 20px;
- }
+.devIcon {
+  width: 20px;
+  height: 20px;
+}
 
- @media (max-width: 1024px) {
-     .columns {
-         grid-template-columns: repeat(4, minmax(0, 1fr));
-         gap: 1.5rem;
-     }
- }
+@media (max-width: 1024px) {
+  .columns {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
 
- @media (max-width: 768px) {
-     .inner {
-         padding-top: 2rem;
-         padding-bottom: 1.75rem;
-     }
+@media (max-width: 768px) {
+  .inner {
+    padding-top: 2rem;
+    padding-bottom: 1.75rem;
+  }
 
-     .columns {
-         grid-template-columns: minmax(0, 1fr);
-         gap: 0.75rem;
-     }
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
 
-     .section {
-         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-         padding-bottom: 0.25rem;
-     }
+  .section {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 0.25rem;
+  }
 
-     .sectionHeader {
-         padding: 0.5rem 0;
-         cursor: pointer;
-     }
+  .sectionHeader {
+    padding: 0.5rem 0;
+    cursor: pointer;
+  }
 
-     .sectionChevron {
-         display: inline-flex;
-     }
+  .sectionChevron {
+    display: inline-flex;
+  }
 
-     .sectionBody {
-         max-height: 0;
-         overflow: hidden;
-         opacity: 0;
-         transform: translateY(-4px);
-         transition:
-             max-height 180ms ease-out,
-             opacity 150ms ease-out,
-             transform 150ms ease-out;
-     }
+  .sectionBody {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition:
+      max-height 180ms ease-out,
+      opacity 150ms ease-out,
+      transform 150ms ease-out;
+  }
 
-     .sectionBodyOpen {
-         max-height: 400px;
-         opacity: 1;
-         transform: translateY(0);
-         margin-bottom: 0.5rem;
-     }
+  .sectionBodyOpen {
+    max-height: 400px;
+    opacity: 1;
+    transform: translateY(0);
+    margin-bottom: 0.5rem;
+  }
 
-     .sectionOpen .chevronIcon {
-         transform: rotate(-135deg);
-     }
+  .sectionOpen .chevronIcon {
+    transform: rotate(-135deg);
+  }
 
-     .brandColumn {
-         padding-top: 1.5rem;
-         align-items: center;
-     }
+  .brandColumn {
+    padding-top: 1.5rem;
+    align-items: center;
+  }
 
-     .bottomBar {
-         flex-direction: column;
-         align-items: center;
-         gap: 2.5rem;
-     }
+  .bottomBar {
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+  }
 
-     .bottomLeft {
-         align-items: center;
-     }
+  .bottomLeft {
+    align-items: center;
+  }
 
-     .devRow {
-         flex-direction: column;
-     }
+  .devRow {
+    flex-direction: column;
+  }
 
-     .columns {
+  .columns {
+  }
+}
 
-     }
- }
+@media (prefers-reduced-motion: reduce) {
+  .sectionBody {
+    transition: none;
+  }
 
- @media (prefers-reduced-motion: reduce) {
-     .sectionBody {
-         transition: none;
-     }
-
-     .chevronIcon {
-         transition: none;
-     }
- }
+  .chevronIcon {
+    transition: none;
+  }
+}

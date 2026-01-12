@@ -35,4 +35,3 @@ export function useCart() {
 
   return { items, total, loading, addItem, removeItem };
 }
-
