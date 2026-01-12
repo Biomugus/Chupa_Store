@@ -9,7 +9,7 @@ type FiltersProps = {
   onFiltersChange: (filters: Partial<CatalogFilters>) => void;
 };
 
-const LIMIT_OPTIONS = [10, 20, 50, 100] as const;
+const LIMIT_OPTIONS = [10, 20, 50] as const;
 
 export default function Filters({ filters, onFiltersChange }: FiltersProps) {
   const handleLimitChange = (limit: number) => {

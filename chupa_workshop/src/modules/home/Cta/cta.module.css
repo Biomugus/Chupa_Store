@@ -96,6 +96,12 @@
   background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(18, 18, 18, 0.9));
 }
 
+@media (max-width: 1440px) {
+  .inner {
+    top: 10rem;
+  }
+}
+
 @media (max-width: 1024px) {
   .inner {
     padding: 0 32px;

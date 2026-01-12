@@ -1,25 +1,28 @@
-import styles from './hero.module.css';
 import Link from 'next/link';
+import styles from './hero.module.css';
 
 function Hero() {
   return (
     <section className={styles.hero}>
       <div className={styles.content}>
         <p className={styles.label}>Мастерская Чупы</p>
-        <h1 className={styles.title}>Оружейные аксессуары</h1>
-        <span className={styles.highlight}>Дерево. Качество. Характер.</span>
+        <h1 className={styles.title}>Тюнинг оружия</h1>
+        <span className={styles.highlight}>Стиль. Качество. Характер.</span>
         <p className={styles.subtitle}>
-          Ваша винтовка заслуживает большего, чем пластик. Мы даём ей душу — изготавливаем из дерева
-          и фанеры тактические приклады, цевья, рукояти для безупречного вида и чувства контроля.
-          Под АК серию на Airsoft и огнестрел (гладкоствольное и нарезное). Под ваш неповторимый
-          стиль. Закажите превосходство..
+          Ведущий производитель аксессуаров из благородных пород древесины для АК и AR плтаформ. Мы
+          предлагаем уникальные изделия из живого материала с высочайшей степенью утилитарности:
+          приклады, цевья, рукоятки, Mlok-фурнитуру и многое другое. Наш продукт позволяет сделать
+          сборку Вашего оружия по настоящему уникальной и выделяющейся за счет использования
+          эстетичных материалов и современного дизайна.
         </p>
 
         <div className={styles.actions}>
           <Link href="/catalog">
             <button className={styles.primary}>Каталог</button>
           </Link>
-          <button className={styles.secondary}>О Мастерской</button>
+          <Link href="/history">
+            <button className={styles.secondary}>О Мастерской</button>
+          </Link>
         </div>
       </div>
     </section>

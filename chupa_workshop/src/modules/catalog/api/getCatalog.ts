@@ -1,16 +1,12 @@
-import { endpoints } from '@/shared/api/endpoints';
-import { httpClient } from '@/shared/api/httpClient';
-
 import { CatalogItem } from '../types/CatalogItem';
 
 export async function getCatalog(): Promise<CatalogItem[]> {
-  // Моковые данные для разработки
   return Promise.resolve([
     {
       id: '1',
       title: 'Mlok-накладки "Оберег"',
       price: 4800,
-      slug: 'chupa-classic',
+      slug: 'mlok',
       images: [
         'https://sun9-33.userapi.com/s/v1/ig2/oKVlSGuCL7rdUGdIrxvIJoWZ-iQ14Vl-LNmyQPRw-pbFR-Dp52piwjWsMwWV9BS55AgHT1dQ2g5rgASLL6kK5S-2.jpg?quality=95&as=32x43,48x64,72x96,108x144,160x213,240x320,360x480,480x640,540x720,640x853,720x960,960x1280&from=bu&cs=960x0',
         'https://sun9-66.userapi.com/s/v1/ig2/qVlj38O1-Bq0AGTR56d4jv9pqx6-HQ-oLlFyElsSL3mX4P4Phkxztnc_f-qFQY1UcqLkqtAx4Ytih42MW7rhiec6.jpg?quality=95&as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960&from=bu&cs=1280x0',
