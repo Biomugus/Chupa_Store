@@ -1,14 +1,14 @@
-'use client';
+'use client'
 
-import Modal from '@/shared/ui/Modal';
-import { useModal } from '@/shared/ui/ModalContext';
-import { useCart } from '../hooks/useCart';
+import Modal from '@/shared/ui/modal/Modal'
+import { useModal } from '@/shared/ui/modal/ModalContext'
+import { useCart } from '../hooks/useCart'
 
 export function CartModal() {
-  const { modal, closeModal } = useModal();
-  const { items, total, loading, removeItem } = useCart();
+  const { modal, closeModal } = useModal()
+  const { items, total, loading, removeItem } = useCart()
 
-  if (modal.type !== 'cart') return null;
+  if (modal.type !== 'cart') return null
 
   return (
     <Modal isOpen onClose={closeModal}>
@@ -27,5 +27,5 @@ export function CartModal() {
       <hr />
       <strong>Итого: {total}</strong>
     </Modal>
-  );
+  )
 }

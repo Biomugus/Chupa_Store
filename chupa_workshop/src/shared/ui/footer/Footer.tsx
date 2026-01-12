@@ -1,25 +1,25 @@
-'use client';
+'use client'
 
-import Link from 'next/link';
-import { useState } from 'react';
+import Link from 'next/link'
+import { useState } from 'react'
 
-import { BRAND_NAME } from '../config/navigation';
-import { useIconsReady } from '../hooks/useIconsReady';
-import { LogoMark } from '../icons/LogoMark';
-import { RuFlag } from '../icons/RuFlag';
-import { TelegramIcon } from '../icons/TelegramIcon';
-import { VkIcon } from '../icons/VkIcon';
-import { WhatsappIcon } from '../icons/WhatsappIcon';
+import { BRAND_NAME } from '../../config/navigation'
+import { useIconsReady } from '../../hooks/useIconsReady'
+import { LogoMark } from '../../icons/LogoMark'
+import { RuFlag } from '../../icons/RuFlag'
+import { TelegramIcon } from '../../icons/TelegramIcon'
+import { VkIcon } from '../../icons/VkIcon'
+import { WhatsappIcon } from '../../icons/WhatsappIcon'
 
-import styles from './Footer.module.css';
+import styles from './Footer.module.css'
 
-type FooterSectionId = 'shop' | 'support' | 'workshop';
+type FooterSectionId = 'shop' | 'support' | 'workshop'
 
 type FooterSectionConfig = {
-  id: FooterSectionId;
-  title: string;
-  items: FooterItem[];
-};
+  id: FooterSectionId
+  title: string
+  items: FooterItem[]
+}
 
 const FOOTER_SECTIONS: FooterSectionConfig[] = [
   {
@@ -52,18 +52,18 @@ const FOOTER_SECTIONS: FooterSectionConfig[] = [
       { label: 'О процессе работы', href: '/process' },
     ],
   },
-];
+]
 
 type FooterSectionProps = {
-  config: FooterSectionConfig;
-  isOpen: boolean;
-  onToggle: () => void;
-};
+  config: FooterSectionConfig
+  isOpen: boolean
+  onToggle: () => void
+}
 
 type FooterItem = {
-  label: string;
-  href: string;
-};
+  label: string
+  href: string
+}
 
 function FooterSection({ config, isOpen, onToggle }: FooterSectionProps) {
   const items = config.items.map((item) => (
@@ -72,7 +72,7 @@ function FooterSection({ config, isOpen, onToggle }: FooterSectionProps) {
         {item.label}
       </Link>
     </li>
-  ));
+  ))
 
   return (
     <section
@@ -99,16 +99,16 @@ function FooterSection({ config, isOpen, onToggle }: FooterSectionProps) {
         <ul className={styles.sectionList}>{items}</ul>
       </div>
     </section>
-  );
+  )
 }
 
 export function Footer() {
-  const [openId, setOpenId] = useState<FooterSectionId | null>(null);
-  const iconsReady = useIconsReady();
+  const [openId, setOpenId] = useState<FooterSectionId | null>(null)
+  const iconsReady = useIconsReady()
 
   const handleToggle = (id: FooterSectionId) => {
-    setOpenId((current) => (current === id ? null : id));
-  };
+    setOpenId((current) => (current === id ? null : id))
+  }
 
   const sections = FOOTER_SECTIONS.map((section) => (
     <FooterSection
@@ -117,9 +117,9 @@ export function Footer() {
       isOpen={openId === section.id}
       onToggle={() => handleToggle(section.id)}
     />
-  ));
+  ))
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear()
 
   return (
     <footer className={styles.footer} aria-label="Подвал сайта">
@@ -213,7 +213,7 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

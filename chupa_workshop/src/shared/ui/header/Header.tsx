@@ -1,35 +1,35 @@
-'use client';
+'use client'
 
-import Link from 'next/link';
-import { useIconsReady } from '../hooks/useIconsReady';
-import { useMobileMenu } from '../hooks/useMobileMenu';
-import { useModal } from './ModalContext';
+import { useIconsReady } from '@/shared/hooks/useIconsReady'
+import { useMobileMenu } from '@/shared/hooks/useMobileMenu'
+import Link from 'next/link'
+import { useModal } from '../modal/ModalContext'
 
-import { CartIcon } from '../icons/Carticon';
-import { LogoMark } from '../icons/LogoMark';
+import { CartIcon } from '@/shared/icons/Carticon'
+import { LogoMark } from '@/shared/icons/LogoMark'
 
-import { HOME_LABEL, NAV_ITEMS } from '../config/navigation';
-import styles from './Header.module.css';
-import { MenuToggle } from './MenuToggle';
+import { HOME_LABEL, NAV_ITEMS } from '@/shared/config/navigation'
+import { MenuToggle } from '../MenuToggle'
+import styles from './Header.module.css'
 
-const NAVIGATION_ID = 'main-navigation';
+const NAVIGATION_ID = 'main-navigation'
 
 function Header() {
-  const iconsReady = useIconsReady();
-  const menu = useMobileMenu();
-  const { openModal } = useModal();
+  const iconsReady = useIconsReady()
+  const menu = useMobileMenu()
+  const { openModal } = useModal()
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
   ) => {
-    if (href === '/' || href === '/catalog') return;
-  
-    e.preventDefault();
-    menu.close();
-    openModal('nav');
-  };
-  
+    if (href === '/' || href === '/catalog') return
+
+    e.preventDefault()
+    menu.close()
+    openModal('nav')
+  }
+
 
   const navigationItems = NAV_ITEMS.map((item) => (
     <li key={item.href} className={styles.navItem}>
@@ -42,7 +42,7 @@ function Header() {
         {item.label}
       </Link>
     </li>
-  ));
+  ))
 
   return (
     <>
@@ -69,8 +69,8 @@ function Header() {
               className={styles.cartButton}
               aria-label="Открыть корзину"
               onClick={() => {
-                menu.close();
-                openModal('cart');
+                menu.close()
+                openModal('cart')
               }}
             >
               <CartIcon ready={iconsReady} />
@@ -80,7 +80,7 @@ function Header() {
         </div>
       </header>
     </>
-  );
+  )
 }
 
-export default Header;
+export default Header
