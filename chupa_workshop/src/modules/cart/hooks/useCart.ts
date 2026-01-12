@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 
 import { addToCart, fetchCart, removeFromCart } from '../api/cartApi';
@@ -9,12 +11,21 @@ export function useCart() {
 
   useEffect(() => {
     let mounted = true;
-    setLoading(true);
-    fetchCart()
-      .then((data) => {
+
+    async function loadCart() {
+      if (!mounted) return;
+
+      setLoading(true);
+
+      try {
+        const data = await fetchCart();
         if (mounted) setItems(data);
-      })
-      .finally(() => mounted && setLoading(false));
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    }
+
+    loadCart();
 
     return () => {
       mounted = false;
