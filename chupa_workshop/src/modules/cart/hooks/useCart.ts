@@ -19,7 +19,9 @@ export function useCart() {
 
       try {
         const data = await fetchCart();
-        if (mounted) setItems(data);
+        if (mounted) setItems(data ?? []);
+      } catch {
+        if (mounted) setItems([]);
       } finally {
         if (mounted) setLoading(false);
       }

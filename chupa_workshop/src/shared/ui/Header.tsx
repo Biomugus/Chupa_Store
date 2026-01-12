@@ -8,7 +8,6 @@ import { useModal } from './ModalContext';
 import { CartIcon } from '../icons/Carticon';
 import { LogoMark } from '../icons/LogoMark';
 
-import { useState } from 'react';
 import { HOME_LABEL, NAV_ITEMS } from '../config/navigation';
 import styles from './Header.module.css';
 import { MenuToggle } from './MenuToggle';
