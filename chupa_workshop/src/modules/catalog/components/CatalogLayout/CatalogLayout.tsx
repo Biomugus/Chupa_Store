@@ -1,10 +1,10 @@
-import styles from './catalogLayout.module.css';
+import styles from './catalogLayout.module.css'
 
 type CatalogLayoutProps = {
-  sidebar: React.ReactNode;
-  quickFilters?: React.ReactNode;
-  children: React.ReactNode;
-};
+  sidebar: React.ReactNode
+  quickFilters?: React.ReactNode
+  children: React.ReactNode
+}
 
 function CatalogLayout({ sidebar, quickFilters, children }: CatalogLayoutProps) {
   return (
@@ -15,7 +15,7 @@ function CatalogLayout({ sidebar, quickFilters, children }: CatalogLayoutProps) 
         <main className={styles.main}>{children}</main>
       </div>
     </div>
-  );
+  )
 }
 
-export default CatalogLayout;
+export default CatalogLayout

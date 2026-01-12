@@ -22,7 +22,7 @@ export async function getCatalog(): Promise<CatalogItem[]> {
     },
     {
       id: '2',
-      title: 'Чупа чупс классический',
+      title: 'Чупа чупс sweet',
       price: 1488,
       slug: 'chupa-classic',
       images: [
@@ -35,7 +35,7 @@ export async function getCatalog(): Promise<CatalogItem[]> {
     },
     {
       id: '3',
-      title: 'Чупа чупс классический',
+      title: 'Чупа чупс high',
       price: 3758,
       slug: 'chupa-classic',
       images: [
@@ -45,7 +45,7 @@ export async function getCatalog(): Promise<CatalogItem[]> {
         'https://i.pinimg.com/736x/ec/2d/e1/ec2de15f53b7b24dacf95b5b89b42e45.jpg',
       ],
       description: 'Классический вкус, который знаком каждому с детства.',
-    }
+    },
   ]);
 
   // Раскомментируй когда будет готов API
