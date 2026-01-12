@@ -16,6 +16,14 @@ export const CartModal = observer(() => {
 
   return (
     <Modal isOpen onClose={closeModal}>
+      <button
+        className={style.closeButton}
+        onClick={closeModal}
+        aria-label='Закрыть корзину'
+      >
+        x
+      </button>
+
       {loading && <p className={style.loadingMessage}>Загрузка…</p>}
 
       {!loading && items.length === 0 && <p className={style.emptyMessage}>Корзина пуста</p>}

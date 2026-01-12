@@ -5,15 +5,15 @@ import { useModal } from './ModalContext';
 import Modal from './Modal';
 
 export function ModalRoot() {
-    const {modal, closeModal} = useModal()
+  const { modal, closeModal } = useModal()
 
 
   return (
     <>
       <CartModal />
 
-    <Modal isOpen={modal.type === 'nav'} onClose={closeModal}>
-    <p
+      <Modal isOpen={modal.type === 'nav'} onClose={closeModal}>
+        <p
           style={{
             margin: 0,
             fontSize: '1.125rem',
@@ -21,9 +21,9 @@ export function ModalRoot() {
             textAlign: 'center',
           }}
         >
-          Раздел ещё на стадии разработки. Пока можете ознакомиться с каталогом.
+          Раздел ещё на стадии разработки. Пока можете ознакомиться с каталогом :)
         </p>
-    </Modal>
+      </Modal>
     </>
   );
 }
