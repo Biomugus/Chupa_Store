@@ -1,24 +1,19 @@
 'use client'
 
 import Modal from '@/shared/ui/modal/Modal'
-import { useModal } from '@/shared/ui/modal/ModalContext'
-import { observer } from 'mobx-react-lite'
-import { useCart } from '../hooks/useCart'
-
 import Image from 'next/image'
 import style from './cartModal.module.css'
 
-export const CartModal = observer(() => {
-  const { modal, closeModal } = useModal()
-  const { items, total, loading, removeItem } = useCart()
+import { CartModalUIProps } from '../types/CartModalUIProps'
 
-  if (modal.type !== 'cart') return null
+export default function CartModalUI({ isOpen, onClose, items, total, loading, onRemoveItem }: CartModalUIProps) {
+  if (!isOpen) return null
 
   return (
-    <Modal isOpen onClose={closeModal}>
+    <Modal isOpen onClose={onClose}>
       <button
         className={style.closeButton}
-        onClick={closeModal}
+        onClick={onClose}
         aria-label='Закрыть корзину'
       >
         x
@@ -40,9 +35,8 @@ export const CartModal = observer(() => {
             <div className={style.cartItemDetails}>
               <span className="title">{item.title}</span>
               <span className="price">{item.price} ₽</span>
-              {/* <span className="characteristics">{item.characteristics}</span> */}
             </div>
-            <button onClick={() => removeItem(item.id)}>Удалить</button>
+            <button onClick={() => onRemoveItem(item.id)}>Удалить</button>
           </div>
         ))}
 
@@ -50,4 +44,4 @@ export const CartModal = observer(() => {
       <strong className={style.total}>Итого: {total} ₽</strong>
     </Modal>
   )
-})
+}

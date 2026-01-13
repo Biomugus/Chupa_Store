@@ -1,68 +1,45 @@
-import { makeAutoObservable, runInAction } from 'mobx';
-import { fetchCart } from '../api/cartApi';
+//cart/store/CartStore.ts
+
+import { makeAutoObservable } from 'mobx';
+import { loadCart, saveCart } from '../dal/cartStorage';
+import { CartModel } from '../model/cartModel';
 import { CartItem } from '../types/CartItem';
 
 class CartStore {
-  items: CartItem[] = [];
-  loading: boolean = false;
+  model = new CartModel();
+  loading = false;
 
   constructor() {
     makeAutoObservable(this);
-    this.loadFromStorage();
+    this.load();
   }
 
-  // --- Persistence ---
-  loadFromStorage() {
-    if (typeof window === 'undefined') return;
-    const data = localStorage.getItem('cart');
-    if (data) this.items = JSON.parse(data);
+  load() {
+    const items = loadCart();
+    this.model.items = items;
   }
 
-  saveToStorage() {
-    if (typeof window === 'undefined') return;
-    localStorage.setItem('cart', JSON.stringify(this.items));
-  }
-
-  // --- Actions ---
   addItem(item: CartItem) {
-    const index = this.items.findIndex((i) => i.id === item.id);
-    if (index > -1) {
-      this.items[index].quantity += item.quantity;
-    } else {
-      this.items.push(item);
-    }
-    this.saveToStorage();
+    this.model.addItem(item);
+    saveCart(this.model.items);
   }
 
   removeItem(id: string) {
-    this.items = this.items.filter((i) => i.id !== id);
-    this.saveToStorage();
+    this.model.removeItem(id);
+    saveCart(this.model.items);
   }
 
-  clearCart() {
-    this.items = [];
-    this.saveToStorage();
+  clear() {
+    this.model.clear();
+    saveCart(this.model.items);
   }
 
-  // --- Computed ---
+  get items() {
+    return this.model.items;
+  }
+
   get total() {
-    return this.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
-  }
-
-  // --- Async API examples ---
-  async fetchCartFromServer() {
-    this.loading = true;
-    try {
-      const data = await fetchCart();
-      runInAction(() => {
-        this.items = data ?? [];
-        this.saveToStorage();
-      });
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
-    }
+    return this.model.total;
   }
 }
 

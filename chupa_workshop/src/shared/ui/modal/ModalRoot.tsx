@@ -1,8 +1,8 @@
 'use client'
 
-import { CartModal } from '@/modules/cart/components/CartModal';
-import { useModal } from './ModalContext';
-import Modal from './Modal';
+import { CartModalContainer } from '@/modules/cart/containers/CartModalContainer'
+import Modal from './Modal'
+import { useModal } from './ModalContext'
 
 export function ModalRoot() {
   const { modal, closeModal } = useModal()
@@ -10,7 +10,7 @@ export function ModalRoot() {
 
   return (
     <>
-      <CartModal />
+      <CartModalContainer />
 
       <Modal isOpen={modal.type === 'nav'} onClose={closeModal}>
         <p
@@ -25,5 +25,5 @@ export function ModalRoot() {
         </p>
       </Modal>
     </>
-  );
+  )
 }

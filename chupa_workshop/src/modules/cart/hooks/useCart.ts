@@ -3,12 +3,11 @@ import { cartStore } from '../store/CartStore';
 
 export const useCart = () => {
   return {
-    items: cartStore.items,
+    items: cartStore.model.items,
     total: cartStore.total,
+    loading: cartStore.loading,
     addItem: cartStore.addItem.bind(cartStore),
     removeItem: cartStore.removeItem.bind(cartStore),
-    clearCart: cartStore.clearCart.bind(cartStore),
-    fetchCart: cartStore.fetchCartFromServer.bind(cartStore),
-    loading: cartStore.loading,
+    clear: cartStore.clear.bind(cartStore),
   };
 };

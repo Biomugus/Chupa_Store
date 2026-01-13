@@ -1,12 +1,12 @@
 type CartSummaryProps = {
-  total: number;
-};
+  total: number
+}
 
-export default function CartSummary({ total }: CartSummaryProps) {
+export default function CartSummaryUI({ total }: CartSummaryProps) {
   return (
     <aside>
       <div>Summary</div>
       <div>Total: {total}</div>
     </aside>
-  );
+  )
 }
