@@ -15,7 +15,7 @@ export default function ProductImageGallery({ images, alt }: ProductImageGallery
   const trackRef = useRef<HTMLDivElement>(null);
 
   const hasMultiple = images.length > 1;
-  const validImages = images.length > 0 ? images : ['/images/placeholder.jpg'];
+  const validImages = images.length > 0 ? images : ['/images/placeholders/placeholder.jpg'];
 
   const prev = useCallback(() => {
     if (!hasMultiple) return;
@@ -73,7 +73,7 @@ export default function ProductImageGallery({ images, alt }: ProductImageGallery
         <div ref={trackRef} className={styles.track}>
           {validImages.map((src, idx) => {
             const isFailed = failedImages.has(idx);
-            const finalSrc = isFailed ? '/images/placeholder.jpg' : src;
+            const finalSrc = isFailed ? '/images/placeholders/placeholder.jpg' : src;
             const finalAlt = isFailed
               ? `${alt} - фото ${idx + 1} (не загружено)`
               : `${alt} - фото ${idx + 1}`;

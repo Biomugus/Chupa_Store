@@ -19,7 +19,7 @@ const ProductCard = observer(({ product }: ProductCardProps) => {
   const images =
     (product as Product).images ??
     (product as CatalogItem).images ??
-    (product.image ? [product.image] : ['/images/placeholder.jpg'])
+    (product.image ? [product.image] : ['/images/placeholders/placeholder.jpg'])
 
   const handleAdd = () => {
     addItem({
@@ -28,7 +28,7 @@ const ProductCard = observer(({ product }: ProductCardProps) => {
       price: product.price,
       quantity: 1,
       characteristics: product.characteristics,
-      image: product.images?.[0] || '/images/placeholder.jpg',
+      image: product.images?.[0] || '/images/placeholders/placeholder.jpg',
 
     })
   }
