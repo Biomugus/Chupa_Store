@@ -1,53 +1,78 @@
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(4px);
-  animation: fadeIn 150ms ease;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  animation: fadeIn 180ms ease-out;
+  overscroll-behavior: contain;
 }
 
 .content {
   position: relative;
   background: #0c0d0f;
   color: #f4f5f7;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.11);
   border-radius: 16px;
-  padding: 2rem;
-  min-width: 30vw;
-  max-width: 100%;
-  min-height: 30vh;
-  max-height: 100%;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  animation: slideUp 200ms ease;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+
+  width: min(90vw, 450px);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+
+  scroll-behavior: smooth;
+
+  animation: slideUp 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.content::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
 }
 
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.content::-webkit-scrollbar-track {
+  background: #101215;
+  border-radius: 10px;
+  margin: 2px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: #3a3f48;
+  border-radius: 10px;
+  border: 2px solid #101215;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: #50566b;
+}
+
+.content::-webkit-scrollbar-corner {
+  background: #101215;
+}
+
+.content {
+  scrollbar-color: #3a3f48 #101215;
+  scrollbar-width: thin;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .overlay,
   .content {
     animation: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    width: calc(100dvw - 24px);
+    max-height: calc(100dvh - 24px);
+    margin: 12px;
+    border-radius: 12px;
   }
 }

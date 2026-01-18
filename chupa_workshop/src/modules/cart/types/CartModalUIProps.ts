@@ -1,10 +1,5 @@
-import { CartItem as CartItemType } from '../types/CartItem';
-
-export type CartModalUIProps = {
+export interface CartModalUIProps {
   isOpen: boolean;
   onClose: () => void;
-  items: CartItemType[];
-  total: number;
-  loading: boolean;
-  onRemoveItem: (id: string) => void;
-};
+  children: React.ReactNode;
+}

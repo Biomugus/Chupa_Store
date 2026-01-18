@@ -1,12 +1,15 @@
+import { formatPrice } from '@/shared/lib/formatPrice'
+import styles from './cartSummaryUI.module.css'
+
+
 type CartSummaryProps = {
   total: number
 }
 
-export default function CartSummaryUI({ total }: CartSummaryProps) {
+export default function CartSummaryUi({ total }: CartSummaryProps) {
   return (
     <aside>
-      <div>Summary</div>
-      <div>Total: {total}</div>
+      <span className={styles.price}>Итого: {formatPrice(total)}</span>
     </aside>
   )
 }
