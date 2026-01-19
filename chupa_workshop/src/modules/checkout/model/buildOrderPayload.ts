@@ -2,8 +2,7 @@ import { CartSnapshot, CheckoutFormData, OrderPayload } from '../types/checkoutT
 
 export function buildOrderPayload(cart: CartSnapshot, form: CheckoutFormData): OrderPayload {
   return {
-    orderId: crypto.randomUUID(),
-    createdAt: new Date().toISOString(),
+    clientRequestId: crypto.randomUUID(),
 
     customer: {
       fullName: form.fullName,

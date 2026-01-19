@@ -6,6 +6,8 @@ import { CartSnapshot, CheckoutFormData, OrderPayload } from '../types/checkoutT
 
 import sendOrder from '../services/sendOrder';
 
+import { ApiError } from '@/shared/api/apiTypes';
+
 type SubmitStatus = 'idle' | 'loading' | 'success' | 'error';
 
 export function useSubmitOrder(cart: CartSnapshot) {
@@ -19,15 +21,17 @@ export function useSubmitOrder(cart: CartSnapshot) {
       setStatus('loading');
       setError(null);
 
-      const payload = buildOrderPayload(cart, formData);
-      lastPayloadRef.current = payload;
+      if (!lastPayloadRef.current) {
+        lastPayloadRef.current = buildOrderPayload(cart, formData)
+      }
 
       try {
-        await sendOrder(payload);
+        await sendOrder(lastPayloadRef.current);
         setStatus('success');
       } catch (err) {
+        const normalized = normalizeError(err)
         setStatus('error');
-        setError(err instanceof Error ? err.message : 'Unknown error');
+        setError(normalized.message);
       }
     },
     [cart]
@@ -43,8 +47,9 @@ export function useSubmitOrder(cart: CartSnapshot) {
       setStatus('success');
       setError(null);
     } catch (err) {
+      const normalized = normalizeError(err);
       setStatus('error');
-      setError(err instanceof Error ? err.message : 'Unknown error');
+      setError(normalized.message);
     }
   }, []);
 
@@ -53,6 +58,22 @@ export function useSubmitOrder(cart: CartSnapshot) {
     setError(null);
     lastPayloadRef.current = null;
   }, []);
+
+  const normalizeError = (err: unknown): {message: string; details?: Record<string, string> } => {
+    if(!err) return {message: 'Неизвестная ошибка'};
+
+    if ((err as ApiError).status){
+      const apiErr = err as ApiError;
+
+      return {message: apiErr.message, details: apiErr.details};
+    }
+
+    if(err instanceof Error){
+      return {message: err.message}
+    }
+
+    return {message: String(err)}
+  }
 
   return {
     submitOrder,

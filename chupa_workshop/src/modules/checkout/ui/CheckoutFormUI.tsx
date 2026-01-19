@@ -201,11 +201,11 @@ export function CheckoutFormUI({
 				>
 					{isLoading ? (
 						<>
-							<span style={{ marginRight: 8 }}>Отправка заказа</span>
+							<span style={{ marginRight: 8 }}>Отправка</span>
 							<Spinner size={16} color="#ffffff" />
 						</>
 					) : (
-						'Оформить заказ'
+						'Отправить'
 					)}
 				</button>
 			)}

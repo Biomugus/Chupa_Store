@@ -39,8 +39,7 @@ export type CheckoutFormData = {
 };
 
 export type OrderPayload = {
-  orderId: string;
-  createdAt: string;
+  clientRequestId: string;
 
   customer: {
     fullName: string;
@@ -61,6 +60,11 @@ export type OrderPayload = {
   items: OrderItem[];
   total: number;
 };
+
+export type CreateOrderResponse =
+  | { status: 'ok'; orderId: string }
+  | { status: 'error'; code: 'VALIDATION_ERROR'; message: string }
+
 
 export type CheckoutFormContainerProps = {
   cartSnapshot: CartSnapshot;
