@@ -23,7 +23,7 @@
   max-height: calc(100dvh - 32px);
   overflow-y: auto;
   overflow-x: hidden;
-  scrollbar-gutter: stable;
+  /* scrollbar-gutter: stable; */
 
   scroll-behavior: smooth;
 

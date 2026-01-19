@@ -15,7 +15,7 @@ export function ModalRoot() {
       <Modal isOpen={modal.type === 'nav'} onClose={closeModal}>
         <p
           style={{
-            margin: 0,
+            padding: '24px 32px',
             fontSize: '1.125rem',
             lineHeight: '1.6',
             textAlign: 'center',
