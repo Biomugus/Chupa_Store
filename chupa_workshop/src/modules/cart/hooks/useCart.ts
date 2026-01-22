@@ -7,7 +7,7 @@ export const useCart = () => {
     total: cartStore.total,
     loading: cartStore.loading,
     addItem: cartStore.addItem.bind(cartStore),
-    removeItem: cartStore.removeItem.bind(cartStore),
+    changeQuantity: cartStore.changeQuantity.bind(cartStore),
     clear: cartStore.clear.bind(cartStore),
   };
 };

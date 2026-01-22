@@ -1,16 +1,16 @@
-'use client'
+'use client';
 
-import styles from './catalogPage.module.css'
+import styles from './catalogPage.module.css';
 
-import { useCatalogFilters } from '../../hooks/useCatalogFilters'
-import CatalogLayout from '../CatalogLayout/CatalogLayout'
-import CatalogList from '../CatalogList/CatalogList'
-import FiltersSidebar from '../FiltersSidebar/FiltersSidebar'
-import CatalogHero from '../QuickFilters/CatalogHero'
+import { useCatalogFilters } from '../../hooks/useCatalogFilters';
+import CatalogLayout from '../CatalogLayout/CatalogLayout';
+import CatalogList from '../CatalogList/CatalogList';
+import FiltersSidebar from '../FiltersSidebar/FiltersSidebar';
+import CatalogHero from '../QuickFilters/CatalogHero';
 
 // Controller по GRASP - композирует все части, делегирует логику хукам
 function CatalogPage() {
-  const { items, filters, loading, updateFilters } = useCatalogFilters()
+  const { items, filters, loading, updateFilters } = useCatalogFilters();
 
   return (
     <div className={styles.page}>
@@ -25,7 +25,7 @@ function CatalogPage() {
         </CatalogLayout>
       )}
     </div>
-  )
+  );
 }
 
-export default CatalogPage
+export default CatalogPage;

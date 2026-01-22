@@ -1,10 +1,10 @@
-import styles from './header/Header.module.css'
+import styles from './header/Header.module.css';
 
 type MenuToggleProps = {
-  isOpen: boolean
-  onToggle: () => void
-  ariaControls: string
-}
+  isOpen: boolean;
+  onToggle: () => void;
+  ariaControls: string;
+};
 
 export function MenuToggle({ isOpen, onToggle, ariaControls }: MenuToggleProps) {
   return (
@@ -20,5 +20,5 @@ export function MenuToggle({ isOpen, onToggle, ariaControls }: MenuToggleProps) 
       <span className={styles.menuBar} />
       <span className={styles.menuBar} />
     </button>
-  )
+  );
 }

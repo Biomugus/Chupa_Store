@@ -1,25 +1,25 @@
-import { formatPrice } from '@/shared/lib/formatPrice'
+import { formatPrice } from '@/shared/lib/formatPrice';
 
-import { CatalogItem } from '../../types/CatalogItem'
-import { Product } from '../../types/Product'
+import { CatalogItem } from '../../types/CatalogItem';
+import { Product } from '../../types/Product';
 
-import styles from './productCard.module.css'
-import ProductImageGallery from './ProductImageGallery'
+import styles from './productCard.module.css';
+import ProductImageGallery from './ProductImageGallery';
 
-import { useCart } from '@/modules/cart/hooks/useCart'
-import { observer } from 'mobx-react-lite'
+import { useCart } from '@/modules/cart/hooks/useCart';
+import { observer } from 'mobx-react-lite';
 
 type ProductCardProps = {
-  product: CatalogItem | Product
-}
+  product: CatalogItem | Product;
+};
 
 const ProductCard = observer(({ product }: ProductCardProps) => {
-  const { addItem } = useCart()
+  const { addItem } = useCart();
 
   const images =
     (product as Product).images ??
     (product as CatalogItem).images ??
-    (product.image ? [product.image] : ['/images/placeholders/placeholder.jpg'])
+    (product.image ? [product.image] : ['/images/placeholders/placeholder.jpg']);
 
   const handleAdd = () => {
     addItem({
@@ -29,9 +29,8 @@ const ProductCard = observer(({ product }: ProductCardProps) => {
       quantity: 1,
       characteristics: product.characteristics,
       image: product.images?.[0] || '/images/placeholders/placeholder.jpg',
-
-    })
-  }
+    });
+  };
 
   return (
     <article className={styles.card}>
@@ -60,7 +59,7 @@ const ProductCard = observer(({ product }: ProductCardProps) => {
         </div>
       </div>
     </article>
-  )
-})
+  );
+});
 
-export default ProductCard
+export default ProductCard;

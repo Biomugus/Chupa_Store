@@ -11,12 +11,28 @@ export class CartModel {
   }
 
   addItem(item: CartItem) {
-    const index = this.items.findIndex((i) => i.id === item.id);
-    if (index >= 0) {
-      this.items[index].quantity += item.quantity;
-    } else {
-      this.items.push(item);
+    const existing = this.items.find((i) => i.id === item.id);
+
+    if (existing) {
+      existing.quantity += item.quantity;
+      return;
     }
+
+    this.items.push(item);
+  }
+
+  changeQuantity(id: string, delta: 1 | -1) {
+    const item = this.items.find((i) => i.id === id);
+    if (!item) return;
+
+    const next = item.quantity + delta;
+
+    if (next <= 0) {
+      this.removeItem(id);
+      return;
+    }
+
+    item.quantity = next;
   }
 
   removeItem(id: string) {

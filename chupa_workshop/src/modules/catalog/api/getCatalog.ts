@@ -25,151 +25,100 @@ export async function getCatalog(): Promise<CatalogItem[]> {
       title: 'Цевье "Румын" с Mlok планками',
       price: 5200,
       slug: 'handguard',
-      images: [
-        '/images/handguards/romanian2.png',
-        '/images/handguards/romanian.png'
-      ],
-      equipment:
-        'Комплектация: информация в разработке',
-      characteristics:
-        'Характеристики изделия: информация в разработке.',
-      description:
-        'Уникальность изделия: информация в разработке',
+      images: ['/images/handguards/romanian2.png', '/images/handguards/romanian.png'],
+      equipment: 'Комплектация: информация в разработке',
+      characteristics: 'Характеристики изделия: информация в разработке.',
+      description: 'Уникальность изделия: информация в разработке',
     },
     {
       id: '3',
       title: 'Цевье "Классика" с 3-мя планками Mlok',
       price: 5600,
       slug: 'handguard',
-      images: [
-        '/images/handguards/handguard.jpg',
-      ],
-      equipment:
-        'Комплектация: информация в разработке',
-      characteristics:
-        'Характеристики изделия: информация в разработке.',
-      description:
-        'Уникальность изделия: информация в разработке',
+      images: ['/images/handguards/handguard.jpg'],
+      equipment: 'Комплектация: информация в разработке',
+      characteristics: 'Характеристики изделия: информация в разработке.',
+      description: 'Уникальность изделия: информация в разработке',
     },
     {
       id: '4',
       title: 'Цевье "Укорот" с планками Mlok',
       price: 4800,
       slug: 'handguard',
-      images: [
-        '/images/handguards/shortening.png',
-      ],
-      equipment:
-        'Комплектация: информация в разработке',
-      characteristics:
-        'Характеристики изделия: информация в разработке.',
-      description:
-        'Уникальность изделия: информация в разработке',
+      images: ['/images/handguards/shortening.png'],
+      equipment: 'Комплектация: информация в разработке',
+      characteristics: 'Характеристики изделия: информация в разработке.',
+      description: 'Уникальность изделия: информация в разработке',
     },
     {
       id: '5',
       title: 'Mlok-накладка удлиненная',
       price: 1900,
       slug: 'mlok',
-      images: [
-        '/images/mlok/mlok-overlay.jpg',
-      ],
-      equipment:
-        'Комплектация: информация в разработке',
-      characteristics:
-        'Характеристики изделия: информация в разработке.',
-      description:
-        'Уникальность изделия: информация в разработке',
+      images: ['/images/mlok/mlok-overlay.jpg'],
+      equipment: 'Комплектация: информация в разработке',
+      characteristics: 'Характеристики изделия: информация в разработке.',
+      description: 'Уникальность изделия: информация в разработке',
     },
     {
       id: '6',
       title: 'Цевье "Упор" с планками Mlok',
       price: 5200,
       slug: 'handguard',
-      images: [
-        '/images/handguards/stopper.jpg',
-      ],
-      equipment:
-        'Комплектация: информация в разработке',
-      characteristics:
-        'Характеристики изделия: информация в разработке.',
-      description:
-        'Уникальность изделия: информация в разработке',
+      images: ['/images/handguards/stopper.jpg'],
+      equipment: 'Комплектация: информация в разработке',
+      characteristics: 'Характеристики изделия: информация в разработке.',
+      description: 'Уникальность изделия: информация в разработке',
     },
     {
       id: '7',
       title: 'Цевье "Упор 2.0" с планками Mlok',
       price: 5600,
       slug: 'handguard',
-      images: [
-        '/images/handguards/stopper2.0.jpg',
-      ],
-      equipment:
-        'Комплектация: информация в разработке',
-      characteristics:
-        'Характеристики изделия: информация в разработке.',
-      description:
-        'Уникальность изделия: информация в разработке',
+      images: ['/images/handguards/stopper2.0.jpg'],
+      equipment: 'Комплектация: информация в разработке',
+      characteristics: 'Характеристики изделия: информация в разработке.',
+      description: 'Уникальность изделия: информация в разработке',
     },
     {
       id: '8',
       title: 'Цевье "Упор" без Mlok-интерфейса',
       price: 4200,
       slug: 'handguard',
-      images: [
-        '/images/handguards/shortening-without-mlok.png',
-      ],
-      equipment:
-        'Комплектация: информация в разработке',
-      characteristics:
-        'Характеристики изделия: информация в разработке.',
-      description:
-        'Уникальность изделия: информация в разработке',
+      images: ['/images/handguards/shortening-without-mlok.png'],
+      equipment: 'Комплектация: информация в разработке',
+      characteristics: 'Характеристики изделия: информация в разработке.',
+      description: 'Уникальность изделия: информация в разработке',
     },
     {
       id: '9',
       title: 'Пистолетная рукоять на "тонкий мотор"',
       price: 2200,
       slug: 'grip',
-      images: [
-        '/images/handlers/handle-thin-motor.png',
-      ],
-      equipment:
-        'Комплектация: информация в разработке',
-      characteristics:
-        'Характеристики изделия: информация в разработке.',
-      description:
-        'Уникальность изделия: информация в разработке',
+      images: ['/images/handlers/handle-thin-motor.png'],
+      equipment: 'Комплектация: информация в разработке',
+      characteristics: 'Характеристики изделия: информация в разработке.',
+      description: 'Уникальность изделия: информация в разработке',
     },
     {
       id: '10',
       title: 'Пистолетная рукоять на "толстый мотор"',
       price: 2200,
       slug: 'grip',
-      images: [
-        '/images/handlers/handle-thick-motor.jpg',
-      ],
-      equipment:
-        'Комплектация: информация в разработке',
-      characteristics:
-        'Характеристики изделия: информация в разработке.',
-      description:
-        'Уникальность изделия: информация в разработке',
+      images: ['/images/handlers/handle-thick-motor.jpg'],
+      equipment: 'Комплектация: информация в разработке',
+      characteristics: 'Характеристики изделия: информация в разработке.',
+      description: 'Уникальность изделия: информация в разработке',
     },
     {
       id: '11',
       title: 'Приклад "ВСС винторез"',
       price: 9800,
       slug: 'stock',
-      images: [
-        '/images/stocks/vss.png',
-      ],
-      equipment:
-        'Комплектация: информация в разработке',
-      characteristics:
-        'Характеристики изделия: информация в разработке.',
-      description:
-        'Уникальность изделия: информация в разработке',
+      images: ['/images/stocks/vss.png'],
+      equipment: 'Комплектация: информация в разработке',
+      characteristics: 'Характеристики изделия: информация в разработке.',
+      description: 'Уникальность изделия: информация в разработке',
     },
   ]);
 

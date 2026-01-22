@@ -1,12 +1,11 @@
-'use client'
+'use client';
 
-import { CartModalContainer } from '@/modules/cart/containers/CartModalContainer'
-import Modal from './Modal'
-import { useModal } from './ModalContext'
+import { CartModalContainer } from '@/modules/cart/containers/CartModalContainer';
+import Modal from './Modal';
+import { useModal } from './ModalContext';
 
 export function ModalRoot() {
-  const { modal, closeModal } = useModal()
-
+  const { modal, closeModal } = useModal();
 
   return (
     <>
@@ -25,5 +24,5 @@ export function ModalRoot() {
         </p>
       </Modal>
     </>
-  )
+  );
 }

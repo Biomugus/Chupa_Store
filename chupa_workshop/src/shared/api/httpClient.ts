@@ -1,9 +1,6 @@
 import type { ApiError } from './apiTypes';
 
-export async function httpClient<T>(
-  url: string,
-  init?: RequestInit
-): Promise<T> {
+export async function httpClient<T>(url: string, init?: RequestInit): Promise<T> {
   let response: Response;
 
   try {

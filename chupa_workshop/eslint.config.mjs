@@ -1,10 +1,25 @@
-import nextVitals from 'eslint-config-next/core-web-vitals';
 import { defineConfig, globalIgnores } from 'eslint/config';
+import next from 'eslint-config-next';
 
-const eslintConfig = defineConfig([
-  ...nextVitals,
-  // Консолидированные игноры (заменяют .eslintignore).
-  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts', 'node_modules/**']),
+export default defineConfig([
+  ...next['core-web-vitals'],
+
+  globalIgnores([
+    '.next/**',
+    'out/**',
+    'build/**',
+    'node_modules/**',
+    'next-env.d.ts',
+  ]),
+
+  {
+    plugins: ['prettier'],
+    extends: ['plugin:prettier/recommended'], // добавляем интеграцию Prettier
+    rules: {
+      'prettier/prettier': 'error', // чтобы Prettier ошибки фиксились
+      'react/react-in-jsx-scope': 'off',
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      'no-unused-vars': 'off'
+    },
+  },
 ]);
-
-export default eslintConfig;

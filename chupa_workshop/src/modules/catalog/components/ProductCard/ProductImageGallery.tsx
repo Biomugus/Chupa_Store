@@ -31,7 +31,7 @@ export default function ProductImageGallery({ images, alt }: ProductImageGallery
     (index: number) => {
       if (hasMultiple) setCurrentIndex(index);
     },
-    [hasMultiple]
+    [hasMultiple],
   );
 
   const handleTouchStart = useCallback(
@@ -53,7 +53,7 @@ export default function ProductImageGallery({ images, alt }: ProductImageGallery
       document.addEventListener('touchmove', move);
       document.addEventListener('touchend', end);
     },
-    [hasMultiple, next, prev]
+    [hasMultiple, next, prev],
   );
 
   useEffect(() => {

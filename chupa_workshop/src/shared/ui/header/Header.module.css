@@ -87,6 +87,7 @@
 }
 
 .cartButton {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -107,6 +108,24 @@
 
 .cartButton:active {
   transform: translateY(2px);
+}
+
+.cartCount {
+  position: absolute;
+  bottom: 0px;
+  right: -15px;
+  background-color: #f0c06c;
+  color: black;
+  border-radius: 50%;
+  font-size: 0.65rem;
+  font-weight: bold;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  opacity: 30%;
 }
 
 .menuToggle {

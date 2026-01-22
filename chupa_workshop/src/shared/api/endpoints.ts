@@ -9,5 +9,4 @@ export const endpoints = {
 
 export const ordersEndpoint = {
   create: () => '/api/orders',
-}
-
+};

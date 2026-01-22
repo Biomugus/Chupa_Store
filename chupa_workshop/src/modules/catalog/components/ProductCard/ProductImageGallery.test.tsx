@@ -231,7 +231,7 @@ describe('ProductImageGallery', () => {
         <ProductImageGallery
           images={['/image1.jpg', '/image2.jpg', '/image3.jpg']}
           alt={defaultAlt}
-        />
+        />,
       );
 
       rerender(<ProductImageGallery images={['/image1.jpg', '/image2.jpg']} alt={defaultAlt} />);
@@ -243,7 +243,7 @@ describe('ProductImageGallery', () => {
         <ProductImageGallery
           images={['/image1.jpg', '/image2.jpg', '/image3.jpg']}
           alt={defaultAlt}
-        />
+        />,
       );
 
       const indicator3 = screen.getByLabelText('Перейти к изображению 3');

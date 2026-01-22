@@ -1,12 +1,12 @@
+// src/modules/checkout/services
+
+import { httpClient } from '@/shared/api/httpClient';
 import { CreateOrderResponse, OrderPayload } from '../types/checkoutTypes';
 import { ApiError } from '@/shared/api/apiTypes';
-// import { httpClient } from '@/shared/api/httpClient';
 
-const USE_MOCK = true;
+const USE_MOCK = false;
 
-export default async function sendOrder(
-  payload: OrderPayload
-): Promise<CreateOrderResponse> {
+export default async function sendOrder(payload: OrderPayload): Promise<CreateOrderResponse> {
   if (USE_MOCK) {
     await new Promise((resolve) => setTimeout(resolve, 4000));
 
@@ -33,14 +33,12 @@ export default async function sendOrder(
     };
   }
 
-  // --- Реальный бэк (пока закомментирован) ---
-  // const response = await httpClient<CreateOrderResponse>('/api/orders', {
-  //   method: 'POST',
-  //   body: JSON.stringify(payload),
-  // });
-  // if (!response) throw { status: 500, message: 'Сервер не ответил' } as ApiError;
-  // return response;
+  const response = await httpClient<CreateOrderResponse>('/api/orders', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!response) throw { status: 500, message: 'Сервер не ответил' } as ApiError;
 
-  // Если USE_MOCK отключен и бэка пока нет — явно бросаем ошибку
-  throw new Error('sendOrder: бэкенд пока не подключен');
+  return response;
 }

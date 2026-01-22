@@ -24,6 +24,11 @@ class CartStore {
     saveCart(this.model.items);
   }
 
+  changeQuantity(id: string, delta: 1 | -1) {
+    this.model.changeQuantity(id, delta);
+    saveCart(this.model.items);
+  }
+
   removeItem(id: string) {
     this.model.removeItem(id);
     saveCart(this.model.items);

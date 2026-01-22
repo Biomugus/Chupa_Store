@@ -1,9 +1,9 @@
-import styles from './spinner.module.css'
+import styles from './spinner.module.css';
 
 type SpinnerProps = {
-  size?: number
-  color?: string
-}
+  size?: number;
+  color?: string;
+};
 
 export default function Spinner({ size = 48, color = '#4F46E5' }: SpinnerProps) {
   return (
@@ -25,5 +25,5 @@ export default function Spinner({ size = 48, color = '#4F46E5' }: SpinnerProps) 
         strokeLinecap="round"
       />
     </svg>
-  )
+  );
 }

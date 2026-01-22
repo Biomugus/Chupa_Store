@@ -16,7 +16,7 @@ function DropdownFilter({ label, options, value, placeholder, onChange }: Dropdo
 
   const selectedOption = useMemo(
     () => (value ? options.find((option) => option.value === value) : undefined),
-    [options, value]
+    [options, value],
   );
 
   const displayLabel = selectedOption?.label ?? placeholder ?? 'Выберите...';

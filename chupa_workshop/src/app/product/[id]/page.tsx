@@ -1,20 +1,20 @@
-import ProductGallery from '@/modules/product/components/ProductGallery'
-import ProductTabs from '@/modules/product/components/ProductTabs'
-import { useProduct } from '@/modules/product/hooks/useProduct'
+import ProductGallery from '@/modules/product/components/ProductGallery';
+import ProductTabs from '@/modules/product/components/ProductTabs';
+import { useProduct } from '@/modules/product/hooks/useProduct';
 
 type ProductPageProps = {
-  params: { id: string }
-}
+  params: { id: string };
+};
 
 export default function ProductPage({ params }: ProductPageProps) {
-  const { product, loading } = useProduct(params.id)
+  const { product, loading } = useProduct(params.id);
 
   if (loading) {
-    return <div>Loading product...</div>
+    return <div>Loading product...</div>;
   }
 
   if (!product) {
-    return <div>Product not found</div>
+    return <div>Product not found</div>;
   }
 
   return (
@@ -22,5 +22,5 @@ export default function ProductPage({ params }: ProductPageProps) {
       <ProductGallery images={product.images} />
       <ProductTabs description={product.description} />
     </div>
-  )
+  );
 }

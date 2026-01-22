@@ -1,20 +1,24 @@
-'use client'
+'use client';
 
-import { CartPageUIProps } from '../types/CartPageUIProps'
-import CartItemUI from './CartItemUI'
-import CartSummaryUI from './CartSummaryUI'
-import styles from './cartPageUI.module.css'
+import { CartPageUIProps } from '../types/CartPageUIProps';
+import CartItemUI from './CartItemUI';
+import CartSummaryUI from './CartSummaryUI';
+import styles from './cartPageUI.module.css';
 
-import { CartIcon } from '@/shared/icons/Carticon'
+import { CartIcon } from '@/shared/icons/Carticon';
 
-
-export function CartPageUI({ items, total, loading,
+export function CartPageUI({
+  items,
+  total,
+  loading,
   onCheckout,
-  footerSlot, onRemoveItem }: CartPageUIProps) {
-  const isEmpty = items.length === 0
+  footerSlot,
+  onChangeQuantity,
+}: CartPageUIProps) {
+  const isEmpty = items.length === 0;
 
   if (loading) {
-    return <div>Идёт загрузка корзины</div>
+    return <div>Идёт загрузка корзины</div>;
   }
 
   return (
@@ -31,12 +35,11 @@ export function CartPageUI({ items, total, loading,
         <>
           <div>
             {items.map((item) => (
-              <CartItemUI key={item.id} item={item} onRemoveItem={onRemoveItem} />
+              <CartItemUI key={item.id} item={item} onChangeQuantity={onChangeQuantity} />
             ))}
           </div>
 
           {total > 0 && <CartSummaryUI total={total} />}
-
 
           {footerSlot}
 
@@ -48,5 +51,5 @@ export function CartPageUI({ items, total, loading,
         </>
       )}
     </section>
-  )
+  );
 }

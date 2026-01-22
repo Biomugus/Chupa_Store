@@ -1,9 +1,11 @@
 # Create Order API
 
 ## Endpoint
+
 POST /api/orders
 
 ## Purpose
+
 Создание заказа на основе данных корзины клиента.
 Ручка является идемпотентной относительно `clientRequestId`.
 
@@ -24,6 +26,7 @@ POST /api/orders
 ## Request
 
 ### Content-Type
+
 `application/json`
 
 ### Schema
@@ -60,6 +63,7 @@ type OrderPayload = {
 ```
 
 ## Success Response
+
 ### 201 Created
 
 ```ts
@@ -75,6 +79,7 @@ type CreateOrderResponse = {
 ```
 
 ## Error Responses
+
 ### 422 Validation Error
 
 - Возвращается, если входные данные не прошли серверную валидацию.

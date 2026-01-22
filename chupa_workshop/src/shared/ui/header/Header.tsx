@@ -1,35 +1,39 @@
-'use client'
+'use client';
 
-import { useIconsReady } from '@/shared/hooks/useIconsReady'
-import { useMobileMenu } from '@/shared/hooks/useMobileMenu'
-import Link from 'next/link'
-import { useModal } from '../modal/ModalContext'
+import { observer } from 'mobx-react-lite';
 
-import { CartIcon } from '@/shared/icons/Carticon'
-import { LogoMark } from '@/shared/icons/LogoMark'
+import { useIconsReady } from '@/shared/hooks/useIconsReady';
+import { useMobileMenu } from '@/shared/hooks/useMobileMenu';
+import { useCart } from '@/modules/cart/hooks/useCart';
+import Link from 'next/link';
+import { useModal } from '../modal/ModalContext';
 
-import { HOME_LABEL, NAV_ITEMS } from '@/shared/config/navigation'
-import { MenuToggle } from '../MenuToggle'
-import styles from './Header.module.css'
+import { CartIcon } from '@/shared/icons/Carticon';
+import { LogoMark } from '@/shared/icons/LogoMark';
 
-const NAVIGATION_ID = 'main-navigation'
+import { HOME_LABEL, NAV_ITEMS } from '@/shared/config/navigation';
+import { MenuToggle } from '../MenuToggle';
+import styles from './Header.module.css';
+import { useEffect, useState } from 'react';
 
-function Header() {
-  const iconsReady = useIconsReady()
-  const menu = useMobileMenu()
-  const { openModal } = useModal()
+const NAVIGATION_ID = 'main-navigation';
 
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ) => {
-    if (href === '/' || href === '/catalog') return
+const Header = observer(function Header() {
+  const iconsReady = useIconsReady();
+  const menu = useMobileMenu();
+  const { openModal } = useModal();
+  const { items } = useCart();
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
-    e.preventDefault()
-    menu.close()
-    openModal('nav')
-  }
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href === '/' || href === '/catalog') return;
 
+    e.preventDefault();
+    menu.close();
+    openModal('nav');
+  };
 
   const navigationItems = NAV_ITEMS.map((item) => (
     <li key={item.href} className={styles.navItem}>
@@ -42,7 +46,7 @@ function Header() {
         {item.label}
       </Link>
     </li>
-  ))
+  ));
 
   return (
     <>
@@ -69,18 +73,19 @@ function Header() {
               className={styles.cartButton}
               aria-label="Открыть корзину"
               onClick={() => {
-                menu.close()
-                openModal('cart')
+                menu.close();
+                openModal('cart');
               }}
             >
               <CartIcon ready={iconsReady} />
+              {mounted && totalItems > 0 && <span className={styles.cartCount}>{totalItems}</span>}
               <span className={styles.srOnly}>Корзина</span>
             </button>
           </div>
         </div>
       </header>
     </>
-  )
-}
+  );
+});
 
-export default Header
+export default Header;

@@ -20,7 +20,12 @@ export function buildOrderPayload(cart: CartSnapshot, form: CheckoutFormData): O
       method: form.paymentMethod,
     },
 
-    items: cart.items,
+    items: cart.items.map((item) => ({
+      id: item.id,
+      title: item.title,
+      price: item.price,
+      quantity: item.quantity, // на случай, если вдруг undefined
+    })),
     total: cart.total,
   };
 }

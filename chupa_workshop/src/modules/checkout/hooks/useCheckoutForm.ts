@@ -66,7 +66,7 @@ export function useCheckoutForm() {
         [field]: value,
       }));
     },
-    []
+    [],
   );
 
   const handleSubmit = useCallback(
@@ -78,7 +78,7 @@ export function useCheckoutForm() {
         onValid(values);
       }
     },
-    [validate, values]
+    [validate, values],
   );
 
   const reset = useCallback(() => {

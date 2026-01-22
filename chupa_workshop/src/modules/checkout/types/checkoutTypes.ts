@@ -17,10 +17,11 @@ export enum ContactMethod {
 }
 
 export type OrderItem = {
+  quantity: number;
   id: string;
   title: string;
   price: number;
-  image: string;
+  image?: string;
 };
 
 export type CartSnapshot = {
@@ -63,8 +64,7 @@ export type OrderPayload = {
 
 export type CreateOrderResponse =
   | { status: 'ok'; orderId: string }
-  | { status: 'error'; code: 'VALIDATION_ERROR'; message: string }
-
+  | { status: 'error'; code: 'VALIDATION_ERROR'; message: string };
 
 export type CheckoutFormContainerProps = {
   cartSnapshot: CartSnapshot;

@@ -1,7 +1,7 @@
-import Cta from '@/modules/home/Cta'
-import Features from '@/modules/home/Features'
-import Hero from '@/modules/home/Hero'
-import styles from './page.module.css'
+import Cta from '@/modules/home/Cta';
+import Features from '@/modules/home/Features';
+import Hero from '@/modules/home/Hero';
+import styles from './page.module.css';
 
 export default function Home() {
   return (
@@ -12,5 +12,5 @@ export default function Home() {
         <Cta />
       </main>
     </div>
-  )
+  );
 }

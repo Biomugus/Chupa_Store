@@ -85,7 +85,7 @@ function FiltersSidebar({ filters, onFiltersChange }: FiltersSidebarProps) {
               onChange={(event) =>
                 handleChange(
                   'minPrice',
-                  event.target.value ? Number(event.target.value) : undefined
+                  event.target.value ? Number(event.target.value) : undefined,
                 )
               }
             />
@@ -98,7 +98,7 @@ function FiltersSidebar({ filters, onFiltersChange }: FiltersSidebarProps) {
               onChange={(event) =>
                 handleChange(
                   'maxPrice',
-                  event.target.value ? Number(event.target.value) : undefined
+                  event.target.value ? Number(event.target.value) : undefined,
                 )
               }
             />
