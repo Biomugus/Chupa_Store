@@ -1,4 +1,10 @@
-import { OrderItem } from '../types/checkoutTypes';
+import {
+  ContactMethod,
+  DeliveryService,
+  OrderItem,
+  OrderPayload,
+  PaymentMethod,
+} from '../types/checkoutTypes';
 
 export function buildItemsText(items: OrderItem[]): string {
   return items
@@ -11,12 +17,17 @@ export function buildItemsText(items: OrderItem[]): string {
     .join('\n');
 }
 
-export function buildOrderMessage(params: {
-  payload: any;
-  paymentMap: Record<string, string>;
-  deliveryMap: Record<string, string>;
-  contactMap: Record<string, string>;
-}) {
+type OrderMessageMaps = {
+  paymentMap: Record<PaymentMethod, string>;
+  deliveryMap: Record<DeliveryService, string>;
+  contactMap: Record<ContactMethod, string>;
+};
+
+export function buildOrderMessage(
+  params: {
+    payload: OrderPayload;
+  } & OrderMessageMaps,
+) {
   const { payload, paymentMap, deliveryMap, contactMap } = params;
   const itemsText = buildItemsText(payload.items);
 

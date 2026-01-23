@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './productImageGallery.module.css';
 
 type ProductImageGalleryProps = {
@@ -37,20 +37,24 @@ export default function ProductImageGallery({ images, alt }: ProductImageGallery
   const handleTouchStart = useCallback(
     (e: React.TouchEvent) => {
       if (!hasMultiple) return;
-      const touch = e.touches[0].clientX;
-      let startX = touch;
-      let endX: number;
+      const startX = e.touches[0].clientX;
+      let endX = 0;
 
-      const move = (ev: TouchEvent) => (endX = ev.touches[0].clientX);
+      const move = (ev: TouchEvent) => {
+        endX = ev.touches[0].clientX;
+      };
+
       const end = () => {
-        if (!endX) return;
         const diff = startX - endX;
-        if (Math.abs(diff) > 50) diff > 0 ? next() : prev();
+        if (Math.abs(diff) > 50 && endX !== 0) {
+          if (diff > 0) next();
+          else prev();
+        }
         document.removeEventListener('touchmove', move);
         document.removeEventListener('touchend', end);
       };
 
-      document.addEventListener('touchmove', move);
+      document.addEventListener('touchmove', move, { passive: true });
       document.addEventListener('touchend', end);
     },
     [hasMultiple, next, prev],

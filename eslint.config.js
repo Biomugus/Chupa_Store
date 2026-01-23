@@ -13,7 +13,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default [
-  // 1. Базовые рекомендации ESLint и TS
   js.configs.recommended,
   {
     files: ['**/*.{ts,tsx,js,jsx}'],
@@ -27,7 +26,7 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
-        React: 'readonly', // Чтобы не ругался на отсутствие импорта React в Next.js
+        React: 'readonly',
       },
       parser: tsParser,
       parserOptions: {
@@ -39,22 +38,29 @@ export default [
       react: { version: 'detect' },
     },
     rules: {
-      // Подключаем правила вручную из объектов, чтобы избежать рекурсии
       ...typescriptEslint.configs.recommended.rules,
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs['core-web-vitals'].rules,
 
-      // Ваши кастомные правила
       'prettier/prettier': ['error', { singleQuote: true, semi: true }],
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'react/react-in-jsx-scope': 'off',
 
-      // Отключаем конфликтующие с Prettier правила
       ...prettierConfig.rules,
     },
   },
-  // 2. Игнорируемые файлы (вместо .eslintignore)
   {
-    ignores: ['.next/', 'node_modules/', 'dist/', 'commitlint.config.js'],
+    files: ['**/*.test.{ts,tsx}', '**/__tests__/**/*.{ts,tsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.jest,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+  {
+    ignores: ['.next/', 'node_modules/', 'dist/', 'commitlint.config.js', 'eslint.config.js', "jest.setup.tsx", "next-env.d.ts", "jest.config.ts"],
   },
 ];

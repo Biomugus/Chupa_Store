@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 type ProductGalleryProps = {
   images: string[];
 };
@@ -10,7 +12,7 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
   return (
     <div>
       {images.map((src, index) => (
-        <img key={src ?? index} src={src} alt="Product" />
+        <Image key={src ?? index} src={src} alt="Product" />
       ))}
     </div>
   );

@@ -14,6 +14,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
+    "types": ["jest", "@testing-library/jest-dom"],
     "paths": {
       "@/*": ["./src/*"]
     },
@@ -28,15 +29,11 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    ".next/dev/types/**/*.ts",
+    "src/**/*.test.tsx"
   ],
   "exclude": [
     "node_modules",
-    "jest.setup.ts",
-    "jest.setup.tsx",
-    "**/*.test.ts",
-    "**/*.test.tsx",
-    "**/*.spec.ts",
-    "**/*.spec.tsx"
+    ".next"
   ]
 }

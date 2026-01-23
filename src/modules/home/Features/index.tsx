@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styles from './features.module.css';
 
 const features = [
@@ -55,7 +56,7 @@ function Features() {
               className={`${styles.row} ${isReversed ? styles.rowReversed : ''}`}
             >
               <div className={styles.rowImage}>
-                <img src={feature.imageUrl} alt={feature.title} />
+                <Image src={feature.imageUrl} alt={feature.title} />
               </div>
               <div className={styles.rowContent}>
                 <h3 className={styles.rowTitle}>{feature.title}</h3>

@@ -17,7 +17,8 @@ export const CartModalContainer = observer(() => {
   const [view, setView] = useState<CartModalView>('cart');
 
   const handleCheckoutSuccess = () => {
-    (clear(), setView('success'));
+    clear();
+    setView('success');
   };
 
   const handleClose = () => {
