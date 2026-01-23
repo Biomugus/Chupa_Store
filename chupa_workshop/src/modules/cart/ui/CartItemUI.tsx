@@ -12,7 +12,7 @@ type CartItemProps = {
 };
 
 export default function CartItemUi({ item, onChangeQuantity }: CartItemProps) {
-  return (    
+  return (
     <article className={styles.item}>
       <div className={styles.imageWrapper}>
         <Image src={item.image} alt={item.title} width={100} height={100} />

@@ -1,4 +1,4 @@
-import { PaymentMethod, DeliveryService, ContactMethod } from '../types/checkoutTypes';
+import { ContactMethod, DeliveryService, PaymentMethod } from '../types/checkoutTypes';
 
 export const paymentMap: Record<PaymentMethod, string> = {
   [PaymentMethod.CARD_TRANSFER]: 'Перевод на карту',
