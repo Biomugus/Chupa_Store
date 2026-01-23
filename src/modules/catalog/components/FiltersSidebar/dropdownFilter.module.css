@@ -1,0 +1,155 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(244, 245, 247, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, rgba(18, 18, 18, 0.95), rgba(12, 12, 12, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #f4f5f7;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    border-color 0.35s ease,
+    background 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s ease;
+}
+
+.trigger:hover {
+  background: linear-gradient(135deg, #161616, #222222);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.trigger:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.triggerOpen {
+  border-color: rgba(155, 126, 75, 0.6);
+}
+
+.triggerText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.triggerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+}
+
+.chevron {
+  width: 9px;
+  height: 9px;
+  border-right: 1px solid rgba(244, 245, 247, 0.9);
+  border-bottom: 1px solid rgba(244, 245, 247, 0.9);
+  transform: rotate(45deg);
+  transition: transform 0.35s ease;
+}
+
+.triggerOpen .chevron {
+  transform: rotate(-135deg) translateY(1px);
+}
+
+.listContainer {
+  overflow: hidden;
+  max-height: 0;
+  transition:
+    max-height 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+.listOpen {
+  max-height: 225px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.listClosed {
+  pointer-events: none;
+}
+
+.list {
+  margin-top: 6px;
+  padding: 6px;
+  background: linear-gradient(135deg, rgba(18, 18, 18, 0.98), rgba(12, 12, 12, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 225px;
+  overflow-y: auto;
+}
+
+.option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 8px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: rgba(244, 245, 247, 0.9);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background 0.35s ease,
+    color 0.35s ease,
+    transform 0.3s ease;
+}
+
+.option:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.optionSelected {
+  background: rgba(155, 126, 75, 0.2);
+  color: #f4f5f7;
+}
+
+.optionLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .trigger {
+    padding: 9px 12px;
+  }
+
+  .list {
+    margin-top: 4px;
+  }
+}

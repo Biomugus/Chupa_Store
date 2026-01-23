@@ -1,0 +1,154 @@
+.features {
+  width: 100%;
+  padding: 32px 0 0 0;
+  background: #f6f5f3;
+}
+
+.header {
+  max-width: 720px;
+  margin: 0 auto 32px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.kicker {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 16px;
+  border-radius: 999px;
+  background: #bbbbbb;
+  color: black;
+  font-size: 18px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: clamp(28px, 4vw, 36px);
+  margin-bottom: 10px;
+  color: black;
+  font-weight: 700;
+}
+
+.subtitle {
+  line-height: 1.6;
+  color: black;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  align-items: stretch;
+  max-height: 500px;
+  overflow: hidden;
+  background: #000000;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+.rowReversed {
+  flex-direction: row-reverse;
+}
+
+.rowImage {
+  flex: 1;
+  position: relative;
+
+  max-height: 500px;
+  overflow: hidden;
+}
+
+.rowImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: inherit;
+  display: block;
+}
+
+.rowContent {
+  flex: 0.5;
+  background: #000000;
+  color: #ffffff;
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  clip-path: polygon(27% 0, 100% 0, 100% 100%, 0 100%);
+  margin-left: -12%;
+}
+
+.rowReversed .rowContent {
+  clip-path: polygon(0 0, 73% 0, 100% 100%, 0 100%);
+  margin-left: 0;
+  margin-right: -12%;
+
+  align-items: flex-start;
+}
+
+.rowReversed .rowDesc {
+  text-align: start;
+}
+
+.rowReversed .rowImage {
+  transform: scaleX(-1);
+}
+
+.rowTitle {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.rowDesc {
+  text-align: end;
+  color: #e2e8f0;
+  line-height: 1.6;
+  max-width: 420px;
+}
+
+@media (max-width: 1024px) {
+  .rowDesc {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .features {
+    padding: 24px 16px;
+  }
+
+  .row,
+  .rowReversed {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .rowContent {
+    align-items: center;
+    clip-path: none;
+    margin: 0;
+    padding: 24px 20px;
+  }
+
+  .rowDesc {
+    text-align: center;
+    max-width: 70%;
+  }
+
+  .rowReversed .rowContent {
+    margin-right: 0;
+
+    align-items: center;
+  }
+
+  .rowReversed .rowDesc {
+    text-align: center;
+  }
+}

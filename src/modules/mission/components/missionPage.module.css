@@ -1,0 +1,91 @@
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 90px 60px;
+  font-family: 'Inter', sans-serif;
+  color: #1a1a1a;
+  line-height: 1.6;
+}
+
+.mission {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.mission_header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.mission_title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.mission_lead {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #555;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.mission_section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mission_section h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #111;
+}
+
+.mission_section p {
+  font-size: 1rem;
+  color: #333;
+}
+
+.mission_figure {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.mission_figure img {
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+}
+
+.mission_figure figcaption {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.mission_blockquote {
+  border-left: 4px solid #000;
+  padding-left: 16px;
+  font-style: italic;
+  color: #222;
+  margin: 20px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mission_title {
+    font-size: 2.25rem;
+  }
+
+  .mission_lead {
+    font-size: 1.1rem;
+  }
+
+  .mission_section h2 {
+    font-size: 1.5rem;
+  }
+}

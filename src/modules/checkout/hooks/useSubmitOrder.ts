@@ -1,0 +1,85 @@
+'use client';
+
+import { useCallback, useRef, useState } from 'react';
+import { buildOrderPayload } from '../model/buildOrderPayload';
+import { CartSnapshot, CheckoutFormData, OrderPayload } from '../types/checkoutTypes';
+
+import sendOrder from '../services/sendOrder';
+
+import { ApiError } from '@/shared/api/apiTypes';
+
+type SubmitStatus = 'idle' | 'loading' | 'success' | 'error';
+
+export function useSubmitOrder(cart: CartSnapshot) {
+  const [status, setStatus] = useState<SubmitStatus>('idle');
+  const [error, setError] = useState<string | null>(null);
+
+  const lastPayloadRef = useRef<OrderPayload | null>(null);
+
+  const submitOrder = useCallback(
+    async (formData: CheckoutFormData) => {
+      setStatus('loading');
+      setError(null);
+
+      if (!lastPayloadRef.current) {
+        lastPayloadRef.current = buildOrderPayload(cart, formData);
+      }
+
+      try {
+        await sendOrder(lastPayloadRef.current);
+        setStatus('success');
+      } catch (err) {
+        const normalized = normalizeError(err);
+        setStatus('error');
+        setError(normalized.message);
+      }
+    },
+    [cart],
+  );
+
+  const retry = useCallback(async () => {
+    if (!lastPayloadRef.current) return;
+
+    setStatus('loading');
+
+    try {
+      await sendOrder(lastPayloadRef.current);
+      setStatus('success');
+      setError(null);
+    } catch (err) {
+      const normalized = normalizeError(err);
+      setStatus('error');
+      setError(normalized.message);
+    }
+  }, []);
+
+  const resetStatus = useCallback(() => {
+    setStatus('idle');
+    setError(null);
+    lastPayloadRef.current = null;
+  }, []);
+
+  const normalizeError = (err: unknown): { message: string; details?: Record<string, string> } => {
+    if (!err) return { message: 'Неизвестная ошибка' };
+
+    if ((err as ApiError).status) {
+      const apiErr = err as ApiError;
+
+      return { message: apiErr.message, details: apiErr.details };
+    }
+
+    if (err instanceof Error) {
+      return { message: err.message };
+    }
+
+    return { message: String(err) };
+  };
+
+  return {
+    submitOrder,
+    retry,
+    status,
+    error,
+    resetStatus,
+  };
+}

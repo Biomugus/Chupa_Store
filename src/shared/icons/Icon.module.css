@@ -1,0 +1,90 @@
+.logoWrapper,
+.cartWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoWrapper {
+  --logo-size: 40px;
+  --logo-scale: 2.8;
+  width: var(--logo-size);
+  height: var(--logo-size);
+}
+
+.logoWrapper:hover .logoSvg,
+.cartWrapper:hover .cartSvg {
+  color: #9b7e4b;
+}
+
+/* Предустановленные размеры логотипа */
+.logoWrapper.logoSmall {
+  --logo-size: 40px;
+}
+
+.logoWrapper.logoMedium {
+  --logo-size: 60px;
+}
+
+.logoWrapper.logoLarge {
+  --logo-size: 80px;
+}
+
+.logoWrapper.logoXLarge {
+  --logo-size: 100px;
+}
+
+.cartWrapper {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+
+.iconSkeleton {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 255, 255, 0.08)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+  opacity: 1;
+}
+
+.logoWrapper[data-loaded='true'] .iconSkeleton,
+.cartWrapper[data-loaded='true'] .iconSkeleton {
+  opacity: 0;
+  animation: none;
+}
+
+.logoSvg {
+  width: 100%;
+  height: 100%;
+  transform: scale(var(--logo-scale, 1));
+  transform-origin: center center;
+  transition: color 250ms ease;
+}
+
+.cartSvg {
+  width: 100%;
+  height: 100%;
+  transition: color 250ms ease;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}

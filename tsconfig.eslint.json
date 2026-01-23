@@ -1,0 +1,11 @@
+{
+	"extends": "./tsconfig.json",
+	"include": [
+			"src",
+			"eslint.config.js",
+			"jest.config.ts",
+			"prettier.config.js",
+			"**/*.test.ts",
+			"**/*.test.tsx"
+	]
+}

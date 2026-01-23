@@ -1,0 +1,74 @@
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.label {
+  font-size: 14px;
+  color: rgba(244, 245, 247, 0.9);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.limitButton {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, rgba(18, 18, 18, 0.9), rgba(12, 12, 12, 0.85));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(244, 245, 247, 0.9);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.limitButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(18, 18, 18, 0.9));
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #f4f5f7;
+}
+
+.limitButton:active {
+  transform: translateY(0);
+}
+
+.limitButton.active {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  color: #9b7e4b;
+  border-color: rgba(155, 126, 75, 0.6);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.limitButton.active:hover {
+  background: linear-gradient(135deg, #161616, #222222);
+  border-color: rgba(155, 126, 75, 0.8);
+}
+
+@media (max-width: 767px) {
+  .filters {
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .label {
+    font-size: 13px;
+  }
+
+  .limitButton {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
