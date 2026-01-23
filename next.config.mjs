@@ -37,6 +37,16 @@ const nextConfig = {
         hostname: 'sun9-36.userapi.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'sun9-74.userapi.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'sun9-57.userapi.com',
+        pathname: '/**',
+      },
     ],
   },
 };

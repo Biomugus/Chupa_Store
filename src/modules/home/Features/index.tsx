@@ -56,7 +56,7 @@ function Features() {
               className={`${styles.row} ${isReversed ? styles.rowReversed : ''}`}
             >
               <div className={styles.rowImage}>
-                <Image src={feature.imageUrl} alt={feature.title} />
+                <Image width={400} height={400} src={feature.imageUrl} alt={feature.title} />
               </div>
               <div className={styles.rowContent}>
                 <h3 className={styles.rowTitle}>{feature.title}</h3>
