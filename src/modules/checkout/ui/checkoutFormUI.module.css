@@ -33,28 +33,6 @@
   color: #e0e0e0;
 }
 
-.input,
-.select {
-  min-width: 200px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 10px;
-  padding: 10px 12px;
-  color: #f0f0f5;
-  font-size: 14px;
-}
-
-.input:focus,
-.select:focus {
-  border-color: rgba(255, 255, 255, 0.45);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.09);
-}
-
-.input::placeholder {
-  color: #777;
-}
-
 .error {
   padding: 12px 0 12px 0;
   color: #ff6b6b;

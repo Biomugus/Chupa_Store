@@ -26,3 +26,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     </html>
   );
 }
+
+// className="dark" style={{ colorScheme: 'dark' }}
+// className="dark bg-background antialiased"
