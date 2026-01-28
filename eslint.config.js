@@ -61,6 +61,6 @@ export default [
     },
   },
   {
-    ignores: ['.next/', 'node_modules/', 'dist/', 'commitlint.config.js', 'eslint.config.js', "jest.setup.tsx", "next-env.d.ts", "jest.config.ts"],
+    ignores: ['.next/', 'node_modules/', 'dist/', 'commitlint.config.js', 'eslint.config.js', "jest.setup.tsx", "next-env.d.ts", "jest.config.ts", 'postcss.config.js', 'tailwind.config.js'],
   },
 ];

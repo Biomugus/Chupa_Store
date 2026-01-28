@@ -1,3 +1,5 @@
+// src/modules/checkout/ui/CheckoutFormUI.tsx
+
 'use client';
 
 import {
@@ -10,6 +12,22 @@ import {
 import Spinner from '@/shared/ui/spinner/Spinner';
 import styles from './checkoutFormUI.module.css';
 
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { cn } from '@/lib/utils';
+import { CityAutocompleteUI } from './CityAutocompleteUI';
+
+const fieldControlClassName = cn(
+  'min-w-[300px] w-full bg-white/5 border-white/20 text-[#f0f0f5]',
+  'rounded-[10px] focus-visible:ring-white/30 transition-all',
+);
+
 export function CheckoutFormUI({
   values,
   errors,
@@ -20,6 +38,7 @@ export function CheckoutFormUI({
   onChange,
   onSubmit,
   onRetry,
+  cityAutocompleteProps,
 }: CheckoutFormUIProps) {
   return (
     <form
@@ -34,15 +53,9 @@ export function CheckoutFormUI({
         <label htmlFor="location" className={styles.label}>
           Город
         </label>
-        <input
-          id="location"
-          name="location"
-          className={styles.input}
-          type="text"
-          autoComplete="address-level2"
-          value={values.location}
-          onChange={(e) => onChange('location', e.target.value)}
-        />
+        <div className="w-full min-w-[300px]">
+          <CityAutocompleteUI {...cityAutocompleteProps} />
+        </div>
         {errors.location && <p className={styles.error}>{errors.location}</p>}
       </div>
 
@@ -51,12 +64,10 @@ export function CheckoutFormUI({
         <label htmlFor="fullName" className={styles.label}>
           ФИО
         </label>
-        <input
+        <Input
           id="fullName"
-          name="fullName"
-          className={styles.input}
-          type="text"
-          autoComplete="name"
+          className={cn(fieldControlClassName, errors.fullName && 'border-red-500')}
+          placeholder="Иванов Иван Иванович"
           value={values.fullName}
           onChange={(e) => onChange('fullName', e.target.value)}
         />
@@ -68,13 +79,11 @@ export function CheckoutFormUI({
         <label htmlFor="phone" className={styles.label}>
           Телефон
         </label>
-        <input
+        <Input
           id="phone"
-          name="phone"
-          className={styles.input}
           type="tel"
-          autoComplete="tel"
-          placeholder="+7XXXXXXXXXX"
+          className={cn(fieldControlClassName, errors.phone && 'border-red-500')}
+          placeholder="+7(...)..."
           value={values.phone}
           onChange={(e) => onChange('phone', e.target.value)}
         />
@@ -86,56 +95,56 @@ export function CheckoutFormUI({
         <label htmlFor="paymentMethod" className={styles.label}>
           Способ оплаты
         </label>
-        <select
-          id="paymentMethod"
-          name="paymentMethod"
-          autoComplete="off"
-          className={styles.select}
+        <Select
           value={values.paymentMethod}
-          onChange={(e) => onChange('paymentMethod', e.target.value as PaymentMethod)}
+          onValueChange={(val) => onChange('paymentMethod', val as PaymentMethod)}
         >
-          <option value={PaymentMethod.CARD_TRANSFER}>Перевод на карту</option>
-          <option value={PaymentMethod.LEGAL_ENTITY}>Оплата через юр. лицо</option>
-        </select>
+          <SelectTrigger className={fieldControlClassName}>
+            <SelectValue placeholder="Выберите способ" />
+          </SelectTrigger>
+
+          <SelectContent className="bg-[#1a1c1e] border-white/20 text-white">
+            <SelectItem value={PaymentMethod.CARD_TRANSFER}>Перевод на карту</SelectItem>
+            <SelectItem value={PaymentMethod.LEGAL_ENTITY}>Оплата через юр. лицо</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* delivery service */}
       <div className={styles.field}>
-        <label htmlFor="deliveryService" className={styles.label}>
-          Служба доставки
-        </label>
-        <select
-          id="deliveryService"
-          name="deliveryService"
-          autoComplete="off"
-          className={styles.select}
+        <label className={styles.label}>Служба доставки</label>
+        <Select
           value={values.deliveryService}
-          onChange={(e) => onChange('deliveryService', e.target.value as DeliveryService)}
+          onValueChange={(val) => onChange('deliveryService', val as DeliveryService)}
         >
-          <option value={DeliveryService.POST_RUSSIA}>Почта России</option>
-          <option value={DeliveryService.CDEK}>СДЭК</option>
-          <option value={DeliveryService.YANDEX}>Яндекс Доставка</option>
-          <option value={DeliveryService.DPD}>DPD</option>
-          <option value={DeliveryService.PONY_EXPRESS}>Pony Express</option>
-        </select>
+          <SelectTrigger className={fieldControlClassName}>
+            <SelectValue placeholder="Выберите службу" />
+          </SelectTrigger>
+          <SelectContent className="bg-[#1a1c1e] border-white/20 text-white">
+            <SelectItem value={DeliveryService.CDEK}>СДЭК</SelectItem>
+            <SelectItem value={DeliveryService.POST_RUSSIA}>Почта России</SelectItem>
+            <SelectItem value={DeliveryService.YANDEX}>Яндекс Доставка</SelectItem>
+            <SelectItem value={DeliveryService.DPD}>DPD</SelectItem>
+            <SelectItem value={DeliveryService.PONY_EXPRESS}>Pony Express</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Communication method */}
       <div className={styles.field}>
-        <label htmlFor="contactMethod" className={styles.label}>
-          Способ связи
-        </label>
-        <select
-          id="contactMethod"
-          name="contactMethod"
-          autoComplete="off"
-          className={styles.select}
+        <label className={styles.label}>Способ связи</label>
+        <Select
           value={values.contactMethod}
-          onChange={(e) => onChange('contactMethod', e.target.value as ContactMethod)}
+          onValueChange={(val) => onChange('contactMethod', val as ContactMethod)}
         >
-          <option value={ContactMethod.TELEGRAM}>Telegram</option>
-          <option value={ContactMethod.VK}>VK</option>
-        </select>
+          <SelectTrigger className={fieldControlClassName}>
+            <SelectValue placeholder="Выберите способ связи" />
+          </SelectTrigger>
+          <SelectContent className="bg-[#1a1c1e] border-white/20 text-white">
+            <SelectItem value={ContactMethod.TELEGRAM}>Telegram</SelectItem>
+            <SelectItem value={ContactMethod.VK}>VK</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Contact */}
@@ -143,12 +152,10 @@ export function CheckoutFormUI({
         <label htmlFor="contactValue" className={styles.label}>
           {values.contactMethod === ContactMethod.VK ? 'Ссылка на VK' : 'Telegram username'}
         </label>
-        <input
+        <Input
           id="contactValue"
-          name="contactValue"
-          className={styles.input}
-          type="text"
-          autoComplete="username"
+          className={cn(fieldControlClassName, errors.contactValue && 'border-red-500')}
+          placeholder={values.contactMethod === ContactMethod.VK ? 'vk.com/id...' : '@username'}
           value={values.contactValue}
           onChange={(e) => onChange('contactValue', e.target.value)}
         />

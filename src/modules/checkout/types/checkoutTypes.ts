@@ -1,3 +1,5 @@
+// src/modules/checkout/types/checkoutTypes.ts
+
 export enum PaymentMethod {
   CARD_TRANSFER = 'card_transfer',
   LEGAL_ENTITY = 'legal_entity',
@@ -85,4 +87,35 @@ export type CheckoutFormUIProps = {
 
   onSubmit: () => void;
   onRetry: () => void;
+  cityAutocompleteProps: CityAutocompleteViewProps;
+};
+
+export interface CitySuggestion {
+  value: string;
+  city?: string | null;
+  region: string;
+}
+
+export type CityAutocompleteViewProps = {
+  value: string;
+  inputValue: string;
+  open: boolean;
+  isLoading: boolean;
+  error?: boolean;
+  suggestions: { value: string }[];
+
+  onOpenChange: (open: boolean) => void;
+  onInputChange: (value: string) => void;
+  onSelect: (value: string) => void;
+};
+
+export type UseCitySuggestionsResult = {
+  suggestions: CitySuggestion[];
+  isLoading: boolean;
+};
+
+export type CityAutocompleteProps = {
+  value: string;
+  onChange: (value: string) => void;
+  error?: boolean;
 };

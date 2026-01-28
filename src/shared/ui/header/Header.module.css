@@ -1,9 +1,10 @@
+/* src/components/ui/select.tsx */
+
 .header {
-  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 150;
   background: #19110b;
   color: #f4f5f7;
   border-bottom: 2px solid rgba(255, 255, 255, 0.08);
