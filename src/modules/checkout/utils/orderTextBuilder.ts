@@ -1,3 +1,5 @@
+// src/modules/checkout/utils/orderTextBuilder.ts
+
 import {
   ContactMethod,
   DeliveryService,
@@ -23,7 +25,26 @@ type OrderMessageMaps = {
   contactMap: Record<ContactMethod, string>;
 };
 
-export function buildOrderMessage(
+function formatContactLink(method: ContactMethod, value: string): string {
+  const cleanValue = value.trim();
+
+  if (method === ContactMethod.TELEGRAM) {
+    const username = cleanValue.replace(/^@/, '');
+    return `https://t.me/${username}`;
+  }
+
+  if (method === ContactMethod.VK) {
+    return cleanValue.includes('vk.com')
+      ? cleanValue.startsWith('http')
+        ? cleanValue
+        : `https://${cleanValue}`
+      : `https://vk.com/${cleanValue}`;
+  }
+
+  return cleanValue;
+}
+
+export function buildOrderData(
   params: {
     payload: OrderPayload;
   } & OrderMessageMaps,
@@ -31,18 +52,29 @@ export function buildOrderMessage(
   const { payload, paymentMap, deliveryMap, contactMap } = params;
   const itemsText = buildItemsText(payload.items);
 
-  return `
-    ПОСТУПИЛ ЗАКАЗ !
-    ID заказа: ${payload.clientRequestId}
-    Отправитель: ${payload.customer.fullName}
-    Телефон: ${payload.customer.phone}
-    Метод связи: ${contactMap[payload.customer.contactMethod]} - ${payload.customer.contactValue}
-    Локация: ${payload.customer.location}
-    Доставка: ${deliveryMap[payload.delivery.service]}
-    Оплата: ${paymentMap[payload.payment.method]}
-    Сумма товаров: ${payload.total}₽
+  const contactLink = formatContactLink(
+    payload.customer.contactMethod,
+    payload.customer.contactValue,
+  );
 
-    Список товаров:
+  const text = `
+    📦 ПОСТУПИЛ ЗАКАЗ!
+    🆔 ID: ${payload.clientRequestId}
+    👤 Клиент: ${payload.customer.fullName}
+    📞 Тел: ${payload.customer.phone}
+    🔗 Связь (${contactMap[payload.customer.contactMethod]}): ${contactLink}
+    📍 Город: ${payload.customer.location}
+    🚚 Доставка: ${deliveryMap[payload.delivery.service]}
+    💳 Оплата: ${paymentMap[payload.payment.method]}
+    💰 Итого: ${payload.total} ₽
+
+    🛒 Состав заказа:
     ${itemsText}
-`;
+`.trim();
+
+  return {
+    text,
+    contactLink,
+    contactMethodLabel: contactMap[payload.customer.contactMethod],
+  };
 }

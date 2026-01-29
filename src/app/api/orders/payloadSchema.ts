@@ -1,3 +1,6 @@
+// src/app/api/orders/payloadSchema.ts
+
+import { commonValidation } from '@/modules/checkout/shemas/validationRules';
 import {
   ContactMethod,
   DeliveryService,
@@ -12,25 +15,39 @@ export const orderItemSchema = z.object({
   quantity: z.number().int().positive(),
 });
 
+const customerSchema = z
+  .object({
+    fullName: commonValidation.fullName,
+    phone: commonValidation.phone,
+    location: commonValidation.location,
+    contactMethod: z.nativeEnum(ContactMethod),
+    contactValue: z.string().min(2),
+  })
+  .refine(
+    (data) => {
+      if (data.contactMethod === ContactMethod.TELEGRAM) {
+        return /^@?[a-zA-Z0-9_]{5,32}$/.test(data.contactValue);
+      }
+      if (data.contactMethod === ContactMethod.VK) {
+        return /vk\.com\/[\w.]+/.test(data.contactValue);
+      }
+      return true;
+    },
+    {
+      message: 'Некорректный формат контакта',
+      path: ['contactValue'],
+    },
+  );
+
 export const orderPayloadSchema = z.object({
   clientRequestId: z.string(),
-
-  customer: z.object({
-    fullName: z.string(),
-    phone: z.string(),
-    contactMethod: z.enum(Object.values(ContactMethod)),
-    contactValue: z.string(),
-    location: z.string(),
-  }),
-
+  customer: customerSchema,
   delivery: z.object({
-    service: z.enum(Object.values(DeliveryService)),
+    service: z.nativeEnum(DeliveryService),
   }),
-
   payment: z.object({
-    method: z.enum(Object.values(PaymentMethod)),
+    method: z.nativeEnum(PaymentMethod),
   }),
-
   items: z.array(orderItemSchema),
   total: z.number(),
 });
