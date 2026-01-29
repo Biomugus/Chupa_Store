@@ -1,21 +1,25 @@
-import styles from './filtersSidebar.module.css';
+// src/modules/catalog/components/FiltersSidebar/FiltersSidebar.tsx
+
+'use client';
+
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useTransition } from 'react';
+import { MATERIALS, PLATFORM, PRODUCT_TYPE } from '../../lib/filterOptions';
 import { CatalogFilters } from '../../types/CatalogFilters';
-import { useState } from 'react';
-import { PLATFORM, MATERIALS, PRODUCT_TYPE } from '../../lib/filterOptions';
 import DropdownFilter from './DropdownFilter';
+import styles from './filtersSidebar.module.css';
 
-type FiltersSidebarProps = {
-  filters: CatalogFilters;
-  onFiltersChange: (filters: Partial<CatalogFilters>) => void;
-};
+function FiltersSidebar() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
 
-function FiltersSidebar({ filters, onFiltersChange }: FiltersSidebarProps) {
   const [localFilters, setLocalFilters] = useState<Partial<CatalogFilters>>({
-    model: filters.model || '',
-    productType: filters.productType || '',
-    material: filters.material || '',
-    minPrice: filters.minPrice,
-    maxPrice: filters.maxPrice,
+    model: searchParams.get('model') || '',
+    productType: searchParams.get('productType') || '',
+    material: searchParams.get('material') || '',
+    minPrice: searchParams.get('minPrice') ? Number(searchParams.get('minPrice')) : undefined,
+    maxPrice: searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined,
   });
 
   const handleChange = (key: keyof CatalogFilters, value: string | number | undefined) => {
@@ -23,24 +27,28 @@ function FiltersSidebar({ filters, onFiltersChange }: FiltersSidebarProps) {
   };
 
   const handleReset = () => {
-    const resetFilters: Partial<CatalogFilters> = {
-      model: undefined,
-      productType: undefined,
-      material: undefined,
-      minPrice: undefined,
-      maxPrice: undefined,
-    };
-
-    setLocalFilters(resetFilters);
-    onFiltersChange(resetFilters);
+    setLocalFilters({});
+    router.push('/catalog', { scroll: false });
   };
 
   const handleApply = () => {
-    onFiltersChange(localFilters);
+    const params = new URLSearchParams(searchParams.toString());
+
+    Object.entries(localFilters).forEach(([key, value]) => {
+      if (value !== undefined && value !== '') {
+        params.set(key, String(value));
+      } else {
+        params.delete(key);
+      }
+    });
+
+    startTransition(() => {
+      router.push(`?${params.toString()}`, { scroll: false });
+    });
   };
 
   return (
-    <section className={styles.sidebar}>
+    <section className={`${styles.sidebar} ${isPending ? styles.loading : ''}`}>
       <h2 className={styles.title}>Фильтрация</h2>
 
       <form className={styles.form} onSubmit={(event) => event.preventDefault()}>
@@ -50,7 +58,7 @@ function FiltersSidebar({ filters, onFiltersChange }: FiltersSidebarProps) {
             options={PLATFORM}
             placeholder="Выберите платформу"
             value={localFilters.model ?? ''}
-            onChange={(value) => handleChange('model', value ?? '')}
+            onChange={(value) => handleChange('model', value)}
           />
         </div>
 
@@ -60,7 +68,7 @@ function FiltersSidebar({ filters, onFiltersChange }: FiltersSidebarProps) {
             options={PRODUCT_TYPE}
             placeholder="Выберите тип изделия"
             value={localFilters.productType ?? ''}
-            onChange={(value) => handleChange('productType', value ?? '')}
+            onChange={(value) => handleChange('productType', value)}
           />
         </div>
 
@@ -70,7 +78,7 @@ function FiltersSidebar({ filters, onFiltersChange }: FiltersSidebarProps) {
             options={MATERIALS}
             placeholder="Выберите материал"
             value={localFilters.material ?? ''}
-            onChange={(value) => handleChange('material', value ?? '')}
+            onChange={(value) => handleChange('material', value)}
           />
         </div>
 

@@ -1,3 +1,5 @@
+// src/modules/catalog/components/Filters/Filters.tsx
+
 'use client';
 
 import styles from './filters.module.css';

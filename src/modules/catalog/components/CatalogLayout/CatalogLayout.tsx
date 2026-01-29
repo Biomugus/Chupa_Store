@@ -1,3 +1,5 @@
+// src/modules/catalog/components/CatalogLayout/CatalogLayout.tsx
+
 import styles from './catalogLayout.module.css';
 
 type CatalogLayoutProps = {
