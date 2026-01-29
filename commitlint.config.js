@@ -1,3 +1,5 @@
+// commitlint.config.js
+
 export default {
 	extends: ['@commitlint/config-conventional'],
 	rules: {
@@ -22,5 +24,6 @@ export default {
 	  'subject-full-stop': [2, 'never', '.'],
 	  'type-case': [2, 'always', 'lower-case'],
 	  'header-max-length': [2, 'always', 72],
+	  'body-max-line-length': [2, 'always', 150],
 	},
   };
