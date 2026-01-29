@@ -1,38 +1,13 @@
 // src/modules/catalog/components/ProductCard/ProductCard.tsx
 
+import { Product } from '@/app/api/products/productsShema';
 import { formatPrice } from '@/shared/lib/formatPrice';
-
-import { CatalogItem } from '../../types/CatalogItem';
-import { Product } from '../../types/Product';
-
+import { AddToCartButton } from './AddToCartButton';
 import styles from './productCard.module.css';
 import ProductImageGallery from './ProductImageGallery';
 
-import { useCart } from '@/modules/cart/hooks/useCart';
-import { observer } from 'mobx-react-lite';
-
-type ProductCardProps = {
-  product: CatalogItem | Product;
-};
-
-const ProductCard = observer(({ product }: ProductCardProps) => {
-  const { addItem } = useCart();
-
-  const images =
-    (product as Product).images ??
-    (product as CatalogItem).images ??
-    (product.image ? [product.image] : ['/images/placeholders/placeholder.jpg']);
-
-  const handleAdd = () => {
-    addItem({
-      id: product.id,
-      title: product.title,
-      price: product.price,
-      quantity: 1,
-      characteristics: product.characteristics,
-      image: product.images?.[0] || '/images/placeholders/placeholder.jpg',
-    });
-  };
+export default function ProductCard({ product }: { product: Product }) {
+  const images = product.images ?? ['/images/placeholders/placeholder.jpg'];
 
   return (
     <article className={styles.card}>
@@ -45,9 +20,17 @@ const ProductCard = observer(({ product }: ProductCardProps) => {
       <div className={styles.right}>
         <div className={styles.header}>
           <h3 className={styles.title}>{product.title}</h3>
-          <p className={styles.description}>{product.description}</p>
-          <p className={styles.description}>{product.equipment}</p>
-          <p className={styles.description}>{product.characteristics}</p>
+          <p className={styles.description}>
+            <strong className={styles.heading}>Описание: </strong> {product.content.description}
+          </p>
+          <p className={styles.description}>
+            <strong className={styles.heading}>Характеристики: </strong>
+            {product.content.characteristics}
+          </p>
+          <p className={styles.description}>
+            <strong className={styles.heading}>Совместимость: </strong>
+            {product.content.compatibility}
+          </p>
         </div>
 
         <div className={styles.meta}>
@@ -55,13 +38,9 @@ const ProductCard = observer(({ product }: ProductCardProps) => {
         </div>
 
         <div className={styles.actions}>
-          <button type="button" className={styles.addButton} onClick={handleAdd}>
-            В корзину
-          </button>
+          <AddToCartButton product={product} />
         </div>
       </div>
     </article>
   );
-});
-
-export default ProductCard;
+}

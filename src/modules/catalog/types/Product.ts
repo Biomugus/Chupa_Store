@@ -3,10 +3,10 @@ export interface Product {
   title: string;
   price: number;
   description: string;
-  equipment?: string;
-  characteristics?: string;
+  characteristics: string;
+  compatibility: string;
   images: string[];
-  slug?: string;
+  slug: string;
   image?: string;
 }
 
@@ -15,8 +15,8 @@ export interface ProductDTO {
   title?: string | null;
   price?: string | number | null;
   description?: string | null;
-  equipment?: string | null;
   characteristics?: string | null;
+  compatibility?: string | null;
   images?: string[];
   slug?: string | null;
   image?: string | null;

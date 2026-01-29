@@ -8,9 +8,11 @@ export const ProductSchema = z.object({
   price: z.number().positive(),
   slug: z.string(),
   images: z.array(z.string()),
-  description: z.string(),
-  characteristics: z.string(),
-  compatibility: z.string(),
+  content: z.object({
+    description: z.string().min(10),
+    characteristics: z.string().min(10),
+    compatibility: z.string().min(10),
+  }),
 });
 
 export const ProductsSchema = z.array(ProductSchema);

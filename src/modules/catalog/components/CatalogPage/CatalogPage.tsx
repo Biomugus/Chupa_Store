@@ -1,30 +1,19 @@
 // src/modules/catalog/components/CatalogPage/CatalogPage.tsx
 
-'use client';
-
 import styles from './catalogPage.module.css';
 
-import { useCatalogFilters } from '../../hooks/useCatalogFilters';
+import { Product } from '@/app/api/products/productsShema';
 import CatalogLayout from '../CatalogLayout/CatalogLayout';
 import CatalogList from '../CatalogList/CatalogList';
 import FiltersSidebar from '../FiltersSidebar/FiltersSidebar';
 import CatalogHero from '../QuickFilters/CatalogHero';
 
-function CatalogPage() {
-  const { items, filters, loading, updateFilters } = useCatalogFilters();
-
+function CatalogPage({ initialItems }: { initialItems: Product[] }) {
   return (
     <div className={styles.page}>
-      {loading ? (
-        <div>Подождите, каталог загружается...</div>
-      ) : (
-        <CatalogLayout
-          quickFilters={<CatalogHero />}
-          sidebar={<FiltersSidebar filters={filters} onFiltersChange={updateFilters} />}
-        >
-          <CatalogList items={items} filters={filters} onFiltersChange={updateFilters} />
-        </CatalogLayout>
-      )}
+      <CatalogLayout quickFilters={<CatalogHero />} sidebar={<FiltersSidebar />}>
+        <CatalogList items={initialItems} />
+      </CatalogLayout>
     </div>
   );
 }
