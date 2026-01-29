@@ -9,6 +9,7 @@ function CatalogHero() {
         alt="Фон превью каталога"
         fill
         priority
+        fetchPriority="high"
         quality={80}
         className={styles.heroImage}
       />
