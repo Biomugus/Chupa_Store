@@ -1,11 +1,13 @@
+// src/app/api/orders/route.ts
+
+import { buildOrderData } from '@/modules/checkout/utils/orderTextBuilder';
 import { NextResponse } from 'next/server';
-import { orderPayloadSchema, OrderPayloadSchema } from './payloadSchema';
 import {
-  paymentMap,
-  deliveryMap,
   contactMap,
+  deliveryMap,
+  paymentMap,
 } from '../../../modules/checkout/mappers/orderMappers';
-import { buildOrderMessage } from '@/modules/checkout/utils/orderTextBuilder';
+import { orderPayloadSchema, OrderPayloadSchema } from './payloadSchema';
 
 export async function POST(req: Request) {
   let payload: OrderPayloadSchema;
@@ -25,7 +27,7 @@ export async function POST(req: Request) {
     return new Response('Server misconfigured', { status: 500 });
   }
 
-  const message = buildOrderMessage({
+  const { text, contactLink, contactMethodLabel } = buildOrderData({
     payload,
     paymentMap,
     deliveryMap,
@@ -37,7 +39,22 @@ export async function POST(req: Request) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       chat_id: chatId,
-      text: message,
+      text: text,
+      link_preview_options: {
+        url: contactLink,
+        is_disabled: false,
+        prefer_large_media: true,
+      },
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: `💬 Написать в ${contactMethodLabel}`,
+              url: contactLink,
+            },
+          ],
+        ],
+      },
     }),
   });
 

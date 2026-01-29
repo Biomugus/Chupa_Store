@@ -36,7 +36,7 @@ export type CheckoutFormData = {
   paymentMethod: PaymentMethod;
   deliveryService: DeliveryService;
   fullName: string;
-  phone: string; // +7XXXXXXXXXX
+  phone: string;
   contactMethod: ContactMethod;
   contactValue: string;
 };

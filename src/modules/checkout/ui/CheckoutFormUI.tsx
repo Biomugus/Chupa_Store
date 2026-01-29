@@ -69,7 +69,10 @@ export function CheckoutFormUI({
           className={cn(fieldControlClassName, errors.fullName && 'border-red-500')}
           placeholder="Иванов Иван Иванович"
           value={values.fullName}
-          onChange={(e) => onChange('fullName', e.target.value)}
+          onChange={(e) => {
+            const val = e.target.value.replace(/[^а-яА-ЯёЁa-zA-Z\s-]/g, '');
+            onChange('fullName', val);
+          }}
         />
         {errors.fullName && <p className={styles.error}>{errors.fullName}</p>}
       </div>
@@ -83,7 +86,7 @@ export function CheckoutFormUI({
           id="phone"
           type="tel"
           className={cn(fieldControlClassName, errors.phone && 'border-red-500')}
-          placeholder="+7(...)..."
+          placeholder="+7 (999) 000-00-00"
           value={values.phone}
           onChange={(e) => onChange('phone', e.target.value)}
         />
@@ -157,9 +160,10 @@ export function CheckoutFormUI({
           className={cn(fieldControlClassName, errors.contactValue && 'border-red-500')}
           placeholder={values.contactMethod === ContactMethod.VK ? 'vk.com/id...' : '@username'}
           value={values.contactValue}
+          aria-invalid={!!errors.contactValue}
           onChange={(e) => onChange('contactValue', e.target.value)}
         />
-        {errors.contactValue && <p className={styles.error}>{errors.contactValue}</p>}
+        {errors.contactValue && <span className={styles.error}>{errors.contactValue}</span>}
       </div>
 
       {/* Submit Error / Retry */}
