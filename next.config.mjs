@@ -1,54 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'main-cdn.sbermegamarket.ru',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'i.pinimg.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'sun9-33.userapi.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'sun9-66.userapi.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'sun9-41.userapi.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'sun9-15.userapi.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'sun9-36.userapi.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'sun9-74.userapi.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'sun9-57.userapi.com',
-        pathname: '/**',
-      },
-    ],
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200],
   },
+  // Экспериментальная опция для уменьшения бандла
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'your-ui-library'], 
+  }
 };
 
 export default nextConfig;

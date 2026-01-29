@@ -6,8 +6,7 @@ const features = [
     id: 1,
     title: 'КАЧЕСТВО',
     desc: 'Постоянное улучшение качества продукции за счет внимательного изучения обратной связи от стрелков, военнослужащих и прочих представителей оружейной культуры в России, подбора соответствующих материалов и использования высокоточного оборудования - всё это позволяет нам держать высокую планку',
-    imageUrl:
-      'https://sun9-15.userapi.com/s/v1/ig2/ff_juk_6FsshvtQnR5jYbl4VgoECrO1piz3NtGnw2AVlib66BZyVXJVsKvv0ONWMEBzfZEIRIV3RbEoHUTfjaVvt.jpg?quality=95&as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960&from=bu&cs=1280x0',
+    imageUrl: '/images/features/features2.jpg',
   },
   {
     id: 2,
@@ -20,15 +19,13 @@ const features = [
     id: 3,
     title: 'ОТСЫЛКИ К ВОЕННОЙ ИСТОРИИ',
     desc: 'Мы любим и активно интересуемся военной историей, вдохновляемся ей в процессе создания дизайна или названий для наших изделий',
-    imageUrl:
-      'https://sun9-74.userapi.com/s/v1/ig2/1V9WaFR9QZDlIeYeHCfOgE9SGe60R9HtZbSx1YpLdwYoE3JbLFi2e9CQTMisV49JoW9xBlcZv5R0aZUG36a2kho2.jpg?quality=95&as=32x24,48x36,72x54,108x81,160x120,240x180,360x270,480x360,540x405,640x480,720x540,1080x810,1280x960,1440x1080,2560x1920&from=bu&cs=2560x0',
+    imageUrl: '/images/features/features2.jpg',
   },
   {
     id: 4,
     title: 'ЭСТЕТИКА',
     desc: 'Нас ценят за красоту, возникающую из минимализма, ясной структуры и отсутствия лишнего. Простые формы изделий работают потому, что мозгу не приходится пробираться через визуальный шум. Мы не стремимся создать красоту искуственно - лишь подсвечиваем её для Вас.',
-    imageUrl:
-      'https://sun9-57.userapi.com/s/v1/ig2/oKitGk8IAQcvqVm4fzBY0mTaur6RLNoLXdsfHjwNGaUpqAgO50dGhZdlsBdvHhy2d9AG7Oc518IDO3tfz9QMa6Ty.jpg?quality=95&as=32x43,48x64,72x96,108x144,160x213,240x320,360x480,480x640,540x720,640x854,720x960,1080x1441,1280x1708,1440x1921,1919x2560&from=bu&u=O2QBwplhQVvr3I23F6CRg-0L9ED3PFARQhscVq9xuAE&cs=1080x0',
+    imageUrl: '/images/features/features2.jpg',
   },
 ];
 
