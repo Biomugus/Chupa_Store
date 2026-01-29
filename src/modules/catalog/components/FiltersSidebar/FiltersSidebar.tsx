@@ -57,6 +57,7 @@ function FiltersSidebar() {
             label="Платформа"
             options={PLATFORM}
             placeholder="Выберите платформу"
+            aria-label="Выбор платформы"
             value={localFilters.model ?? ''}
             onChange={(value) => handleChange('model', value)}
           />
@@ -67,6 +68,7 @@ function FiltersSidebar() {
             label="Тип Изделия"
             options={PRODUCT_TYPE}
             placeholder="Выберите тип изделия"
+            aria-label="Выбор типа изделия"
             value={localFilters.productType ?? ''}
             onChange={(value) => handleChange('productType', value)}
           />
@@ -77,6 +79,7 @@ function FiltersSidebar() {
             label="Материал"
             options={MATERIALS}
             placeholder="Выберите материал"
+            aria-label="Выбор материала"
             value={localFilters.material ?? ''}
             onChange={(value) => handleChange('material', value)}
           />
@@ -89,6 +92,7 @@ function FiltersSidebar() {
               type="number"
               className={styles.input}
               placeholder="От"
+              aria-label="Минимальная цена"
               value={localFilters.minPrice ?? ''}
               onChange={(event) =>
                 handleChange(
@@ -102,6 +106,7 @@ function FiltersSidebar() {
               type="number"
               className={styles.input}
               placeholder="До"
+              aria-label="Максимальная цена"
               value={localFilters.maxPrice ?? ''}
               onChange={(event) =>
                 handleChange(

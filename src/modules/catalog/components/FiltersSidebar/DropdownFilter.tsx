@@ -10,9 +10,17 @@ type DropdownFilterProps = {
   value?: string;
   placeholder?: string;
   onChange: (value: string | undefined) => void;
+  'aria-label'?: string;
 };
 
-function DropdownFilter({ label, options, value, placeholder, onChange }: DropdownFilterProps) {
+function DropdownFilter({
+  label,
+  options,
+  value,
+  placeholder,
+  onChange,
+  'aria-label': ariaLabel,
+}: DropdownFilterProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -61,6 +69,7 @@ function DropdownFilter({ label, options, value, placeholder, onChange }: Dropdo
         onClick={handleToggle}
         aria-haspopup="listbox"
         aria-expanded={open}
+        aria-label={ariaLabel || label}
       >
         <span className={styles.triggerText}>{displayLabel}</span>
         <span className={styles.triggerIcon} aria-hidden="true">
@@ -69,7 +78,7 @@ function DropdownFilter({ label, options, value, placeholder, onChange }: Dropdo
       </button>
 
       <div className={`${styles.listContainer} ${open ? styles.listOpen : styles.listClosed}`}>
-        <div className={styles.list} role="listbox">
+        <div className={styles.list} role="listbox" aria-label={label}>
           {options
             .filter((option) => option.value !== '')
             .map((option) => {
