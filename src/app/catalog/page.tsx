@@ -1,3 +1,5 @@
+// src/app/catalog/page.tsx
+
 import { Suspense } from 'react';
 
 import CatalogPage from '@/modules/catalog/components/CatalogPage/CatalogPage';

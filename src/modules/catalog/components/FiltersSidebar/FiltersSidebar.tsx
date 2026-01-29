@@ -1,8 +1,10 @@
-import styles from './filtersSidebar.module.css';
-import { CatalogFilters } from '../../types/CatalogFilters';
+// src/modules/catalog/components/FiltersSidebar/FiltersSidebar.tsx
+
 import { useState } from 'react';
-import { PLATFORM, MATERIALS, PRODUCT_TYPE } from '../../lib/filterOptions';
+import { MATERIALS, PLATFORM, PRODUCT_TYPE } from '../../lib/filterOptions';
+import { CatalogFilters } from '../../types/CatalogFilters';
 import DropdownFilter from './DropdownFilter';
+import styles from './filtersSidebar.module.css';
 
 type FiltersSidebarProps = {
   filters: CatalogFilters;

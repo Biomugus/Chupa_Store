@@ -1,3 +1,5 @@
+// src/modules/catalog/components/CatalogList/CatalogList.tsx
+
 'use client';
 
 import Filters from '../Filters/Filters';
@@ -5,8 +7,8 @@ import ProductCard from '../ProductCard/ProductCard';
 
 import { CatalogItem } from '../../types/CatalogItem';
 
-import styles from './catalogList.module.css';
 import { CatalogFilters } from '../../types/CatalogFilters';
+import styles from './catalogList.module.css';
 
 type CatalogListProps = {
   items: CatalogItem[];

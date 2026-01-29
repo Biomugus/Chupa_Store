@@ -1,3 +1,5 @@
+// src/modules/catalog/components/CatalogPage/CatalogPage.tsx
+
 'use client';
 
 import styles from './catalogPage.module.css';
@@ -8,7 +10,6 @@ import CatalogList from '../CatalogList/CatalogList';
 import FiltersSidebar from '../FiltersSidebar/FiltersSidebar';
 import CatalogHero from '../QuickFilters/CatalogHero';
 
-// Controller по GRASP - композирует все части, делегирует логику хукам
 function CatalogPage() {
   const { items, filters, loading, updateFilters } = useCatalogFilters();
 

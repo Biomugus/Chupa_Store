@@ -1,3 +1,5 @@
+// src/modules/catalog/components/ProductCard/ProductCard.tsx
+
 import { formatPrice } from '@/shared/lib/formatPrice';
 
 import { CatalogItem } from '../../types/CatalogItem';

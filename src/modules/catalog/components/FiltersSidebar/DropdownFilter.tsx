@@ -1,3 +1,5 @@
+// src/modules/catalog/components/FiltersSidebar/DropdownFilter.tsx
+
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { FilterOption } from '../../lib/filterOptions';
 import styles from './dropdownFilter.module.css';
