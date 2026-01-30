@@ -4,6 +4,7 @@ import { ModalProvider } from '@/shared/ui/modal/ModalContext';
 import { ModalRoot } from '@/shared/ui/modal/ModalRoot';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { ibmPlex, inter, montserrat } from './fonts';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ru">
-      <body>
+    <html lang="ru" className={`${montserrat.variable} ${inter.variable} ${ibmPlex.variable}`}>
+      <body className="antialiased">
         <ModalProvider>
           <Header />
           {children}
