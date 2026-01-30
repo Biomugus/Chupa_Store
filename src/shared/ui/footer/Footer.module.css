@@ -46,10 +46,12 @@
 }
 
 .sectionTitle {
-  font-size: 0.95rem;
-  letter-spacing: 0.13em;
+  line-height: 1.5;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 400;
+  color: white;
 }
 
 .sectionChevron {
@@ -111,8 +113,8 @@
 }
 
 .brandText {
-  font-size: 0.9rem;
-  color: rgba(244, 245, 247, 0.8);
+  color: white;
+  font-size: 12px;
   max-width: 20rem;
 }
 
@@ -189,12 +191,10 @@
 }
 
 .footerLink {
-  color: inherit;
-  border-radius: 0.65rem;
+  color: white;
   align-items: center;
   gap: 0.25rem;
-  font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.6em;
   text-decoration: none;
   transition:
     background-color 0.15s,

@@ -5,7 +5,7 @@
   justify-content: center;
 
   padding: 32px 24px;
-  background-color: #f0fff4;
+  background-color: white;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   /* max-width: 360px; */
@@ -18,39 +18,39 @@
 }
 
 .icon {
-  width: 64px;
-  height: 64px;
+  width: 84px;
+  height: 84px;
 }
 
 .title {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 8px;
-  color: #2e7d32;
+  color: #d9b56f;
 }
 
 .message {
   font-size: 16px;
   margin-bottom: 24px;
-  color: #333;
+  color: black;
 }
 
 .button {
-  background-color: #2e7d32;
+  background-color: #9c7e4a;
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 10px 24px;
-  font-size: 16px;
-  font-weight: 500;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 400;
   cursor: pointer;
   transition:
-    background-color 0.2s ease,
-    transform 0.1s ease;
+    background-color 0.5s ease,
+    transform 0.5s ease;
 }
 
 .button:hover {
-  background-color: #27632a;
+  background-color: #d9b56f;
 }
 
 .button:active {
@@ -58,6 +58,6 @@
 }
 
 .button:focus {
-  outline: 2px solid #a5d6a7;
+  outline: 2px solid #dfbe7c;
   outline-offset: 2px;
 }

@@ -11,14 +11,14 @@
   cursor: pointer;
   background: linear-gradient(135deg, #f0c06c, #d59a3a);
   border: none;
-  border-radius: 16px;
+  border-radius: 6px;
   justify-content: center;
   align-items: center;
   gap: 8px;
   width: fit-content;
-  padding: 12px 24px;
-  font-size: 14px;
-  font-weight: 600;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 400;
   display: inline-flex;
 }
 
@@ -39,6 +39,9 @@
 
 .emptyState p {
   margin: 0.5rem 0;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 1px;
 }
 
 .emptyIcon {

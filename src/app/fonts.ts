@@ -2,7 +2,7 @@ import { IBM_Plex_Sans, Inter, Montserrat } from 'next/font/google';
 
 export const montserrat = Montserrat({
   subsets: ['latin', 'cyrillic'],
-  weight: ['800', '900'],
+  weight: ['600'],
   variable: '--font-montserrat',
 });
 

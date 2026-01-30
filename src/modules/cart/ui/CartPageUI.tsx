@@ -26,8 +26,7 @@ export function CartPageUI({
       {isEmpty && (
         <div className={styles.emptyState}>
           <CartIcon ready={true} className={styles.emptyIcon} />
-          <p>Ваша корзина пуста</p>
-          <p>Добавьте товары, чтобы оформить заказ</p>
+          <p>Ваша корзина пуста - добавьте товары, чтобы оформить заказ.</p>
         </div>
       )}
 
