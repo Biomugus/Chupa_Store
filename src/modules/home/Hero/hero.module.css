@@ -12,7 +12,7 @@
   background: #0f172a;
   overflow: hidden;
 
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
 
   display: flex;
@@ -20,11 +20,11 @@
 
   border-bottom: 2px solid #a8a8a8;
   box-shadow: 0 15px 12px -5px #00000047;
+}
 
-  background-image: url('/images/hero/hero.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.heroImage {
+  object-fit: cover;
+  z-index: 0;
 }
 
 .hero::before {
@@ -33,12 +33,12 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0.6) 60%,
-    rgba(0, 0, 0, 0.7) 100%
+    rgba(0, 0, 0, 0.4) 40%,
+    rgba(0, 0, 0, 0.6) 70%,
+    rgba(0, 0, 0, 0.7) 90%
   );
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 
 .content {
@@ -46,7 +46,7 @@
   margin: 0 auto;
   text-align: center;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .label {

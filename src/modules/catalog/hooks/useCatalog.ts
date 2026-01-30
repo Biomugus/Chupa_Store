@@ -1,6 +1,8 @@
+// src/modules/catalog/hooks/useCatalog.ts
+
 import { useEffect, useState } from 'react';
 
-import { getCatalog } from '../api/getCatalog';
+import { getProducts } from '../api/getCatalog';
 import { CatalogItem } from '../types/CatalogItem';
 
 export function useCatalog() {
@@ -10,7 +12,7 @@ export function useCatalog() {
   useEffect(() => {
     let mounted = true;
     setLoading(true);
-    getCatalog()
+    getProducts()
       .then((data) => {
         if (mounted) {
           setItems(data);
