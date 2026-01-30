@@ -1,9 +1,20 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import styles from './hero.module.css';
 
 function Hero() {
   return (
     <section className={styles.hero}>
+      <Image
+        src="/images/hero/hero.avif"
+        alt="Тюнинг оружия - Мастерская Чупы"
+        fill
+        priority
+        quality={80}
+        className={styles.heroImage}
+        sizes="100vw"
+      />
+
       <div className={styles.content}>
         <p className={styles.label}>Мастерская Чупы</p>
         <h1 className={styles.title}>Тюнинг оружия</h1>

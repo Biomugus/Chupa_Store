@@ -6,26 +6,26 @@ const features = [
     id: 1,
     title: 'КАЧЕСТВО',
     desc: 'Постоянное улучшение качества продукции за счет внимательного изучения обратной связи от стрелков, военнослужащих и прочих представителей оружейной культуры в России, подбора соответствующих материалов и использования высокоточного оборудования - всё это позволяет нам держать высокую планку',
-    imageUrl: '/images/features/features2.jpg',
+    imageUrl: '/images/features/features1.avif',
   },
   {
     id: 2,
     title: 'ИНДИВИДУАЛЬНОСТЬ',
     desc: 'Для того что бы создавать уникальные, единичные, кастомные изделия - мы используем не только современное оборудование но и сложные техники ручной художественной обработки дерева: резьба декоративных надписей, орнаментов и тд.',
 
-    imageUrl: '/images/features/features2.jpg',
+    imageUrl: '/images/features/features2.avif',
   },
   {
     id: 3,
     title: 'ОТСЫЛКИ К ВОЕННОЙ ИСТОРИИ',
     desc: 'Мы любим и активно интересуемся военной историей, вдохновляемся ей в процессе создания дизайна или названий для наших изделий',
-    imageUrl: '/images/features/features2.jpg',
+    imageUrl: '/images/features/features3.avif',
   },
   {
     id: 4,
     title: 'ЭСТЕТИКА',
     desc: 'Нас ценят за красоту, возникающую из минимализма, ясной структуры и отсутствия лишнего. Простые формы изделий работают потому, что мозгу не приходится пробираться через визуальный шум. Мы не стремимся создать красоту искуственно - лишь подсвечиваем её для Вас.',
-    imageUrl: '/images/features/features2.jpg',
+    imageUrl: '/images/features/features4.avif',
   },
 ];
 
@@ -53,7 +53,15 @@ function Features() {
               className={`${styles.row} ${isReversed ? styles.rowReversed : ''}`}
             >
               <div className={styles.rowImage}>
-                <Image width={400} height={400} src={feature.imageUrl} alt={feature.title} />
+                <Image
+                  src={feature.imageUrl}
+                  alt={feature.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className={styles.imageElement}
+                  quality={80}
+                  priority={index === 0}
+                />
               </div>
               <div className={styles.rowContent}>
                 <h3 className={styles.rowTitle}>{feature.title}</h3>
