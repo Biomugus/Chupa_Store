@@ -12,6 +12,11 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        header: ["var(--font-montserrat)", "sans-serif"],
+        sans: ["var(--font-inter)", "sans-serif"],
+        data: ["var(--font-ibm-plex)", "monospace"],
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',

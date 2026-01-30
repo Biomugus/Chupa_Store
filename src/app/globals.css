@@ -19,11 +19,6 @@ body {
   margin: 0;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -92,5 +87,39 @@ a {
   }
   body {
     @apply bg-background text-foreground;
+    @apply font-sans text-base leading-relaxed text-slate-800;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-header font-black uppercase tracking-tighter text-slate-900;
+  }
+
+  h1 {
+    @apply text-4xl md:text-6xl;
+  }
+  h2 {
+    @apply text-2xl md:text-4xl;
+  }
+
+  p,
+  span,
+  li {
+    @apply font-sans;
+  }
+
+  button,
+  input {
+    @apply font-sans font-medium uppercase tracking-wider;
+  }
+
+  .spec-label {
+    @apply font-data text-xs uppercase text-slate-500 tracking-widest;
+  }
+
+  .spec-value {
+    @apply font-data font-semibold text-sm text-slate-900;
   }
 }
