@@ -3,8 +3,10 @@
   align-items: center;
   gap: 24px;
 
+  min-width: 400px;
+
   padding: 12px 16px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 
   background-color: #1c1c1c;
   border-radius: 12px;
@@ -26,12 +28,13 @@
 .buttonsWrapper {
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: 12px;
 }
 
 .content {
   display: flex;
   flex-direction: column;
+  align-items: center;
   flex: 1;
   gap: 8px;
 }
@@ -57,7 +60,7 @@
 .quantity {
   font-size: 14px;
   line-height: 1;
-  color: #6b7280; /* нейтральный серый */
+  color: #6b7280;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -68,30 +71,35 @@
   color: #dba245;
 }
 
-.addButton {
-  background-color: green;
-  color: #fff;
+.addButton, 
+.removeButton {
+  background: transparent;
+  color: #ffffff;
   border: none;
-  border-radius: 6px;
-  padding: 4px 10px;
+  font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  padding: 4px 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .addButton:hover {
-  background-color: rgb(1, 184, 1);
-}
-
-.removeButton {
-  background-color: #ff4d4f;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 4px 10px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+  color: #4ade80;
+  text-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+  transform: scale(1.1);
 }
 
 .removeButton:hover {
-  background-color: #ff7875;
+  color: #f87171;
+  text-shadow: 0 0 8px rgba(248, 113, 113, 0.6);
+  transform: scale(1.1);
+}
+
+.addButton:active, 
+.removeButton:active {
+  transform: scale(0.95);
 }

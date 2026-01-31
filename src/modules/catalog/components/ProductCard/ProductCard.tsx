@@ -19,18 +19,21 @@ export default function ProductCard({ product }: { product: Product }) {
 
       <div className={styles.right}>
         <div className={styles.header}>
-          <h3 className={styles.title}>{product.title}</h3>
-          <p className={styles.description}>
-            <strong className={styles.heading}>Описание: </strong> {product.content.description}
-          </p>
-          <p className={styles.description}>
+          <h2 className={styles.title}>{product.title}</h2>
+          <h3>
+            <strong className={styles.heading}>Описание: </strong>
+          </h3>
+          <p className={styles.description}>{product.content.description}</p>
+
+          <h3>
             <strong className={styles.heading}>Характеристики: </strong>
-            {product.content.characteristics}
-          </p>
-          <p className={styles.description}>
+          </h3>
+          <p className={styles.description}>{product.content.characteristics}</p>
+
+          <h3>
             <strong className={styles.heading}>Совместимость: </strong>
-            {product.content.compatibility}
-          </p>
+          </h3>
+          <p className={styles.description}>{product.content.compatibility}</p>
         </div>
 
         <div className={styles.meta}>

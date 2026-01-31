@@ -1,4 +1,4 @@
-/* src/components/ui/select.tsx */
+/* src/shared/ui/header/Header.module.css */
 
 .header {
   top: 0;
@@ -49,12 +49,11 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.65rem;
-  font-weight: 600;
+  padding: 0.5rem 0.35rem;
+  font-size: 15px;
+  font-weight: 400;
   color: inherit;
   text-decoration: none;
-  line-height: 1.2;
   transition:
     background-color 150ms ease,
     color 150ms ease;
@@ -189,6 +188,7 @@
 
   .nav {
     grid-area: nav;
+    justify-content: center;
   }
 
   .logo {

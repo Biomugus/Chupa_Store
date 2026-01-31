@@ -48,11 +48,11 @@
 }
 
 .heroTitle {
-  font-size: 32px;
-  line-height: 1.1;
-  letter-spacing: 2px;
-  font-weight: 700;
-  margin-bottom: 12px;
+  font-size: 38px;
+  line-height: 1.2em;
+  letter-spacing: 1px;
+  font-weight: 400;
+  margin-bottom: 6px;
   color: #ffffff;
 
   animation: fadeInUp 0.8s ease-out forwards;
@@ -62,8 +62,8 @@
 .heroDescription {
   max-width: 720px;
   margin: 0 auto 28px;
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  color: white;
   line-height: 1.6;
 
   animation: fadeInUp 0.8s ease-out forwards;

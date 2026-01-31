@@ -86,7 +86,7 @@ function FooterSection({ config, isOpen, onToggle }: FooterSectionProps) {
         aria-controls={`${config.id}-content`}
         onClick={onToggle}
       >
-        <span className={styles.sectionTitle}>{config.title}</span>
+        <h4 className={styles.sectionTitle}>{config.title}</h4>
         <span className={styles.sectionChevron} aria-hidden="true">
           <span className={styles.chevronIcon} />
         </span>

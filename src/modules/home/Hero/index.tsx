@@ -18,7 +18,7 @@ function Hero() {
       <div className={styles.content}>
         <p className={styles.label}>Мастерская Чупы</p>
         <h1 className={styles.title}>Тюнинг оружия</h1>
-        <span className={styles.highlight}>Стиль. Качество. Характер.</span>
+        {/* <span className={styles.highlight}>Стиль. Качество. Характер.</span> */}
         <p className={styles.subtitle}>
           Ведущий производитель аксессуаров из благородных пород древесины для АК и AR плтаформ. Мы
           предлагаем уникальные изделия из живого материала с высочайшей степенью утилитарности:
