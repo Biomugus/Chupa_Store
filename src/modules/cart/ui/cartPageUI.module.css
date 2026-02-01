@@ -23,7 +23,9 @@
   font-weight: 400;
   display: inline-flex;
 
-  transition: color 0.5s ease-in-out, background-color 0.5s ease-in-out;
+  transition:
+    color 0.5s ease-in-out,
+    background-color 0.5s ease-in-out;
 }
 
 .checkoutButton:hover {

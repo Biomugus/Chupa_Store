@@ -35,7 +35,7 @@ export function CityAutocompleteUI({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            'h-9 w-full px-3 py-1 rounded-md border border-input bg-transparent text-white flex justify-between items-center',
+            'h-9 w-full px-3 py-1 rounded-md border border-black bg-white text-black flex justify-between items-center',
             error && 'border-destructive',
           )}
         >
@@ -52,7 +52,7 @@ export function CityAutocompleteUI({
             onValueChange={onInputChange}
           />
 
-          <CommandList className="bg-[#d8b56fa5] border border-input text-white rounded-md">
+          <CommandList className="bg-[white] border border-black text-white rounded-md">
             {isLoading && <div className="p-4 text-sm text-muted-foreground">Загрузка...</div>}
 
             <CommandEmpty className="text-black text-center p-2 text-sm">

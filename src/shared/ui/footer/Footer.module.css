@@ -1,8 +1,8 @@
 .footer {
-    color: white;
-    background: #19110b;
-    border-top: 1px solid #eec075ab;
-    transition: border-top-color .55s;
+  color: white;
+  background: #19110b;
+  border-top: 1px solid #eec075ab;
+  transition: border-top-color 0.55s;
 }
 
 .footer:has(.footerLink:hover) {
