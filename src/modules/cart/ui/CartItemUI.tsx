@@ -15,7 +15,13 @@ export default function CartItemUi({ item, onChangeQuantity }: CartItemProps) {
   return (
     <article className={styles.item}>
       <div className={styles.imageWrapper}>
-        <Image src={item.image} alt={item.title} width={100} height={100} />
+        <Image
+          src={item.image}
+          alt={item.title}
+          fill
+          sizes="(max-width: 768px) 50vw, 33vw"
+          className={styles.image}
+        />
       </div>
 
       <div className={styles.content}>
