@@ -2,13 +2,10 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #000;
 }
 
 .heroPreview {
-  padding: 20px 32px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(0, 0, 0, 0.45);
 }
 
 .content {
