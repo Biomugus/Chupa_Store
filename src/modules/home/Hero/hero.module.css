@@ -92,6 +92,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-width: 180px;
   padding: 10px 20px;
   border-radius: 6px;
   border: 1px solid transparent;
