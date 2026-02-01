@@ -71,7 +71,7 @@
   color: #dba245;
 }
 
-.addButton, 
+.addButton,
 .removeButton {
   background: transparent;
   color: #ffffff;
@@ -99,7 +99,7 @@
   transform: scale(1.1);
 }
 
-.addButton:active, 
+.addButton:active,
 .removeButton:active {
   transform: scale(0.95);
 }
