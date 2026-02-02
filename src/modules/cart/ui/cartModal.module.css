@@ -84,9 +84,5 @@
   line-height: 1;
   cursor: pointer;
 
-  color: white;
-}
-
-.closeButton:hover {
-  color: #9b7e4b;
+  color: black;
 }

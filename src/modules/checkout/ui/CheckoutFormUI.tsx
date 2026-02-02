@@ -24,8 +24,8 @@ import { cn } from '@/lib/utils';
 import { CityAutocompleteUI } from './CityAutocompleteUI';
 
 const fieldControlClassName = cn(
-  'min-w-[300px] w-full bg-white/5 border-white/20 text-[#f0f0f5]',
-  'rounded-[10px] focus-visible:ring-white/30 transition-all',
+  'min-w-[300px] w-full bg-white border-black text-[black]',
+  'rounded-[6px] focus-visible:ring-white transition-all',
 );
 
 export function CheckoutFormUI({
@@ -106,7 +106,7 @@ export function CheckoutFormUI({
             <SelectValue placeholder="Выберите способ" />
           </SelectTrigger>
 
-          <SelectContent className="bg-[#1a1c1e] border-white/20 text-white">
+          <SelectContent className="bg-[white] border-black text-black">
             <SelectItem value={PaymentMethod.CARD_TRANSFER}>Перевод на карту</SelectItem>
             <SelectItem value={PaymentMethod.LEGAL_ENTITY}>Оплата через юр. лицо</SelectItem>
           </SelectContent>
@@ -123,7 +123,7 @@ export function CheckoutFormUI({
           <SelectTrigger className={fieldControlClassName}>
             <SelectValue placeholder="Выберите службу" />
           </SelectTrigger>
-          <SelectContent className="bg-[#1a1c1e] border-white/20 text-white">
+          <SelectContent className="bg-[white] border-black text-black">
             <SelectItem value={DeliveryService.CDEK}>СДЭК</SelectItem>
             <SelectItem value={DeliveryService.POST_RUSSIA}>Почта России</SelectItem>
             <SelectItem value={DeliveryService.YANDEX}>Яндекс Доставка</SelectItem>
@@ -143,7 +143,7 @@ export function CheckoutFormUI({
           <SelectTrigger className={fieldControlClassName}>
             <SelectValue placeholder="Выберите способ связи" />
           </SelectTrigger>
-          <SelectContent className="bg-[#1a1c1e] border-white/20 text-white">
+          <SelectContent className="bg-[white] border-black text-black">
             <SelectItem value={ContactMethod.TELEGRAM}>Telegram</SelectItem>
             <SelectItem value={ContactMethod.VK}>VK</SelectItem>
           </SelectContent>

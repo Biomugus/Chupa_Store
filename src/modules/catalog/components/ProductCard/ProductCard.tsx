@@ -11,13 +11,13 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <article className={styles.card}>
-      <div className={styles.left}>
+      <div className={styles.media}>
         <ProductImageGallery images={images} alt={product.title} />
       </div>
 
       <div className={styles.divider} aria-hidden />
 
-      <div className={styles.right}>
+      <div className={styles.content}>
         <div className={styles.header}>
           <h2 className={styles.title}>{product.title}</h2>
           <h3>
