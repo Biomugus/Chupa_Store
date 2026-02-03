@@ -123,6 +123,32 @@
     padding: 32px 0px;
   }
 
+  .row {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .rowImage {
+    max-height: 350px;
+    overflow: hidden;
+  }
+
+  .imageElement {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .row:first-child .rowImage {
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+  }
+
+  .row:not(:first-child) .rowImage {
+    border-radius: 40px;
+    margin-top: 16px; 
+  }
+
   .row,
   .rowReversed {
     flex-direction: column;
@@ -143,11 +169,18 @@
 
   .rowReversed .rowContent {
     margin-right: 0;
+    clip-path: none;
 
     align-items: center;
   }
 
   .rowReversed .rowDesc {
     text-align: center;
+  }
+}
+
+@media (max-width: 425px) {
+  .rowDesc {
+    max-width: 100%;
   }
 }

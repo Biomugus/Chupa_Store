@@ -145,6 +145,7 @@
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   background: rgba(0, 0, 0, 0.25);
+  text-align: center;
 }
 
 .badgeRow {
@@ -306,7 +307,8 @@
     flex-direction: column;
   }
 
-  .columns {
+  .bottomRight {
+    justify-content: center;
   }
 }
 

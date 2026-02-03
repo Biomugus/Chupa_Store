@@ -94,13 +94,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 180px;
+  width: 100%;
   padding: 10px 20px;
   border-radius: 6px;
   border: 1px solid transparent;
   font-weight: 400;
   font-size: 12px;
   font-style: normal;
+  text-wrap-mode: nowrap;
   cursor: pointer;
   transition:
     transform 0.15s ease,
@@ -150,4 +151,24 @@
   font-size: clamp(1rem, 1.5vw + 0.5rem, 1.125rem);
 
   margin-bottom: 20px;
+}
+
+@media (max-width: 480px) {
+  .actions {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+@media (min-width: 481px) {
+  .actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .primary,
+  .secondary {
+    width: auto; 
+    min-width: 180px; 
+  }
 }

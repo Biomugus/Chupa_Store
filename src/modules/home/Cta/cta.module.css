@@ -2,10 +2,13 @@
   position: relative;
   width: 100%;
   min-height: 60vh;
+  display: flex; /* Добавляем флекс для центрирования inner */
+  align-items: center; /* Центрируем по вертикали */
+  justify-content: center; /* Центрируем по горизонтали */
   overflow: hidden;
-
   color: white;
   border-top: 2px solid #9b7e4b;
+  padding: 40px 20px; /* Даем внутренний отступ, чтобы контент не лип к краям */
 }
 
 .cta::before {
@@ -22,12 +25,11 @@
   display: flex;
   align-items: center;
   gap: 32px;
-
   position: relative;
-  top: 22rem;
+  /* УДАЛЯЕМ top: 22rem! Он больше не нужен */
   max-width: 1080px;
+  width: 100%; /* Занимает всю ширину, ограниченную max-width */
   margin: 0 auto;
-
   z-index: 1;
 }
 
@@ -67,6 +69,7 @@
   border: 1px solid transparent;
   font-weight: 400;
   font-size: 12px;
+  text-wrap-mode: nowrap;
   cursor: pointer;
   transition:
     transform 0.15s ease,
@@ -100,32 +103,41 @@
   background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(18, 18, 18, 0.9));
 }
 
-@media (max-width: 1440px) {
-  .inner {
-    top: 10rem;
-  }
-}
-
 @media (max-width: 1024px) {
   .inner {
-    padding: 0 32px;
-    top: 10rem;
     flex-direction: column;
-    max-width: 70%;
+    text-align: center;
+    gap: 24px;
   }
 
   .texts {
-    text-align: center;
-  }
-}
-
-@media (max-width: 768px) {
-  .inner {
-    flex-direction: column;
-    gap: 16px;
+    flex: none;
   }
 
   .actions {
-    justify-content: flex-start;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta {
+    min-height: auto;
+    padding: 60px 16px; 
+  }
+
+  .texts h2 {
+    font-size: 1.75rem;
+    letter-spacing: 1px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .primary, .secondary {
+    width: 100%;
+    font-size: 14px;
+    padding: 14px;
   }
 }
