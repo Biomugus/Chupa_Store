@@ -1,6 +1,7 @@
 /* src/shared/ui/header/Header.module.css */
 
 .header {
+  position: relative;
   top: 0;
   left: 0;
   right: 0;
@@ -24,12 +25,13 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 1rem;
-  padding: 0.9rem 2.25rem;
+  padding: 0.9rem clamp(1rem, 3vw, 2.25rem);
 }
 
 .nav {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .navList {
@@ -37,7 +39,7 @@
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 0.75rem;
+  gap: clamp(0.25rem, 1vw, 0.75rem);
   flex-wrap: wrap;
 }
 
@@ -49,14 +51,12 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.5rem 0.35rem;
-  font-size: 15px;
+  padding: 0.5rem 0.5rem;
+  font-size: clamp(0.8rem, 1vw, 1rem);
   font-weight: 400;
   color: inherit;
   text-decoration: none;
-  transition:
-    background-color 150ms ease,
-    color 150ms ease;
+  transition: color 150ms ease;
 }
 
 .navLink:hover,
@@ -73,17 +73,23 @@
   justify-self: center;
 }
 
+.logo:hover,
+.logo:focus-visible {
+  color: #9b7e4b;
+}
+
 .logoText {
   font-weight: 800;
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
 }
 
 .actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.75rem;
+  gap: clamp(0.5rem, 2vw, 1rem);
 }
 
 .cartButton {
@@ -112,20 +118,20 @@
 
 .cartCount {
   position: absolute;
-  bottom: 0px;
-  right: -15px;
+  top: -5px;
+  right: -10px;
   background-color: #f0c06c;
   color: black;
   border-radius: 50%;
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: bold;
-  min-width: 20px;
-  height: 20px;
+  min-width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 4px;
-  opacity: 30%;
+  padding: 2px;
+  opacity: 0.9;
 }
 
 .menuToggle {
@@ -173,56 +179,115 @@
 
 @media (max-width: 1024px) {
   .inner {
-    grid-template-columns: 1fr auto 1fr;
-    grid-template-rows: auto auto;
+    grid-template-columns: 1fr auto;
     grid-template-areas:
-      'nav nav nav'
-      'logo . cart';
-    align-items: center;
-    gap: 0.75rem;
+      'nav  nav'
+      'logo actions';
+    gap: 1.5rem 1rem;
   }
 
   .navList {
-    gap: 0.5rem;
+    justify-content: center;
   }
 
   .nav {
     grid-area: nav;
+    width: 100%;
     justify-content: center;
+    padding-top: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
 
   .logo {
     grid-area: logo;
+    justify-self: start;
   }
 
   .actions {
-    grid-area: cart;
-  }
-
-  .actions {
-    justify-content: center;
+    grid-area: actions;
+    justify-self: end;
   }
 }
 
 @media (max-width: 768px) {
+  .inner {
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas: 'logo burger actions';
+    grid-template-rows: auto;
+    gap: 0.5rem;
+    min-height: 60px;
+    position: static;
+  }
+
+  .logo {
+    grid-area: logo;
+    z-index: 151;
+    justify-self: start;
+  }
+
+  .actions {
+    grid-area: actions;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 151;
+  }
+
   .menuToggle {
-    display: inline-flex;
+    grid-area: burger;
+    display: flex;
+    justify-self: center;
+    z-index: 151;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+  }
+
+  .actions {
+    grid-area: actions;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    z-index: 151;
   }
 
   .nav {
-    width: 100%;
-    grid-column: 1 / 4;
-    order: 3;
+    grid-area: unset;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: auto;
+    z-index: 140;
+
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition:
+      opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0.3s;
+  }
+
+  .nav[data-open='true'] {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+
+    padding-top: 2px;
   }
 
   .navList {
-    width: 100%;
+    display: flex;
     flex-direction: column;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 14px;
-    padding: 0.35rem;
-    background: rgba(0, 0, 0, 0.45);
-    display: none;
+    background: #19110b;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    align-items: center;
   }
 
   .nav[data-open='true'] .navList {
@@ -231,11 +296,13 @@
 
   .navLink {
     width: 100%;
-    justify-content: center;
+    justify-content: flex-start;
+    color: #f4f5f7;
   }
 
-  .logoText {
-    font-size: 0.95rem;
+  .navLink:active {
+    background: rgba(155, 126, 75, 0.1);
+    color: #9b7e4b;
   }
 }
 

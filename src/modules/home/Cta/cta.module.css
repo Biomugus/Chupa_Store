@@ -36,15 +36,16 @@
 }
 
 .texts h2 {
-  font-size: 38px;
+  font-size: clamp(2rem, 5vw, 2.75rem);
   margin-bottom: 10px;
   font-weight: 400;
-  letter-spacing: 1px;
+  letter-spacing: clamp(2px, 0.2vw, 10px);
 
   color: white;
 }
 
 .texts p {
+  font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
   color: white;
 }
 
