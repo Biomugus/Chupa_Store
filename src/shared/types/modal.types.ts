@@ -1,4 +1,4 @@
-export type ModalType = 'nav' | 'cart' | null;
+export type ModalType = 'nav' | 'cart' | 'product_detail' | 'filters' | null;
 
 export type ModalPayload = unknown;
 

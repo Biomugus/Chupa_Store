@@ -123,7 +123,7 @@
 @media (max-width: 480px) {
   .cta {
     min-height: auto;
-    padding: 60px 16px; 
+    padding: 60px 16px;
   }
 
   .texts h2 {
@@ -135,7 +135,8 @@
     flex-direction: column;
   }
 
-  .primary, .secondary {
+  .primary,
+  .secondary {
     width: 100%;
     font-size: 14px;
     padding: 14px;

@@ -10,7 +10,7 @@
 
 .content {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 260px 1fr;
   flex: 1;
   gap: 32px;
   padding: 24px 32px;
@@ -28,15 +28,7 @@
   min-height: 0;
 }
 
-@media (max-width: 1023px) {
-  .content {
-    grid-template-columns: 240px 1fr;
-    gap: 20px;
-    padding: 20px 24px;
-  }
-}
-
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .quickFilters {
     padding: 16px 20px;
   }
@@ -50,10 +42,10 @@
   .sidebar {
     position: static;
     max-height: none;
-    order: 2;
+    order: 1;
   }
 
   .main {
-    order: 1;
+    order: 2;
   }
 }
