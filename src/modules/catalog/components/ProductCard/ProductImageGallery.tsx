@@ -1,81 +1,78 @@
 'use client';
 
+import useEmblaCarousel from 'embla-carousel-react';
 import Image from 'next/image';
 import 'photoswipe/dist/photoswipe.css';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Gallery, Item } from 'react-photoswipe-gallery';
 import styles from './productImageGallery.module.css';
 
-type ProductImageGalleryProps = {
+interface ProductImageGalleryProps {
   images: string[];
   alt: string;
-};
+}
 
 export default function ProductImageGallery({ images, alt }: ProductImageGalleryProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [failedImages, setFailedImages] = useState<Set<number>>(new Set());
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    duration: 25,
+    align: 'start',
+    skipSnaps: false,
+    watchSlides: true,
+  });
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const hasMultiple = images.length > 1;
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+  const scrollTo = useCallback((index: number) => emblaApi && emblaApi.scrollTo(index), [emblaApi]);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on('select', onSelect);
+  }, [emblaApi, onSelect]);
+
   const validImages = images.length > 0 ? images : ['/images/placeholders/placeholder.jpg'];
 
-  const next = useCallback(() => {
-    if (!hasMultiple) return;
-    setCurrentIndex((i) => (i === validImages.length - 1 ? 0 : i + 1));
-  }, [hasMultiple, validImages.length]);
-
-  const prev = useCallback(() => {
-    if (!hasMultiple) return;
-    setCurrentIndex((i) => (i === 0 ? validImages.length - 1 : i - 1));
-  }, [hasMultiple, validImages.length]);
-
-  const handleError = useCallback((index: number) => {
-    setFailedImages((prev) => new Set(prev).add(index));
-  }, []);
-
   return (
-    <Gallery
-      options={{
-        showHideAnimationType: 'zoom',
-        initialZoomLevel: 'fit',
-        secondaryZoomLevel: 1.5,
-        maxZoomLevel: 3,
-      }}
-    >
-      <div className={styles.gallery} aria-live="polite">
-        <div className={styles.media}>
-          <Item
-            original={validImages[currentIndex]}
-            thumbnail={validImages[currentIndex]}
-            width="1920"
-            height="1080"
-          >
-            {({ ref, open }) => {
-              const isFailed = failedImages.has(currentIndex);
-              const finalSrc = isFailed
-                ? '/images/placeholders/placeholder.jpg'
-                : validImages[currentIndex];
-
-              return (
-                <div className={styles.imageWrapper} onClick={open} style={{ cursor: 'zoom-in' }}>
-                  <Image
-                    ref={ref as unknown as React.MutableRefObject<HTMLImageElement>}
-                    src={finalSrc}
-                    alt={`${alt} - фото ${currentIndex + 1}`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority
-                    className={styles.image}
-                    onError={() => handleError(currentIndex)}
-                  />
-                </div>
-              );
-            }}
-          </Item>
+    <Gallery options={{ showHideAnimationType: 'zoom', initialZoomLevel: 'fit' }}>
+      <div className={styles.gallery}>
+        <div className={styles.media} ref={emblaRef}>
+          <div className={styles.emblaContainer}>
+            {validImages.map((src, index) => (
+              <div className={styles.emblaSlide} key={index}>
+                <Item original={src} thumbnail={src} width="1920" height="1080">
+                  {({ ref, open }) => (
+                    <div
+                      className={styles.imageWrapper}
+                      onClick={open}
+                      style={{ cursor: 'zoom-in' }}
+                    >
+                      <Image
+                        ref={ref as React.Ref<HTMLImageElement>}
+                        src={src}
+                        alt={`${alt} - ${index + 1}`}
+                        fill
+                        priority={index === 0}
+                        className={styles.image}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                    </div>
+                  )}
+                </Item>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {hasMultiple && (
+        {validImages.length > 1 && (
           <>
-            <button type="button" className={styles.navButton} onClick={prev} aria-label="Назад">
+            <button className={styles.navButton} onClick={scrollPrev}>
               <svg
                 width="24"
                 height="24"
@@ -87,13 +84,7 @@ export default function ProductImageGallery({ images, alt }: ProductImageGallery
                 <path d="M15 18L9 12L15 6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
-
-            <button
-              type="button"
-              className={`${styles.navButton} ${styles.navButtonRight}`}
-              onClick={next}
-              aria-label="Вперед"
-            >
+            <button className={`${styles.navButton} ${styles.navButtonRight}`} onClick={scrollNext}>
               <svg
                 width="24"
                 height="24"
@@ -105,15 +96,12 @@ export default function ProductImageGallery({ images, alt }: ProductImageGallery
                 <path d="M9 18L15 12L9 6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
-
             <div className={styles.indicators}>
               {validImages.map((_, i) => (
                 <button
                   key={i}
-                  type="button"
-                  className={`${styles.indicator} ${i === currentIndex ? styles.indicatorActive : ''}`}
-                  onClick={() => setCurrentIndex(i)}
-                  aria-current={i === currentIndex}
+                  className={`${styles.indicator} ${i === selectedIndex ? styles.indicatorActive : ''}`}
+                  onClick={() => scrollTo(i)}
                 />
               ))}
             </div>

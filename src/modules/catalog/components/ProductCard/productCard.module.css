@@ -12,7 +12,6 @@
   border-radius: 16px;
   padding: clamp(16px, 3vw, 32px);
   transition:
-    transform 0.65s ease,
     box-shadow 0.65s ease,
     border-color 0.65s ease;
   overflow: hidden;
@@ -20,19 +19,14 @@
 
 .card:hover {
   border-color: #9c7e4a;
-  transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
 .media {
   width: 100%;
-  height: auto;
   aspect-ratio: 16 / 9;
   order: 1;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
   border-radius: 6px;
 }
