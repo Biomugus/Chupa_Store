@@ -24,8 +24,9 @@ import { cn } from '@/lib/utils';
 import { CityAutocompleteUI } from './CityAutocompleteUI';
 
 const fieldControlClassName = cn(
-  'min-w-[300px] w-full bg-white border-black text-[black]',
+  'min-w-0 w-full bg-white border-black text-black',
   'rounded-[6px] focus-visible:ring-white transition-all',
+  'md:min-w-[300px]',
 );
 
 export function CheckoutFormUI({
@@ -53,7 +54,7 @@ export function CheckoutFormUI({
         <label htmlFor="location" className={styles.label}>
           Город
         </label>
-        <div className="w-full min-w-[300px]">
+        <div className="w-full">
           <CityAutocompleteUI {...cityAutocompleteProps} />
         </div>
         {errors.location && <p className={styles.error}>{errors.location}</p>}
@@ -106,7 +107,7 @@ export function CheckoutFormUI({
             <SelectValue placeholder="Выберите способ" />
           </SelectTrigger>
 
-          <SelectContent className="bg-[white] border-black text-black">
+          <SelectContent className="bg-[white] border-black text-black max-w-[95vw]">
             <SelectItem value={PaymentMethod.CARD_TRANSFER}>Перевод на карту</SelectItem>
             <SelectItem value={PaymentMethod.LEGAL_ENTITY}>Оплата через юр. лицо</SelectItem>
           </SelectContent>
@@ -123,7 +124,7 @@ export function CheckoutFormUI({
           <SelectTrigger className={fieldControlClassName}>
             <SelectValue placeholder="Выберите службу" />
           </SelectTrigger>
-          <SelectContent className="bg-[white] border-black text-black">
+          <SelectContent className="bg-[white] border-black text-black max-w-[95vw]">
             <SelectItem value={DeliveryService.CDEK}>СДЭК</SelectItem>
             <SelectItem value={DeliveryService.POST_RUSSIA}>Почта России</SelectItem>
             <SelectItem value={DeliveryService.YANDEX}>Яндекс Доставка</SelectItem>
@@ -143,7 +144,7 @@ export function CheckoutFormUI({
           <SelectTrigger className={fieldControlClassName}>
             <SelectValue placeholder="Выберите способ связи" />
           </SelectTrigger>
-          <SelectContent className="bg-[white] border-black text-black">
+          <SelectContent className="bg-[white] border-black text-black max-w-[95vw]">
             <SelectItem value={ContactMethod.TELEGRAM}>Telegram</SelectItem>
             <SelectItem value={ContactMethod.VK}>VK</SelectItem>
           </SelectContent>

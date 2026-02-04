@@ -24,8 +24,9 @@ export function ModalRoot() {
           style={{
             padding: '50px 50px',
             color: 'black',
-            fontSize: '16px',
+            fontSize: '14px',
             letterSpacing: '1px',
+            textAlign: 'center',
           }}
         >
           Раздел ещё на стадии разработки. Пока можете ознакомиться с каталогом :)

@@ -35,7 +35,7 @@ export function CityAutocompleteUI({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            'h-9 w-full px-3 py-1 rounded-md border border-black bg-white text-black flex justify-between items-center',
+            'md:min-w-[300px] h-9 w-full px-3 py-1 rounded-md border border-black bg-white text-black flex justify-between items-center',
             error && 'border-destructive',
           )}
         >

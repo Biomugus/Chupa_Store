@@ -42,9 +42,11 @@
   border-radius: 16px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
   
-  width: max-content; 
-  max-height: calc(100dvh - 32px);
+  width: fit-content;
+  max-width: 90vw; 
+  max-height: calc(100dvh - 40px);
   overflow-y: auto;
+  overflow-x: hidden;
   
   animation: slideUp 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
@@ -200,25 +202,34 @@
 }
 
 @media (max-width: 768px) {
+  .content {
+    width: 95vw; 
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 12px;
+  }
+
   .modalBody {
     grid-template-columns: 1fr;
     padding: 20px;
   }
 
-  .closeButton {
-    top: 12px;
-    right: 12px;
-    width: 40px;
-    height: 40px;
-    background: rgba(128, 128, 128, 0.15);
+  .productDetailView {
+    max-width: 700px;
   }
 }
 
 @media (max-width: 480px) {
   .content {
-    width: calc(100dvw - 24px);
-    max-height: calc(100dvh - 24px);
-    margin: 12px;
-    border-radius: 12px;
+    width: calc(100dvw - 32px);
+    max-height: calc(100dvh - 32px);
+    margin: 12px 24px;
+    border-radius: 6px;
+  }
+
+  .DetailsModalFooter {
+    flex-direction: column;
+    padding: 12px 20px;
+    gap: 6px;
   }
 }
