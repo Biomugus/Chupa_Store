@@ -7,11 +7,20 @@ import CatalogLayout from '../CatalogLayout/CatalogLayout';
 import CatalogList from '../CatalogList/CatalogList';
 import FiltersSidebar from '../FiltersSidebar/FiltersSidebar';
 import CatalogHero from '../QuickFilters/CatalogHero';
+import CatalogPageButton from './CatalogPageButton';
 
 function CatalogPage({ initialItems }: { initialItems: Product[] }) {
   return (
     <div className={styles.page}>
-      <CatalogLayout quickFilters={<CatalogHero />} sidebar={<FiltersSidebar />}>
+      <CatalogLayout
+        quickFilters={<CatalogHero />}
+        sidebar={
+          <div className={styles.desktopSidebar}>
+            <FiltersSidebar />
+          </div>
+        }
+      >
+        <CatalogPageButton />
         <CatalogList items={initialItems} />
       </CatalogLayout>
     </div>

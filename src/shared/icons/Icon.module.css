@@ -1,90 +1,59 @@
+/* src\shared\icons\Icon.module.css */
+
 .logoWrapper,
 .cartWrapper {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  width: clamp(2.25rem, 5vw, 3.125rem);
+  height: clamp(2.25rem, 5vw, 3.125rem);
+  color: inherit;
 }
 
-.logoWrapper {
-  --logo-size: 40px;
-  --logo-scale: 2.8;
-  width: var(--logo-size);
-  height: var(--logo-size);
+.logoSvg,
+.cartSvg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  transition:
+    color 250ms ease,
+    transform 250ms ease;
 }
 
-.logoWrapper:hover .logoSvg,
-.cartWrapper:hover .cartSvg {
-  color: #9b7e4b;
-}
-
-/* Предустановленные размеры логотипа */
-.logoWrapper.logoSmall {
-  --logo-size: 40px;
-}
-
-.logoWrapper.logoMedium {
-  --logo-size: 60px;
-}
-
-.logoWrapper.logoLarge {
-  --logo-size: 80px;
-}
-
-.logoWrapper.logoXLarge {
-  --logo-size: 100px;
+.logoSvg {
+  transform: scale(1.8);
+  transform-origin: center center;
 }
 
 .cartWrapper {
-  width: 40px;
-  height: 40px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  transition: color 150ms ease;
+  width: clamp(2rem, 4vw, 2.5rem);
+  height: clamp(2rem, 4vw, 2.5rem);
 }
 
 .iconSkeleton {
   position: absolute;
   inset: 0;
-  border-radius: 12px;
+  border-radius: 8px;
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.08),
-    rgba(255, 255, 255, 0.16),
-    rgba(255, 255, 255, 0.08)
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.05)
   );
   background-size: 200% 100%;
   animation: shimmer 1.2s ease-in-out infinite;
+  pointer-events: none;
   opacity: 1;
+  transition:
+    opacity 300ms ease,
+    visibility 300ms ease;
+  z-index: 1;
 }
 
-.logoWrapper[data-loaded='true'] .iconSkeleton,
-.cartWrapper[data-loaded='true'] .iconSkeleton {
+[data-loaded='true'] .iconSkeleton {
   opacity: 0;
+  visibility: hidden;
   animation: none;
-}
-
-.logoSvg {
-  width: 100%;
-  height: 100%;
-  transform: scale(var(--logo-scale, 1));
-  transform-origin: center center;
-  transition: color 250ms ease;
-}
-
-.cartSvg {
-  width: 100%;
-  height: 100%;
-  transition: color 250ms ease;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-
-  100% {
-    background-position: -200% 0;
-  }
 }

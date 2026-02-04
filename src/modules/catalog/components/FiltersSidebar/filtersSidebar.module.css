@@ -18,6 +18,7 @@
 
 .form {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 20px;
 }
@@ -132,9 +133,12 @@
   transform: translateY(0);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .sidebar {
-    padding: 16px;
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
   }
 
   .title {
@@ -143,6 +147,18 @@
   }
 
   .actions {
-    flex-direction: column;
+    margin-top: auto;
+    padding-top: 16px;
+    gap: 8px;
+  }
+
+  .form {
+    overflow-y: auto;
+    gap: clamp(12px, 2vh, 20px);
+    padding-bottom: 20px;
+  }
+
+  .label {
+    margin-bottom: 4px;
   }
 }

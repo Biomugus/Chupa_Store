@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  padding: 24px 32px;
+  gap: 8px;
+  padding: 40px 40px;
 
   background-color: white;
 }
@@ -63,4 +63,11 @@
   color: black;
 
   pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .emptyState {
+    min-height: 100%;
+    padding: 0;
+  }
 }

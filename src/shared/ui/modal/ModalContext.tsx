@@ -1,3 +1,5 @@
+// src/shared/ui/modal/ModalContext.tsx
+
 'use client';
 
 import { ModalState, ModalType } from '@/shared/types/modal.types';

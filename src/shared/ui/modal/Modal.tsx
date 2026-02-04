@@ -1,3 +1,5 @@
+// src/shared/ui/modal/Modal.tsx
+
 'use client';
 
 import { useEffect, type PropsWithChildren } from 'react';
@@ -32,6 +34,23 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.content} onClick={(e) => e.stopPropagation()}>
+        <button
+          type="button"
+          className={styles.closeButton}
+          onClick={onClose}
+          aria-label="Закрыть модальное окно"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
         {children}
       </div>
     </div>
