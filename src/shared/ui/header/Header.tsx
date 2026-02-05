@@ -2,9 +2,9 @@
 
 import { observer } from 'mobx-react-lite';
 
+import { useCart } from '@/modules/cart/hooks/useCart';
 import { useIconsReady } from '@/shared/hooks/useIconsReady';
 import { useMobileMenu } from '@/shared/hooks/useMobileMenu';
-import { useCart } from '@/modules/cart/hooks/useCart';
 import Link from 'next/link';
 import { useModal } from '../modal/ModalContext';
 
@@ -12,9 +12,9 @@ import { CartIcon } from '@/shared/icons/Carticon';
 import { LogoMark } from '@/shared/icons/LogoMark';
 
 import { HOME_LABEL, NAV_ITEMS } from '@/shared/config/navigation';
+import { useEffect, useState } from 'react';
 import { MenuToggle } from '../MenuToggle';
 import styles from './Header.module.css';
-import { useEffect, useState } from 'react';
 
 const NAVIGATION_ID = 'main-navigation';
 
@@ -28,10 +28,19 @@ const Header = observer(function Header() {
   useEffect(() => setMounted(true), []);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href === '/' || href === '/catalog') return;
+    menu.close();
+
+    if (href === '/customs') {
+      e.preventDefault();
+      openModal('nav');
+      return;
+    }
+
+    if (href.startsWith('/catalog') || href === '/history') {
+      return;
+    }
 
     e.preventDefault();
-    menu.close();
     openModal('nav');
   };
 
