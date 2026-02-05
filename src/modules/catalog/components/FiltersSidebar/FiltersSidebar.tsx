@@ -3,7 +3,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { MATERIALS, PLATFORM, PRODUCT_TYPE } from '../../lib/filterOptions';
 import { CatalogFilters } from '../../types/CatalogFilters';
 import DropdownFilter from './DropdownFilter';
@@ -14,7 +14,7 @@ function FiltersSidebar() {
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
-  const [localFilters, setLocalFilters] = useState<Partial<CatalogFilters>>({
+  const getFiltersFromParams = () => ({
     model: searchParams.get('model') || '',
     productType: searchParams.get('productType') || '',
     material: searchParams.get('material') || '',
@@ -22,12 +22,25 @@ function FiltersSidebar() {
     maxPrice: searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined,
   });
 
+  const [localFilters, setLocalFilters] = useState<Partial<CatalogFilters>>(getFiltersFromParams());
+
+  useEffect(() => {
+    setLocalFilters(getFiltersFromParams());
+  }, [searchParams]);
+
+  // const [localFilters, setLocalFilters] = useState<Partial<CatalogFilters>>({
+  //   model: searchParams.get('model') || '',
+  //   productType: searchParams.get('productType') || '',
+  //   material: searchParams.get('material') || '',
+  //   minPrice: searchParams.get('minPrice') ? Number(searchParams.get('minPrice')) : undefined,
+  //   maxPrice: searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined,
+  // });
+
   const handleChange = (key: keyof CatalogFilters, value: string | number | undefined) => {
     setLocalFilters((prev) => ({ ...prev, [key]: value || undefined }));
   };
 
   const handleReset = () => {
-    setLocalFilters({});
     router.push('/catalog', { scroll: false });
   };
 

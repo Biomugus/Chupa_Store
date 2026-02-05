@@ -7,6 +7,9 @@ export const ProductSchema = z.object({
   title: z.string(),
   price: z.number().positive(),
   slug: z.string(),
+  model: z.enum(['AK', 'AR', 'HK', 'others']),
+  productType: z.enum(['handguard', 'stock', 'grip', 'mlock']),
+  material: z.enum(['plywood', 'walnut']),
   images: z.array(z.string()),
   content: z.object({
     description: z.string().min(10),
