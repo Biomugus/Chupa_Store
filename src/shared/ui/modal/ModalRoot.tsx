@@ -2,10 +2,10 @@
 
 'use client';
 
-import { Product } from '@/app/api/products/productsShema';
 import { CartModalContainer } from '@/modules/cart/containers/CartModalContainer';
 import FiltersSidebar from '@/modules/catalog/components/FiltersSidebar/FiltersSidebar';
 import { AddToCartButton } from '@/modules/catalog/components/ProductCard/AddToCartButton';
+import { Product } from '@/modules/catalog/model/productsSchema';
 import { formatPrice } from '@/shared/lib/formatPrice';
 import Modal from './Modal';
 import styles from './Modal.module.css';
@@ -42,17 +42,17 @@ export function ModalRoot() {
 
               <div className={styles.section}>
                 <h3 className={styles.modalSubheading}>О товаре</h3>
-                <p>{product.content.description}</p>
+                <p>{product.description}</p>
               </div>
 
               <div className={styles.section}>
                 <h3 className={styles.modalSubheading}>Характеристики</h3>
-                <p>{product.content.characteristics}</p>
+                <p>{product.characteristics}</p>
               </div>
 
               <div className={styles.section}>
                 <h3 className={styles.modalSubheading}>Совместимость</h3>
-                <p>{product.content.compatibility}</p>
+                <p>{product.compatibility}</p>
               </div>
             </div>
 
