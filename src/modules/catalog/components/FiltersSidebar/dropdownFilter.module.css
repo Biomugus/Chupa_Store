@@ -74,18 +74,21 @@
 }
 
 .listContainer {
-  position: absolute; 
+  position: absolute;
   top: 100%;
   left: 0;
   right: 0;
   z-index: 50;
-  
+
   overflow: hidden;
   max-height: 0;
-  transition: max-height 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    max-height 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
   opacity: 0;
   transform: translateY(-4px);
-  
+
   margin-top: 4px;
 }
 

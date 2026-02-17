@@ -2,61 +2,34 @@
 
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState, useTransition } from 'react';
+import { useCatalogFilters } from '../../hooks/useCatalogFilters';
 import { MATERIALS, PLATFORM, PRODUCT_TYPE } from '../../lib/filterOptions';
-import { CatalogFilters } from '../../types/CatalogFilters';
+import { CatalogSearchParams } from '../../model/productsSchema';
 import DropdownFilter from './DropdownFilter';
 import styles from './filtersSidebar.module.css';
 
 function FiltersSidebar() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const { filters, updateFilters, resetFilters } = useCatalogFilters();
+
   const [isPending, startTransition] = useTransition();
 
-  const getFiltersFromParams = () => ({
-    model: searchParams.get('model') || '',
-    productType: searchParams.get('productType') || '',
-    material: searchParams.get('material') || '',
-    minPrice: searchParams.get('minPrice') ? Number(searchParams.get('minPrice')) : undefined,
-    maxPrice: searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined,
-  });
-
-  const [localFilters, setLocalFilters] = useState<Partial<CatalogFilters>>(getFiltersFromParams());
+  const [localFilters, setLocalFilters] = useState<CatalogSearchParams>(filters);
 
   useEffect(() => {
-    setLocalFilters(getFiltersFromParams());
-  }, [searchParams]);
+    setLocalFilters(filters);
+  }, [filters]);
 
-  // const [localFilters, setLocalFilters] = useState<Partial<CatalogFilters>>({
-  //   model: searchParams.get('model') || '',
-  //   productType: searchParams.get('productType') || '',
-  //   material: searchParams.get('material') || '',
-  //   minPrice: searchParams.get('minPrice') ? Number(searchParams.get('minPrice')) : undefined,
-  //   maxPrice: searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined,
-  // });
-
-  const handleChange = (key: keyof CatalogFilters, value: string | number | undefined) => {
-    setLocalFilters((prev) => ({ ...prev, [key]: value || undefined }));
-  };
-
-  const handleReset = () => {
-    router.push('/catalog', { scroll: false });
+  const handleChange = (key: keyof CatalogSearchParams, value: string | number | undefined) => {
+    setLocalFilters((prev) => ({
+      ...prev,
+      [key]: value === '' ? undefined : value,
+    }));
   };
 
   const handleApply = () => {
-    const params = new URLSearchParams(searchParams.toString());
-
-    Object.entries(localFilters).forEach(([key, value]) => {
-      if (value !== undefined && value !== '') {
-        params.set(key, String(value));
-      } else {
-        params.delete(key);
-      }
-    });
-
     startTransition(() => {
-      router.push(`?${params.toString()}`, { scroll: false });
+      updateFilters(localFilters);
     });
   };
 
@@ -64,13 +37,12 @@ function FiltersSidebar() {
     <section className={`${styles.sidebar} ${isPending ? styles.loading : ''}`}>
       <h2 className={styles.title}>Фильтрация</h2>
 
-      <form className={styles.form} onSubmit={(event) => event.preventDefault()}>
+      <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.filterGroup}>
           <DropdownFilter
             label="Платформа"
             options={PLATFORM}
             placeholder="Выберите платформу"
-            aria-label="Выбор платформы"
             value={localFilters.model ?? ''}
             onChange={(value) => handleChange('model', value)}
           />
@@ -81,7 +53,6 @@ function FiltersSidebar() {
             label="Тип Изделия"
             options={PRODUCT_TYPE}
             placeholder="Выберите тип изделия"
-            aria-label="Выбор типа изделия"
             value={localFilters.productType ?? ''}
             onChange={(value) => handleChange('productType', value)}
           />
@@ -92,7 +63,6 @@ function FiltersSidebar() {
             label="Материал"
             options={MATERIALS}
             placeholder="Выберите материал"
-            aria-label="Выбор материала"
             value={localFilters.material ?? ''}
             onChange={(value) => handleChange('material', value)}
           />
@@ -105,38 +75,26 @@ function FiltersSidebar() {
               type="number"
               className={styles.input}
               placeholder="От"
-              aria-label="Минимальная цена"
               value={localFilters.minPrice ?? ''}
-              onChange={(event) =>
-                handleChange(
-                  'minPrice',
-                  event.target.value ? Number(event.target.value) : undefined,
-                )
-              }
+              onChange={(e) => handleChange('minPrice', e.target.value)}
             />
             <span className={styles.priceSeparator}>—</span>
             <input
               type="number"
               className={styles.input}
               placeholder="До"
-              aria-label="Максимальная цена"
               value={localFilters.maxPrice ?? ''}
-              onChange={(event) =>
-                handleChange(
-                  'maxPrice',
-                  event.target.value ? Number(event.target.value) : undefined,
-                )
-              }
+              onChange={(e) => handleChange('maxPrice', e.target.value)}
             />
           </div>
         </div>
 
         <div className={styles.actions}>
-          <button type="button" className={styles.resetButton} onClick={handleReset}>
+          <button type="button" className={styles.resetButton} onClick={resetFilters}>
             Сбросить
           </button>
           <button type="button" className={styles.applyButton} onClick={handleApply}>
-            Применить
+            {isPending ? 'Загрузка...' : 'Применить'}
           </button>
         </div>
       </form>

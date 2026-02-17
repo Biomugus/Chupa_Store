@@ -1,6 +1,6 @@
 // src/modules/catalog/components/CatalogList/CatalogList.tsx
 
-import { Product } from '@/app/api/products/productsShema';
+import { Product } from '../../model/productsSchema';
 import ProductCard from '../ProductCard/ProductCard';
 import styles from './catalogList.module.css';
 import EmptyState from './EmptyState';

@@ -2,7 +2,7 @@
 
 import styles from './catalogPage.module.css';
 
-import { Product } from '@/app/api/products/productsShema';
+import { Product } from '../../model/productsSchema';
 import CatalogLayout from '../CatalogLayout/CatalogLayout';
 import CatalogList from '../CatalogList/CatalogList';
 import FiltersSidebar from '../FiltersSidebar/FiltersSidebar';

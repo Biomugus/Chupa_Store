@@ -1,35 +1,47 @@
 // src/modules/catalog/api/getCatalog.ts
 
-import { Product, ProductsSchema } from '@/app/api/products/productsShema';
-import fs from 'fs/promises';
-import path from 'path';
-
-export interface CatalogSearchParams {
-  model?: string;
-  productType?: string;
-  material?: string;
-  minPrice?: string;
-  maxPrice?: string;
-}
+import { createClient } from '@/shared/api/supabase/server';
+import { CatalogSearchParams, Product, mapDbProduct } from '../model/productsSchema';
 
 export async function getProducts(params?: CatalogSearchParams): Promise<Product[]> {
-  const filePath = path.join(process.cwd(), 'src/data/products.json');
-  const raw = await fs.readFile(filePath, 'utf-8');
-  const data = JSON.parse(raw);
+  const supabase = await createClient();
+  let query = supabase.from('products').select('*');
 
-  let products = ProductsSchema.parse(data);
+  if (params?.model) query = query.eq('model', params.model);
+  if (params?.productType) query = query.eq('product_type', params.productType);
+  if (params?.material) query = query.eq('material', params.material);
 
-  if (params) {
-    products = products.filter((p) => {
-      const matchModel = !params.model || p.model === params.model;
-      const matchType = !params.productType || p.productType === params.productType;
-      const matchMaterial = !params.material || p.material === params.material;
-      const matchMinPrice = !params.minPrice || p.price >= Number(params.minPrice);
-      const matchMaxPrice = !params.maxPrice || p.price <= Number(params.maxPrice);
+  if (params?.minPrice) query = query.gte('price', Number(params.minPrice));
+  if (params?.maxPrice) query = query.lte('price', Number(params.maxPrice));
 
-      return matchModel && matchType && matchMaterial && matchMinPrice && matchMaxPrice;
-    });
+  if (params?.query) {
+    query = query.ilike('title', `%${params.query}%`);
   }
 
-  return products;
+  if (params?.sortBy) {
+    switch (params.sortBy) {
+      case 'price_asc':
+        query = query.order('price', { ascending: true });
+        break;
+      case 'price_desc':
+        query = query.order('price', { ascending: false });
+        break;
+      case 'name_asc':
+        query = query.order('title', { ascending: true });
+        break;
+      case 'name_desc':
+        query = query.order('title', { ascending: false });
+        break;
+      default:
+        query = query.order('created_at', { ascending: false });
+    }
+  } else {
+    query = query.order('created_at', { ascending: false });
+  }
+
+  const { data, error } = await query;
+
+  if (error || !data) return [];
+
+  return data.map(mapDbProduct);
 }
