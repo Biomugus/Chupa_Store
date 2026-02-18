@@ -113,7 +113,7 @@
     border-radius: 20px;
     backdrop-filter: blur(4px);
   }
-  
+
   .indicator {
     width: 6px;
     height: 6px;
@@ -124,7 +124,7 @@
     padding: 0;
     transition: all 0.2s ease;
   }
-  
+
   .indicatorActive {
     background: #d7b46a;
     width: 18px;
@@ -135,13 +135,13 @@
     background: rgba(255, 255, 255, 0.6);
     transform: scale(1.2);
   }
-  
+
   .indicatorActive {
     background: #d7b46a;
     width: 20px;
     border-radius: 3px;
   }
-  
+
   .indicator:focus-visible {
     outline: 2px solid rgba(215, 180, 106, 0.6);
     outline-offset: 2px;
@@ -151,7 +151,7 @@
 /* Mobile+ */
 @media (max-width: 1023px) {
   .media {
-    min-height: auto; 
+    min-height: auto;
     border-radius: 10px;
   }
 
@@ -164,7 +164,7 @@
 
   @media (max-width: 767px) {
     .navButton {
-      display: none; 
+      display: none;
     }
     .indicators {
       bottom: 8px;
@@ -173,7 +173,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .navButton, .indicator, .emblaContainer {
+  .navButton,
+  .indicator,
+  .emblaContainer {
     transition: none !important;
   }
 }

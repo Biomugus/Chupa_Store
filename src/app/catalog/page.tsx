@@ -1,7 +1,8 @@
 // src/app/catalog/page.tsx
 
-import { CatalogSearchParams, getProducts } from '@/modules/catalog/api/getCatalog';
+import { getProducts } from '@/modules/catalog/api/getCatalog';
 import CatalogPage from '@/modules/catalog/components/CatalogPage/CatalogPage';
+import { CatalogSearchParams } from '@/modules/catalog/model/productsSchema';
 
 export default async function Page({
   searchParams,

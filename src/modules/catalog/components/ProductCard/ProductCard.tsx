@@ -1,7 +1,7 @@
 // src/modules/catalog/components/ProductCard/ProductCard.tsx
 
-import { Product } from '@/app/api/products/productsShema';
 import { formatPrice } from '@/shared/lib/formatPrice';
+import { Product } from '../../model/productsSchema';
 import { AddToCartButton } from './AddToCartButton';
 import DetailsButton from './DetailsButton';
 import styles from './productCard.module.css';

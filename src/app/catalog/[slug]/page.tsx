@@ -1,32 +1,23 @@
-'use client';
-
-import { Suspense } from 'react';
-
+import { getProduct } from '@/modules/catalog/api/getProduct';
 import ProductCard from '@/modules/catalog/components/ProductCard/ProductCard';
-import { useProduct } from '@/modules/catalog/hooks/useProduct';
+import { notFound } from 'next/navigation';
 
 type CatalogSlugPageProps = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
-function CatalogSlugContent({ slug }: { slug: string }) {
-  const { product, loading } = useProduct(slug);
+export default async function CatalogSlugPage({ params }: CatalogSlugPageProps) {
+  const { slug } = await params;
 
-  if (loading) {
-    return <div>Loading product...</div>;
-  }
+  const product = await getProduct(slug);
 
   if (!product) {
-    return <div>Product not found</div>;
+    notFound();
   }
 
-  return <ProductCard product={product} />;
-}
-
-export default function CatalogSlugPage({ params }: CatalogSlugPageProps) {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <CatalogSlugContent slug={params.slug} />
-    </Suspense>
+    <div style={{ padding: '20px' }}>
+      <ProductCard product={product} />
+    </div>
   );
 }

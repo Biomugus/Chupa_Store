@@ -1,182 +1,177 @@
 /* src/shared/ui/NotFound/notFound.module.css */
 
 .container {
-	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-height: 100vh;
-	padding: 16px;
-	text-align: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 16px;
+  text-align: center;
+}
+
+.bgWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.bgImage {
+  object-fit: cover;
+  object-position: top;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  max-width: 600px;
+  padding: 0 20px;
+}
+
+.title {
+  text-transform: uppercase;
+  color: black;
+  background-color: #ffffff80;
+  margin-bottom: 12px;
+  font-size: clamp(1.4rem, 4vw, 2.5rem);
+  font-weight: 800;
+  box-shadow: 0 0 8px 12px #ffffff80;
+}
+
+.subTitle {
+  margin-bottom: 12px;
+  color: white;
+}
+
+.text {
+  font-size: clamp(0.95rem, 2.5vw, 1.125rem);
+  color: white;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.buttonsWrapper {
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.addButton {
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  background: #9c7e4a;
+  border: none;
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 180px;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 400;
+  transition:
+    transform 0.35s,
+    box-shadow 0.35s,
+    filter 0.35s;
+  display: inline-flex;
+  box-shadow: 0 8px 20px #00000059;
+}
+
+.addButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.42);
+  filter: brightness(1.06);
+  background: #a48242;
+}
+
+.addButton:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  filter: brightness(0.96);
+}
+
+.homeButton:hover {
+  opacity: 0.8;
+}
+
+@media (min-width: 480px) {
+  .container {
+    padding: 20px;
   }
 
-  .bgWrapper {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: -1;
-  }
-
-  .bgImage {
-	object-fit: cover;
-	object-position: top;
-  }
-  
-  .overlay {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.6);
-  }
-  
-  .content {
-	position: relative;
-	z-index: 10;
-	max-width: 600px;
-	padding: 0 20px;
-  }
-  
-  .title {
-	text-transform: uppercase;
-    color: black;
-    background-color: #ffffff80;
-    margin-bottom: 12px;
-    font-size: clamp(1.4rem, 4vw, 2.5rem);
-    font-weight: 800;
-    box-shadow: 0 0 8px 12px #ffffff80;
-  }
-  
-  .subTitle {
-	margin-bottom: 12px;
-	color: white;
-  }
-  
-  .text {
-	font-size: clamp(0.95rem, 2.5vw, 1.125rem);
-	color: white;
-	line-height: 1.6;
-	margin-bottom: 24px;
-  }
-  
   .buttonsWrapper {
-	flex-wrap: wrap;
-    gap: 16px;
-    width: 100%;
-    margin-top: auto;
-    display: flex;
-	justify-content: center;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .content {
+    max-width: 500px;
   }
 
-  .addButton {
-	color: #fff;
-    cursor: pointer;
-    white-space: nowrap;
-    background: #9c7e4a;
-    border: none;
-    border-radius: 6px;
+  .title {
+    margin-bottom: 32px;
+  }
+
+  .text {
+    margin-bottom: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content {
+    max-width: 560px;
+  }
+
+  .buttonsWrapper {
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 8px;
-    width: 100%;
-    min-width: 180px;
-    padding: 10px 20px;
-    font-size: 12px;
-    font-weight: 400;
-    transition: transform .35s, box-shadow .35s, filter .35s;
-    display: inline-flex;
-    box-shadow: 0 8px 20px #00000059;
   }
 
-  .addButton:hover {
-	transform: translateY(-2px);
-	box-shadow: 0 12px 26px rgba(0, 0, 0, 0.42);
-	filter: brightness(1.06);
-	background: #a48242;
+  .buttonsWrapper > * {
+    width: auto;
   }
-  
-  .addButton:active {
-	transform: translateY(0);
-	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
-	filter: brightness(0.96);
-  }
-  
-  .homeButton:hover {
-	opacity: 0.8;
-  }
-  
-  
-  @media (min-width: 480px) {
-	.container {
-	  padding: 20px;
-	}
-  
-	.buttonsWrapper {
-	  flex-direction: row;
-	  align-items: center;
-	}
-  }
-  
-  
-  @media (min-width: 768px) {
-	.content {
-	  max-width: 500px;
-	}
-  
-	.title {
-	  margin-bottom: 32px;
-	}
-  
-	.text {
-	  margin-bottom: 32px;
-	}
-  }
-  
-  
-  @media (min-width: 1024px) {
-	.content {
-	  max-width: 560px;
-	}
+}
 
-	.buttonsWrapper {
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-	}
-	
-	.buttonsWrapper > * {
-		width: auto;
-	}
+@media (min-width: 1440px) {
+  .content {
+    max-width: 640px;
   }
-  
-  
-  @media (min-width: 1440px) {
-	.content {
-	  max-width: 640px;
-	}
+}
+
+@media (min-width: 1920px) {
+  .content {
+    max-width: 720px;
   }
-  
-  
-  @media (min-width: 1920px) {
-	.content {
-	  max-width: 720px;
-	}
+}
+
+@media (min-width: 2560px) {
+  .content {
+    max-width: 820px;
   }
-  
-  
-  @media (min-width: 2560px) {
-	.content {
-	  max-width: 820px;
-	}
+}
+
+@media (min-width: 3840px) {
+  .content {
+    max-width: 960px;
   }
-  
-  
-  @media (min-width: 3840px) {
-	.content {
-	  max-width: 960px;
-	}
-  }
-  
+}
