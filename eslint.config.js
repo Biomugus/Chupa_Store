@@ -61,6 +61,26 @@ export default [
     },
   },
   {
+    // Node.js scripts — чистый JS, без TS-парсера
+    files: ['scripts/**/*.{js,mjs,cjs}'],
+    languageOptions: {
+      // Сбрасываем TS-парсер на стандартный espree
+      parser: undefined,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      // Отключаем правила, которые требуют TypeScript type-checking
+      '@typescript-eslint/no-require-imports': 'off',
+      '@typescript-eslint/no-var-requires': 'off',
+    },
+  },
+  {
     ignores: ['.next/', 'node_modules/', 'dist/', 'commitlint.config.js', 'eslint.config.js', "jest.setup.tsx", "next-env.d.ts", "jest.config.ts", 'postcss.config.js', 'tailwind.config.js'],
   },
 ];

@@ -15,8 +15,7 @@ body {
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+  /* padding: 0 and margin: 0 removed — Tailwind Preflight handles this */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -52,6 +51,26 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+
+    /* ── Brand design tokens ── */
+    --brand-gold: #9c7e4a;
+    --brand-gold-hover: #a48242;
+    --brand-gold-light: #d9b56f;
+    --brand-gold-accent: #eec075ab;
+    --brand-gold-badge: #f0c06c;
+    --brand-dark: #19110b;
+    --brand-surface: #f6f5f3;
+    --brand-text: #1a1a1a;
+    --brand-text-secondary: #666;
+    --brand-text-muted: #555;
+    --brand-border: #e5e7eb;
+    --brand-hover-gold: #9b7e4b;
+
+    /* ── Button shadows ── */
+    --btn-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    --btn-shadow-hover: 0 12px 26px rgba(0, 0, 0, 0.42);
+    --btn-shadow-lg: 0 14px 30px rgba(0, 0, 0, 0.35);
+    --btn-shadow-lg-hover: 0 18px 34px rgba(0, 0, 0, 0.45);
   }
   .dark {
     --background: 20 14.3% 4.1%;

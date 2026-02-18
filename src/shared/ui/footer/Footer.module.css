@@ -1,12 +1,12 @@
 .footer {
   color: white;
-  background: #19110b;
-  border-top: 1px solid #eec075ab;
+  background: var(--brand-dark);
+  border-top: 1px solid var(--brand-gold-accent);
   transition: border-top-color 0.55s;
 }
 
 .footer:has(.footerLink:hover) {
-  border-top-color: #fcd089;
+  border-top-color: var(--brand-gold-badge);
 }
 
 .inner {
@@ -120,7 +120,7 @@
   justify-content: space-between;
   gap: 1.5rem;
   padding-top: 1.25rem;
-  border-top: 1px solid #eec075ab;
+  border-top: 1px solid var(--brand-gold-accent);
   font-size: 0.8rem;
   color: white;
   flex-wrap: wrap;
@@ -201,7 +201,7 @@
 }
 
 .footerLink:hover {
-  color: #9b7e4b;
+  color: var(--brand-hover-gold);
 }
 
 .devRow {

@@ -1,0 +1,134 @@
+/* src/shared/ui/buttons/buttons.module.css */
+/* Shared button patterns — single source of truth */
+
+/* ── Brand gold button (catalog addToCart, notFound, cartSuccess) ── */
+
+.btnBrand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  width: 100%;
+  min-width: 180px;
+  background: var(--brand-gold);
+  color: #fff;
+  font-weight: 400;
+  font-size: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: var(--btn-shadow);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    filter 0.35s ease;
+}
+
+.btnBrand:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--btn-shadow-hover);
+  filter: brightness(1.06);
+  background: var(--brand-gold-hover);
+}
+
+.btnBrand:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  filter: brightness(0.96);
+}
+
+/* ── Outline button (checkout, cartPage, filters) ── */
+
+.btnOutline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 10px 20px;
+  background: white;
+  color: var(--brand-text);
+  border: 1px solid black;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  transition:
+    color 0.5s ease-in-out,
+    background-color 0.5s ease-in-out;
+}
+
+.btnOutline:hover {
+  color: white;
+  background-color: black;
+}
+
+.btnOutline:active {
+  transform: translateY(2px);
+}
+
+.btnOutline:disabled {
+  background-color: white;
+  cursor: not-allowed;
+  color: #00000029;
+}
+
+/* ── Gradient hero/CTA buttons ── */
+
+.btnGradientPrimary,
+.btnGradientSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-weight: 400;
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.btnGradientPrimary {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  color: var(--brand-gold-light);
+  box-shadow: var(--btn-shadow-lg);
+}
+
+.btnGradientPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--btn-shadow-lg-hover);
+  background: linear-gradient(135deg, #161616, #222222);
+}
+
+.btnGradientSecondary {
+  background: linear-gradient(135deg, rgba(18, 18, 18, 0.9), rgba(12, 12, 12, 0.85));
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--brand-gold-light);
+}
+
+.btnGradientSecondary:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.16);
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(18, 18, 18, 0.9));
+}
+
+/* ── Reduced motion ── */
+
+@media (prefers-reduced-motion: reduce) {
+  .btnBrand,
+  .btnOutline,
+  .btnGradientPrimary,
+  .btnGradientSecondary {
+    transition: none;
+  }
+}

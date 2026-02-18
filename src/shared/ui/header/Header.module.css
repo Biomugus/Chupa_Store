@@ -6,7 +6,7 @@
   left: 0;
   right: 0;
   z-index: 150;
-  background: #19110b;
+  background: var(--brand-dark);
   color: #f4f5f7;
   border-bottom: 2px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
@@ -15,7 +15,7 @@
 
 .header:has(.navLink:hover),
 .header:has(.navLink:focus-visible) {
-  border-bottom-color: #eec075ab;
+  border-bottom-color: var(--brand-gold-accent);
 }
 
 .inner {
@@ -61,7 +61,7 @@
 
 .navLink:hover,
 .navLink:focus-visible {
-  color: #9b7e4b;
+  color: var(--brand-hover-gold);
 }
 
 .logo {
@@ -120,7 +120,7 @@
   position: absolute;
   top: -5px;
   right: -10px;
-  background-color: #f0c06c;
+  background-color: var(--brand-gold-badge);
   color: black;
   border-radius: 50%;
   font-size: 0.75rem;
@@ -140,7 +140,7 @@
   height: 50px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  background: #9b7e4b;
+  background: var(--brand-hover-gold);
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -154,7 +154,7 @@
 
 .menuToggle:hover,
 .menuToggle:focus-visible {
-  background: #d9b56f;
+  background: var(--brand-gold-light);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -284,7 +284,7 @@
   .navList {
     display: flex;
     flex-direction: column;
-    background: #19110b;
+    background: var(--brand-dark);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     width: 100%;
     align-items: center;
@@ -302,7 +302,7 @@
 
   .navLink:active {
     background: rgba(155, 126, 75, 0.1);
-    color: #9b7e4b;
+    color: var(--brand-hover-gold);
   }
 }
 

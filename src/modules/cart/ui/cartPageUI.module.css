@@ -8,31 +8,6 @@
   background-color: white;
 }
 
-.checkoutButton {
-  color: #161616;
-  cursor: pointer;
-  background: white;
-  border: 1px solid black;
-  border-radius: 6px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  width: fit-content;
-  padding: 10px 20px;
-  font-size: 12px;
-  font-weight: 400;
-  display: inline-flex;
-
-  transition:
-    color 0.5s ease-in-out,
-    background-color 0.5s ease-in-out;
-}
-
-.checkoutButton:hover {
-  color: white;
-  background-color: black;
-}
-
 .emptyState {
   display: flex;
   flex-direction: column;

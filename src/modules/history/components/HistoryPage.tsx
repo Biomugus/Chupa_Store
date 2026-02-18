@@ -1,20 +1,20 @@
+import styles from '@/shared/ui/articlePage/articlePage.module.css';
 import Image from 'next/image';
-import styles from './historyPage.module.css';
 
 function HistoryPage() {
   return (
     <main className={styles.page}>
-      <article className={styles.history}>
-        <div className={styles.history_header}>
-          <h1 className={styles.history_title}>История мастерской</h1>
+      <article className={styles.article}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>История мастерской</h1>
 
-          <p className={styles.history_lead}>
+          <p className={styles.lead}>
             Как все начиналось, через какие этапы прошла мастерская и почему сегодня мы работаем
             именно так.
           </p>
         </div>
 
-        <section className={styles.history_section}>
+        <section className={styles.section}>
           <h2 id="origin">Начало пути</h2>
 
           <p>
@@ -25,12 +25,12 @@ function HistoryPage() {
           <p>Здесь важно показать не результат, а мотивацию и обстоятельства.</p>
         </section>
 
-        <section className={styles.history_section}>
+        <section className={styles.section}>
           <h2 id="formation">Становление</h2>
 
           <p>Период роста, ошибок, первых заказов, изменения подходов и взглядов на продукт.</p>
 
-          <figure className={styles.history_figure}>
+          <figure className={styles.figure}>
             <Image
               src="/images/history2.jpg"
               alt="Ранний этап работы"
@@ -47,7 +47,7 @@ function HistoryPage() {
           </p>
         </section>
 
-        <section className={styles.history_section} aria-labelledby="philosophy">
+        <section className={styles.section} aria-labelledby="philosophy">
           <h2 id="philosophy">Формирование подхода</h2>
 
           <p>
@@ -60,7 +60,7 @@ function HistoryPage() {
           </blockquote>
         </section>
 
-        <section className={styles.history_section} aria-labelledby="today">
+        <section className={styles.section} aria-labelledby="today">
           <h2 id="today">Мастерская сегодня</h2>
 
           <p>Текущее состояние. Как прошлый опыт влияет на решения, которые принимаются сейчас.</p>

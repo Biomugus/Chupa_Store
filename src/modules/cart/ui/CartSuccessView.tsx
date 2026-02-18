@@ -1,5 +1,6 @@
 'use client';
 
+import btnStyles from '@/shared/ui/buttons/buttons.module.css';
 import styles from './cartSuccessView.module.css';
 
 export function CartSuccessView({ onClose }: { onClose: () => void }) {
@@ -23,7 +24,7 @@ export function CartSuccessView({ onClose }: { onClose: () => void }) {
       </div>
       <h3 className={styles.title}>Заказ оформлен</h3>
       <p className={styles.message}>Мы свяжемся с вами в ближайшее время, спасибо за доверие!</p>
-      <button className={styles.button} onClick={onClose}>
+      <button className={`${btnStyles.btnBrand} ${styles.button}`} onClick={onClose}>
         Закрыть
       </button>
     </div>

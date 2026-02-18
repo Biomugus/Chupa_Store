@@ -7,7 +7,7 @@ const nextConfig = {
   },
 
   experimental: {
-    optimizePackageImports: ['lucide-react', 'your-ui-library'], 
+    optimizePackageImports: ['lucide-react'],
   }
 };
 

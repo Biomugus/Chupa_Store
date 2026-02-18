@@ -1,19 +1,19 @@
+import styles from '@/shared/ui/articlePage/articlePage.module.css';
 import Image from 'next/image';
-import styles from './missionPage.module.css';
 
 function missionPage() {
   return (
     <main className={styles.page}>
-      <article className={styles.mission}>
-        <div className={styles.mission_header}>
-          <h1 className={styles.mission_title}>Наша миссия</h1>
+      <article className={styles.article}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Наша миссия</h1>
 
-          <p className={styles.mission_lead}>
+          <p className={styles.lead}>
             Что мы создаем, зачем мы это делаем и какие ценности лежат в основе нашей мастерской.
           </p>
         </div>
 
-        <section className={styles.mission_section}>
+        <section className={styles.section}>
           <h2 id="purpose">Цель мастерской</h2>
 
           <p>
@@ -28,7 +28,7 @@ function missionPage() {
           </p>
         </section>
 
-        <section className={styles.mission_section}>
+        <section className={styles.section}>
           <h2 id="values">Наши ценности</h2>
 
           <p>
@@ -36,7 +36,7 @@ function missionPage() {
             то, что мы соблюдаем в каждом проекте.
           </p>
 
-          <figure className={styles.mission_figure}>
+          <figure className={styles.figure}>
             <Image
               src="/images/mission.jpg"
               alt="Процесс работы в мастерской"
@@ -53,7 +53,7 @@ function missionPage() {
           </p>
         </section>
 
-        <section className={styles.mission_section} aria-labelledby="approach">
+        <section className={styles.section} aria-labelledby="approach">
           <h2 id="approach">Подход к работе</h2>
 
           <p>
@@ -61,12 +61,12 @@ function missionPage() {
             Каждое изделие уникально, и мы внимательно относимся к каждой детали.
           </p>
 
-          <blockquote className={styles.mission_blockquote}>
+          <blockquote className={styles.blockquote}>
             Каждое дерево заслуживает уважения, каждая работа — внимания мастера.
           </blockquote>
         </section>
 
-        <section className={styles.mission_section} aria-labelledby="impact">
+        <section className={styles.section} aria-labelledby="impact">
           <h2 id="impact">Наше влияние</h2>
 
           <p>

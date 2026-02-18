@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
+import btnStyles from '../buttons/buttons.module.css';
 import styles from './notFound.module.css';
 
 export default function notFound() {
@@ -30,10 +31,14 @@ export default function notFound() {
 
         <div className={styles.buttonsWrapper}>
           <Link href="/">
-            <Button className={styles.addButton}>Вернуться на главную</Button>
+            <Button className={`${btnStyles.btnBrand} ${styles.addButton}`}>
+              Вернуться на главную
+            </Button>
           </Link>
           <Link href="/catalog">
-            <Button className={styles.addButton}>Перейти в каталог</Button>
+            <Button className={`${btnStyles.btnBrand} ${styles.addButton}`}>
+              Перейти в каталог
+            </Button>
           </Link>
         </div>
       </div>

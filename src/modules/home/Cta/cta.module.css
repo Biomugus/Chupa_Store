@@ -1,14 +1,14 @@
 .cta {
   position: relative;
   width: 100%;
-  min-height: 60vh;
-  display: flex; /* Добавляем флекс для центрирования inner */
-  align-items: center; /* Центрируем по вертикали */
-  justify-content: center; /* Центрируем по горизонтали */
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   color: white;
   border-top: 2px solid #9b7e4b;
-  padding: 40px 20px; /* Даем внутренний отступ, чтобы контент не лип к краям */
+  padding: 60px 16px;
 }
 
 .cta::before {
@@ -23,14 +23,28 @@
 
 .inner {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 32px;
+  text-align: center;
+  gap: 24px;
   position: relative;
-  /* УДАЛЯЕМ top: 22rem! Он больше не нужен */
   max-width: 1080px;
-  width: 100%; /* Занимает всю ширину, ограниченную max-width */
+  width: 100%;
   margin: 0 auto;
   z-index: 1;
+}
+
+@media (min-width: 1024px) {
+  .cta {
+    min-height: 60vh;
+    padding: 40px 20px;
+  }
+
+  .inner {
+    flex-direction: row;
+    text-align: left;
+    gap: 32px;
+  }
 }
 
 .texts {
@@ -38,11 +52,10 @@
 }
 
 .texts h2 {
-  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
   margin-bottom: 10px;
   font-weight: 400;
-  letter-spacing: clamp(2px, 0.2vw, 10px);
-
+  letter-spacing: clamp(1px, 0.2vw, 10px);
   color: white;
 }
 
@@ -53,92 +66,36 @@
 
 .actions {
   display: flex;
+  flex-direction: column;
   gap: 12px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  flex: 0 0 auto;
+  width: 100%;
 }
 
 .primary,
 .secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 20px;
-  border-radius: 6px;
-  border: 1px solid transparent;
-  font-weight: 400;
-  font-size: 12px;
-  text-wrap-mode: nowrap;
-  cursor: pointer;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    background 0.15s ease,
-    border-color 0.15s ease,
-    color 0.15s ease;
+  width: 100%;
+  font-size: 14px;
+  padding: 14px;
 }
 
-.primary {
-  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-  color: #d8b56f;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
-}
-
-.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.45);
-  background: linear-gradient(135deg, #161616, #222222);
-}
-
-.secondary {
-  background: linear-gradient(135deg, rgba(18, 18, 18, 0.9), rgba(12, 12, 12, 0.85));
-  border-color: rgba(255, 255, 255, 0.08);
-  color: #d8b56f;
-}
-
-.secondary:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.16);
-  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(18, 18, 18, 0.9));
-}
-
-@media (max-width: 1024px) {
-  .inner {
-    flex-direction: column;
-    text-align: center;
-    gap: 24px;
-  }
-
-  .texts {
-    flex: none;
-  }
-
+@media (min-width: 480px) {
   .actions {
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
-    width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .cta {
-    min-height: auto;
-    padding: 60px 16px;
-  }
-
-  .texts h2 {
-    font-size: 1.75rem;
-    letter-spacing: 1px;
-  }
-
-  .actions {
-    flex-direction: column;
+    width: auto;
   }
 
   .primary,
   .secondary {
-    width: 100%;
-    font-size: 14px;
-    padding: 14px;
+    width: auto;
+    font-size: inherit;
+  }
+}
+
+@media (min-width: 1024px) {
+  .actions {
+    justify-content: flex-end;
+    flex: 0 0 auto;
   }
 }

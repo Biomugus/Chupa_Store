@@ -2,9 +2,10 @@
 
 'use client';
 
-import { Product } from '@/app/api/products/productsShema';
 import { useCart } from '@/modules/cart/hooks/useCart';
+import btnStyles from '@/shared/ui/buttons/buttons.module.css';
 import { observer } from 'mobx-react-lite';
+import { Product } from '../../model/productsSchema';
 import styles from './productCard.module.css';
 
 export const AddToCartButton = observer(({ product }: { product: Product }) => {
@@ -21,7 +22,11 @@ export const AddToCartButton = observer(({ product }: { product: Product }) => {
   };
 
   return (
-    <button type="button" className={styles.addButton} onClick={handleAdd}>
+    <button
+      type="button"
+      className={`${btnStyles.btnBrand} ${styles.addButton}`}
+      onClick={handleAdd}
+    >
       В корзину
     </button>
   );
