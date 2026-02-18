@@ -18,7 +18,7 @@
 }
 
 .card:hover {
-  border-color: #9c7e4a;
+  border-color: var(--brand-gold);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
@@ -112,43 +112,6 @@
   flex: 1 1 140px;
 }
 
-.addButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 20px;
-  width: 100%;
-  min-width: 180px;
-  background: #9c7e4a;
-  color: white;
-  font-weight: 400;
-  font-size: 12px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-  transition:
-    transform 0.35s ease,
-    box-shadow 0.35s ease,
-    filter 0.35s ease;
-
-  white-space: nowrap;
-}
-
-.addButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.42);
-  filter: brightness(1.06);
-  background: #a48242;
-}
-
-.addButton:active {
-  transform: translateY(0);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
-  filter: brightness(0.96);
-}
-
 @media (max-width: 1024px) {
   .left {
     width: 200px;
@@ -174,8 +137,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card,
-  .addButton {
+  .card {
     transition: none;
   }
 }

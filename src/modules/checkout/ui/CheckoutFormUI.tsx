@@ -9,6 +9,7 @@ import {
   PaymentMethod,
 } from '../types/checkoutTypes';
 
+import btnStyles from '@/shared/ui/buttons/buttons.module.css';
 import Spinner from '@/shared/ui/spinner/Spinner';
 import styles from './checkoutFormUI.module.css';
 
@@ -188,7 +189,11 @@ export function CheckoutFormUI({
           </button>
         </div>
       ) : (
-        <button className={styles.submitButton} type="submit" disabled={!isValid || isLoading}>
+        <button
+          className={`${btnStyles.btnOutline} ${styles.submitButton}`}
+          type="submit"
+          disabled={!isValid || isLoading}
+        >
           {isLoading ? (
             <>
               <span style={{ marginRight: 8 }}>Отправка</span>

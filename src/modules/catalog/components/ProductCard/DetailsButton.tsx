@@ -2,8 +2,9 @@
 
 'use client';
 
-import { Product } from '@/app/api/products/productsShema';
 import { useModal } from '@/shared/ui/modal/ModalContext';
+import btnStyles from '../../../../shared/ui/buttons/buttons.module.css';
+import { Product } from '../../model/productsSchema';
 import styles from './productCard.module.css';
 
 export default function DetailsButton({ product }: { product: Product }) {
@@ -14,7 +15,11 @@ export default function DetailsButton({ product }: { product: Product }) {
   };
 
   return (
-    <button type="button" className={styles.addButton} onClick={handleAdd}>
+    <button
+      type="button"
+      className={`${btnStyles.btnBrand} ${styles.addButton}`}
+      onClick={handleAdd}
+    >
       О товаре
     </button>
   );

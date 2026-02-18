@@ -1,5 +1,6 @@
 'use client';
 
+import btnStyles from '@/shared/ui/buttons/buttons.module.css';
 import { CartPageUIProps } from '../types/CartPageUIProps';
 import CartItemUI from './CartItemUI';
 import CartSummaryUI from './CartSummaryUI';
@@ -43,7 +44,10 @@ export function CartPageUI({
           {footerSlot}
 
           {onCheckout && total > 0 && (
-            <button className={styles.checkoutButton} onClick={onCheckout}>
+            <button
+              className={`${btnStyles.btnOutline} ${styles.checkoutButton}`}
+              onClick={onCheckout}
+            >
               Оформить заказ
             </button>
           )}

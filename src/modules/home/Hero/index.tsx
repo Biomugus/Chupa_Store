@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import btnStyles from '../../../shared/ui/buttons/buttons.module.css';
 import styles from './hero.module.css';
 
 function Hero() {
@@ -18,7 +19,6 @@ function Hero() {
       <div className={styles.content}>
         <p className={styles.label}>Мастерская Чупы</p>
         <h1 className={styles.title}>Тюнинг оружия</h1>
-        {/* <span className={styles.highlight}>Стиль. Качество. Характер.</span> */}
         <p className={styles.subtitle}>
           Ведущий производитель аксессуаров из благородных пород древесины для АК и AR плтаформ. Мы
           предлагаем уникальные изделия из живого материала с высочайшей степенью утилитарности:
@@ -29,10 +29,12 @@ function Hero() {
 
         <div className={styles.actions}>
           <Link href="/catalog">
-            <button className={styles.primary}>Каталог</button>
+            <button className={`${btnStyles.btnGradientPrimary} ${styles.primary}`}>Каталог</button>
           </Link>
           <Link href="/history">
-            <button className={styles.secondary}>О Мастерской</button>
+            <button className={`${btnStyles.btnGradientSecondary} ${styles.secondary}`}>
+              О Мастерской
+            </button>
           </Link>
         </div>
       </div>

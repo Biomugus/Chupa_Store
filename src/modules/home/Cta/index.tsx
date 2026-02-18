@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import btnStyles from '../../../shared/ui/buttons/buttons.module.css';
 import styles from './cta.module.css';
 
 function Cta() {
@@ -15,9 +16,13 @@ function Cta() {
         </div>
         <div className={styles.actions}>
           <Link href="/catalog">
-            <button className={styles.primary}>Перейти в каталог</button>
+            <button className={`${btnStyles.btnGradientPrimary} ${styles.primary}`}>
+              Перейти в каталог
+            </button>
           </Link>
-          <button className={styles.secondary}>Уточнить детали</button>
+          <button className={`${btnStyles.btnGradientSecondary} ${styles.secondary}`}>
+            Уточнить детали
+          </button>
         </div>
       </div>
     </section>

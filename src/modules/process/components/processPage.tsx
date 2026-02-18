@@ -1,19 +1,19 @@
+import styles from '@/shared/ui/articlePage/articlePage.module.css';
 import Image from 'next/image';
-import styles from './processPage.module.css';
 
 function processPage() {
   return (
     <main className={styles.page}>
-      <article className={styles.process}>
-        <div className={styles.process_header}>
-          <h1 className={styles.process_title}>Процесс работы</h1>
+      <article className={styles.article}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Процесс работы</h1>
 
-          <p className={styles.process_lead}>
+          <p className={styles.lead}>
             От выбора древесины до готового изделия — как мы создаем цевья, приклады и рукоятки.
           </p>
         </div>
 
-        <section className={styles.process_section}>
+        <section className={styles.section}>
           <h2 id="selection">Отбор и подготовка древесины</h2>
 
           <p>
@@ -25,7 +25,7 @@ function processPage() {
           <p>На этом этапе закладываются основы долговечности и качества будущего изделия.</p>
         </section>
 
-        <section className={styles.process_section}>
+        <section className={styles.section}>
           <h2 id="cutting">Формирование заготовок</h2>
 
           <p>
@@ -34,7 +34,7 @@ function processPage() {
             последующей шлифовки.
           </p>
 
-          <figure className={styles.process_figure}>
+          <figure className={styles.figure}>
             <Image
               src="/images/process.jpg"
               alt="Формирование заготовок"
@@ -45,7 +45,7 @@ function processPage() {
           </figure>
         </section>
 
-        <section className={styles.process_section} aria-labelledby="shaping">
+        <section className={styles.section} aria-labelledby="shaping">
           <h2 id="shaping">Шлифовка и точная подгонка</h2>
 
           <p>
@@ -53,12 +53,12 @@ function processPage() {
             Все поверхности доводятся до идеала, чтобы готовое изделие было удобным и эстетичным.
           </p>
 
-          <blockquote className={styles.process_blockquote}>
+          <blockquote className={styles.blockquote}>
             Тонкая шлифовка превращает заготовку в качественный и долговечный продукт.
           </blockquote>
         </section>
 
-        <section className={styles.process_section} aria-labelledby="finishing">
+        <section className={styles.section} aria-labelledby="finishing">
           <h2 id="finishing">Отделка и контроль качества</h2>
 
           <p>
@@ -66,7 +66,7 @@ function processPage() {
             древесины и обеспечивающим долговечность.
           </p>
 
-          <figure className={styles.process_figure}>
+          <figure className={styles.figure}>
             <Image src="/images/process2.jpg" alt="Финишная обработка" width={1200} height={800} />
             <figcaption>Финишная отделка деталей</figcaption>
           </figure>

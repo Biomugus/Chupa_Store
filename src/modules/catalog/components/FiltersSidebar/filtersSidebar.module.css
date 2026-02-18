@@ -129,10 +129,6 @@
   transform: translateY(0);
 }
 
-.applyButton:active {
-  transform: translateY(0);
-}
-
 @media (max-width: 768px) {
   .sidebar {
     height: 100%;
