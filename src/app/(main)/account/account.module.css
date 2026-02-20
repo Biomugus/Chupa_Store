@@ -1,0 +1,57 @@
+/* src/app/account/account.module.css */
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.card {
+  max-width: 480px;
+  width: 100%;
+  padding: 40px 32px;
+  border: 1px solid var(--brand-border);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 24px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--brand-gold);
+  color: var(--brand-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.email {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--brand-text);
+  margin: 0;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--brand-text-secondary);
+  margin: 4px 0 0;
+}
