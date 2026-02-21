@@ -3,6 +3,7 @@
 import { formatPrice } from '@/shared/lib/formatPrice';
 import { Product } from '../../model/productsSchema';
 import { AddToCartButton } from './AddToCartButton';
+import { CompatibilityBadge } from './CompatibilityBadge';
 import DetailsButton from './DetailsButton';
 import styles from './productCard.module.css';
 import ProductImageGallery from './ProductImageGallery';
@@ -21,6 +22,9 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className={styles.content}>
         <div className={styles.header}>
           <h2 className={styles.title}>{product.title}</h2>
+          {product.compatibilityStatus && (
+            <CompatibilityBadge status={product.compatibilityStatus} />
+          )}
         </div>
 
         <div className={styles.meta}>
