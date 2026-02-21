@@ -12,6 +12,7 @@ export default async function Page({
 }) {
   const params = await searchParams;
   const profile = await getUserProfile();
+
   const products = await getProducts(params, profile?.selected_platform_id);
 
   return <CatalogPage initialItems={products} />;

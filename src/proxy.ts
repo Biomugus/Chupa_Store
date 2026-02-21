@@ -1,4 +1,4 @@
-// src/middleware.ts
+// src/proxy.ts
 
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
@@ -95,7 +95,7 @@ async function updateSession(request: NextRequest): Promise<NextResponse> {
   return supabaseResponse;
 }
 
-export async function middleware(request: NextRequest): Promise<NextResponse> {
+export async function proxy(request: NextRequest): Promise<NextResponse> {
   const response = await updateSession(request);
 
   // Apply security headers to every response
