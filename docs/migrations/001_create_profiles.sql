@@ -1,6 +1,5 @@
 -- ============================================================
 -- Migration: Create profiles table + auto-create trigger
--- Run this in Supabase Dashboard → SQL Editor
 -- ============================================================
 
 -- 1. Таблица профилей (расширение auth.users)

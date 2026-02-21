@@ -18,6 +18,10 @@ export const ProductsSchema = z.object({
   description: z.string().nullable(),
   characteristics: z.string().nullable(),
   compatibility: z.string().nullable(),
+  compatibilityStatus: z
+    .enum(['perfect', 'modification_required', 'incompatible'])
+    .nullable()
+    .optional(),
 });
 
 export type Product = z.infer<typeof ProductsSchema>;
@@ -25,6 +29,7 @@ export type Product = z.infer<typeof ProductsSchema>;
 /**
  * Маппер: превращает плоский объект из БД в типизированный объект для фронтенда.
  * Это решает конфликт имен полей (product_type -> productType).
+ * compatibilityStatus по умолчанию null — обогащается в getCatalog при наличии userPlatformId.
  */
 export const mapDbProduct = (row: ProductRow): Product => {
   return {
@@ -40,6 +45,7 @@ export const mapDbProduct = (row: ProductRow): Product => {
     description: row.description,
     characteristics: row.characteristics,
     compatibility: row.compatibility,
+    compatibilityStatus: null,
   };
 };
 

@@ -1,10 +1,15 @@
 // src/modules/catalog/api/getCatalog.ts
 
+import { CompatibilityStatus } from '@/modules/armory/types/armoryTypes';
 import { createClient } from '@/shared/api/supabase/server';
 import { CatalogSearchParams, Product, mapDbProduct } from '../model/productsSchema';
 
-export async function getProducts(params?: CatalogSearchParams): Promise<Product[]> {
+export async function getProducts(
+  params?: CatalogSearchParams,
+  userPlatformId?: string | null,
+): Promise<Product[]> {
   const supabase = await createClient();
+
   let query = supabase.from('products').select('*');
 
   if (params?.model) query = query.eq('model', params.model);
@@ -43,5 +48,26 @@ export async function getProducts(params?: CatalogSearchParams): Promise<Product
 
   if (error || !data) return [];
 
-  return data.map(mapDbProduct);
+  const products = data.map(mapDbProduct);
+
+  if (!userPlatformId) return products;
+
+  const productIds = products.map((p) => p.id);
+  const { data: compatData } = await supabase
+    .from('product_compatibility')
+    .select('product_id, status')
+    .eq('platform_id', userPlatformId)
+    .in('product_id', productIds);
+
+  if (!compatData || compatData.length === 0) return products;
+
+  const compatMap = new Map<string, CompatibilityStatus>();
+  for (const row of compatData) {
+    compatMap.set(row.product_id, row.status);
+  }
+
+  return products.map((product) => ({
+    ...product,
+    compatibilityStatus: compatMap.get(product.id) ?? null,
+  }));
 }

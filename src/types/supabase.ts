@@ -1,8 +1,6 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: '14.1';
   };
@@ -56,6 +54,92 @@ export type Database = {
         };
         Relationships: [];
       };
+      profiles: {
+        Row: {
+          id: string;
+          email: string | null;
+          full_name: string | null;
+          selected_platform_id: string | null;
+          created_at: string | null;
+        };
+        Insert: {
+          id: string;
+          email?: string | null;
+          full_name?: string | null;
+          selected_platform_id?: string | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          email?: string | null;
+          full_name?: string | null;
+          selected_platform_id?: string | null;
+          created_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'profiles_selected_platform_id_fkey';
+            columns: ['selected_platform_id'];
+            isOneToOne: false;
+            referencedRelation: 'weapon_platforms';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      weapon_platforms: {
+        Row: {
+          id: string;
+          name: string;
+          slug: string;
+          platform_group: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          slug: string;
+          platform_group: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          slug?: string;
+          platform_group?: string;
+        };
+        Relationships: [];
+      };
+      product_compatibility: {
+        Row: {
+          product_id: string;
+          platform_id: string;
+          status: Database['public']['Enums']['compatibility_status'];
+        };
+        Insert: {
+          product_id: string;
+          platform_id: string;
+          status?: Database['public']['Enums']['compatibility_status'];
+        };
+        Update: {
+          product_id?: string;
+          platform_id?: string;
+          status?: Database['public']['Enums']['compatibility_status'];
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'product_compatibility_product_id_fkey';
+            columns: ['product_id'];
+            isOneToOne: false;
+            referencedRelation: 'products';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'product_compatibility_platform_id_fkey';
+            columns: ['platform_id'];
+            isOneToOne: false;
+            referencedRelation: 'weapon_platforms';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
     };
     Views: {
       [_ in never]: never;
@@ -64,7 +148,7 @@ export type Database = {
       [_ in never]: never;
     };
     Enums: {
-      [_ in never]: never;
+      compatibility_status: 'perfect' | 'modification_required' | 'incompatible';
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -189,6 +273,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      compatibility_status: ['perfect', 'modification_required', 'incompatible'],
+    },
   },
 } as const;

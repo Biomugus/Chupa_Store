@@ -1,6 +1,5 @@
 -- ============================================================
 -- Migration 002: Update trigger to save full_name from user metadata
--- Run this in Supabase Dashboard → SQL Editor
 -- ============================================================
 
 CREATE OR REPLACE FUNCTION public.handle_new_user()
