@@ -4,12 +4,20 @@
 
 import { createClient } from '@/shared/api/supabase/server';
 import { revalidatePath } from 'next/cache';
+import { z } from 'zod';
+
+const platformIdSchema = z.string().uuid().nullable();
 
 export interface UpdatePlatformResult {
   error?: string;
   success?: string;
 }
 export async function updateUserPlatform(platformId: string | null): Promise<UpdatePlatformResult> {
+  const parsed = platformIdSchema.safeParse(platformId);
+  if (!parsed.success) {
+    return { error: 'Некорректный идентификатор платформы' };
+  }
+
   const supabase = await createClient();
 
   const {

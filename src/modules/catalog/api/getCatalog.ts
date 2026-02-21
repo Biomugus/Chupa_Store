@@ -2,7 +2,10 @@
 
 import { CompatibilityStatus } from '@/modules/armory/types/armoryTypes';
 import { createClient } from '@/shared/api/supabase/server';
+import { z } from 'zod';
 import { CatalogSearchParams, Product, mapDbProduct } from '../model/productsSchema';
+
+const uuidSchema = z.string().uuid();
 
 export async function getProducts(
   params?: CatalogSearchParams,
@@ -50,7 +53,7 @@ export async function getProducts(
 
   const products = data.map(mapDbProduct);
 
-  if (!userPlatformId) return products;
+  if (!userPlatformId || !uuidSchema.safeParse(userPlatformId).success) return products;
 
   const productIds = products.map((p) => p.id);
   const { data: compatData } = await supabase

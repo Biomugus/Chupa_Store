@@ -2,7 +2,7 @@
 
 .page {
   min-height: calc(100vh - 120px);
-  padding: 40px 16px 80px;
+  padding: 24px 12px 60px;
   background: var(--brand-surface);
 }
 
@@ -13,7 +13,7 @@
 
 .pageTitle {
   font-family: var(--font-montserrat), sans-serif;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -25,7 +25,7 @@
   background: #fff;
   border: 1px solid var(--brand-border);
   border-radius: 12px;
-  padding: 28px 24px;
+  padding: 20px 16px;
   margin-bottom: 20px;
 }
 
@@ -165,17 +165,17 @@
   background: rgba(239, 68, 68, 0.04);
 }
 
-@media (max-width: 480px) {
+@media (min-width: 481px) {
   .page {
-    padding: 24px 12px 60px;
+    padding: 40px 16px 80px;
   }
 
   .card {
-    padding: 20px 16px;
+    padding: 28px 24px;
   }
 
   .pageTitle {
-    font-size: 20px;
+    font-size: 24px;
   }
 }
 
