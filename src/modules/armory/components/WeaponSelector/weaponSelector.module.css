@@ -1,0 +1,138 @@
+/* src/modules/armory/components/WeaponSelector/weaponSelector.module.css */
+
+.section {
+  padding: 24px 0;
+}
+
+.sectionTitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--brand-text-secondary);
+  margin: 0 0 20px;
+}
+
+.groupTabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.groupTab {
+  padding: 8px 16px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--brand-text-secondary);
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.groupTab:hover {
+  color: var(--brand-text);
+  border-color: var(--brand-gold);
+}
+
+.groupTabActive {
+  color: #fff;
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+}
+
+.platformGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 480px) {
+  .platformGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.platformCard {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 12px;
+  min-height: 56px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+  text-align: center;
+  color: var(--brand-text);
+  background: #fff;
+  border: 1.5px solid var(--brand-border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.platformCard:hover {
+  border-color: var(--brand-gold);
+  box-shadow: 0 2px 12px rgba(156, 126, 74, 0.12);
+  transform: translateY(-1px);
+}
+
+.platformCardSelected {
+  border-color: var(--brand-gold);
+  background: linear-gradient(135deg, rgba(156, 126, 74, 0.06) 0%, rgba(156, 126, 74, 0.02) 100%);
+  box-shadow: 0 0 0 2px var(--brand-gold);
+}
+
+.platformCardSelected::after {
+  content: '✓';
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--brand-gold);
+}
+
+.savingOverlay {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.statusMessage {
+  margin-top: 12px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 13px;
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+}
+
+.statusSuccess {
+  color: hsl(142, 71%, 45%);
+}
+
+.statusError {
+  color: hsl(0, 84%, 60%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .platformCard,
+  .groupTab {
+    transition: none;
+  }
+}
