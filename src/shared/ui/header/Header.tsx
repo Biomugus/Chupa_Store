@@ -8,13 +8,13 @@ import { useMobileMenu } from '@/shared/hooks/useMobileMenu';
 import Link from 'next/link';
 import { useModal } from '../modal/ModalContext';
 
+import { HOME_LABEL, NAV_ITEMS } from '@/shared/config/navigation';
 import { CartIcon } from '@/shared/icons/Carticon';
 import { LogoMark } from '@/shared/icons/LogoMark';
-
-import { HOME_LABEL, NAV_ITEMS } from '@/shared/config/navigation';
 import { useEffect, useState } from 'react';
 import { MenuToggle } from '../MenuToggle';
 import styles from './Header.module.css';
+import { UserMenu } from './UserMenu';
 
 const NAVIGATION_ID = 'main-navigation';
 
@@ -77,6 +77,7 @@ const Header = observer(function Header() {
           </Link>
 
           <div className={styles.actions}>
+            <UserMenu />
             <button
               type="button"
               className={styles.cartButton}

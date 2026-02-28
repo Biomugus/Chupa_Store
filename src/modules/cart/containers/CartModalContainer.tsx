@@ -1,20 +1,38 @@
 'use client';
 
 import CheckoutFormContainer from '@/modules/checkout/containers/CheckoutFormContainer';
+import { createClient } from '@/shared/api/supabase/client';
 import { useModal } from '@/shared/ui/modal/ModalContext';
 import { observer } from 'mobx-react-lite';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCart } from '../hooks/useCart';
 import { CartModalView } from '../types/CartModalContainerProps';
 import { CartModalUi } from '../ui/CartModalUI';
 import { CartPageUI } from '../ui/CartPageUI';
 import { CartSuccessView } from '../ui/CartSuccessView';
+import { RegistrationNudge } from '../ui/RegistrationNudge';
 
 export const CartModalContainer = observer(() => {
   const { modal, closeModal } = useModal();
   const { items, total, loading, clear, changeQuantity } = useCart();
 
   const [view, setView] = useState<CartModalView>('cart');
+  const [isGuest, setIsGuest] = useState(true);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setIsGuest(!user);
+    });
+  }, []);
+
+  const handleCheckout = () => {
+    if (isGuest) {
+      setView('nudge');
+    } else {
+      setView('checkout');
+    }
+  };
 
   const handleCheckoutSuccess = () => {
     clear();
@@ -34,10 +52,12 @@ export const CartModalContainer = observer(() => {
             items={items}
             total={total}
             loading={loading}
-            onCheckout={() => setView('checkout')}
+            onCheckout={handleCheckout}
             onChangeQuantity={changeQuantity}
           />
         )}
+
+        {view === 'nudge' && <RegistrationNudge onContinueAsGuest={() => setView('checkout')} />}
 
         {view === 'success' && (
           <CartSuccessView

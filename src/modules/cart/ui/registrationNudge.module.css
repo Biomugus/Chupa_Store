@@ -1,0 +1,108 @@
+/* src/modules/cart/ui/registrationNudge.module.css */
+
+.nudge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 32px 24px;
+  gap: 16px;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(156, 126, 74, 0.12) 0%, rgba(156, 126, 74, 0.04) 100%);
+  color: var(--brand-gold);
+}
+
+.title {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--brand-text);
+  margin: 0;
+}
+
+.description {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--brand-text-secondary);
+  max-width: 320px;
+  margin: 0;
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 280px;
+  margin-top: 8px;
+}
+
+.registerButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #0e0b07;
+  background: linear-gradient(135deg, var(--brand-gold) 0%, var(--brand-gold-light) 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 4px 16px rgba(156, 126, 74, 0.3);
+}
+
+.registerButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(156, 126, 74, 0.4);
+}
+
+.guestButton {
+  height: 40px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--brand-text-secondary);
+  background: transparent;
+  border: 1px solid var(--brand-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.guestButton:hover {
+  color: var(--brand-text);
+  border-color: var(--brand-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .registerButton,
+  .guestButton {
+    transition: none;
+  }
+}
