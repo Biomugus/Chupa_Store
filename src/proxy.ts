@@ -25,6 +25,16 @@ const SECURITY_HEADERS: Record<string, string> = {
   'X-XSS-Protection': '1; mode=block',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+  // Report-Only: logs violations without blocking. After monitoring,
+  // rename key to 'Content-Security-Policy' to enforce.
+  'Content-Security-Policy-Report-Only':
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+    "style-src 'self' 'unsafe-inline'; " +
+    "img-src 'self' data: https:; " +
+    "font-src 'self' https://fonts.gstatic.com; " +
+    "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://suggestions.dadata.ru; " +
+    "frame-ancestors 'none';",
 };
 
 /**

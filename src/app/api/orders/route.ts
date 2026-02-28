@@ -15,8 +15,7 @@ export async function POST(req: Request) {
   try {
     const json = await req.json();
     payload = orderPayloadSchema.parse(json);
-  } catch (err) {
-    console.error('Invalid payload', err);
+  } catch {
     return new Response('Invalid payload', { status: 400 });
   }
 

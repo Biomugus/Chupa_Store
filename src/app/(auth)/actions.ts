@@ -104,8 +104,6 @@ export async function register(
   });
 
   if (error) {
-    // eslint-disable-next-line no-console
-    console.error('[Register] Supabase error:', error.message, error.status, error.code);
     return { error: getAuthErrorMessage(error.message) };
   }
 
