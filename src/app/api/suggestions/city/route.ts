@@ -39,7 +39,6 @@ export async function POST(req: Request) {
     const parsed = DadataResponseSchema.safeParse(rawData);
 
     if (!parsed.success) {
-      console.error('Invalid DaData response', parsed.error.issues);
       return NextResponse.json(
         { error: 'Invalid response from address provider' },
         { status: 502 },
@@ -55,8 +54,7 @@ export async function POST(req: Request) {
     }));
 
     return NextResponse.json(suggestions);
-  } catch (error) {
-    console.error('City API Error:', error);
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch cities' }, { status: 400 });
   }
 }
