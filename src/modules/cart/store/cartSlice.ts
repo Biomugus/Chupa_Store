@@ -1,6 +1,6 @@
 // src/modules/cart/store/cartSlice.ts
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loadCart, saveCart } from '../dal/cartStorage';
 import { CartItem } from '../types/CartItem';
 
@@ -72,8 +72,9 @@ export const { addItem, changeQuantity, removeItem, clearCart } = cartSlice.acti
 // Selectors (используем локальный тип чтобы избежать circular dependency с store.ts)
 export const selectCartItems = (state: { cart: CartState }) => state.cart.items;
 export const selectCartLoading = (state: { cart: CartState }) => state.cart.loading;
-export const selectCartTotal = (state: { cart: CartState }) =>
-  state.cart.items.reduce((sum: number, item: CartItem) => sum + item.price * item.quantity, 0);
+export const selectCartTotal = createSelector(selectCartItems, (items) =>
+  items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+);
 
 // Reducer
 export const cartReducer = cartSlice.reducer;

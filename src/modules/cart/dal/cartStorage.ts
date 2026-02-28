@@ -6,8 +6,14 @@ const CART_KEY = 'cart_items';
 
 export function loadCart(): CartItem[] {
   if (typeof window === 'undefined') return [];
-  const data = localStorage.getItem(CART_KEY);
-  return data ? JSON.parse(data) : [];
+  try {
+    const data = localStorage.getItem(CART_KEY);
+    if (!data) return [];
+    const parsed = JSON.parse(data);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
 }
 
 export function saveCart(items: CartItem[]): void {

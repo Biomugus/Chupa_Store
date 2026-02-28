@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useCart } from '@/modules/cart/hooks/useCart';
+import { useCart } from '@/modules/cart';
 import btnStyles from '@/shared/ui/buttons/buttons.module.css';
 import { Product } from '../../model/productsSchema';
 import styles from './productCard.module.css';

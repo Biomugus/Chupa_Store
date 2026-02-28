@@ -1,6 +1,6 @@
 'use client';
 
-import { useCart } from '@/modules/cart/hooks/useCart';
+import { useCart } from '@/modules/cart';
 import { useIconsReady } from '@/shared/hooks/useIconsReady';
 import { useMobileMenu } from '@/shared/hooks/useMobileMenu';
 import Link from 'next/link';
