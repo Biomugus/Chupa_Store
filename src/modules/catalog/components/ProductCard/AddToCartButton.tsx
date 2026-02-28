@@ -4,11 +4,10 @@
 
 import { useCart } from '@/modules/cart/hooks/useCart';
 import btnStyles from '@/shared/ui/buttons/buttons.module.css';
-import { observer } from 'mobx-react-lite';
 import { Product } from '../../model/productsSchema';
 import styles from './productCard.module.css';
 
-export const AddToCartButton = observer(({ product }: { product: Product }) => {
+export const AddToCartButton = ({ product }: { product: Product }) => {
   const { addItem } = useCart();
 
   const handleAdd = () => {
@@ -30,4 +29,4 @@ export const AddToCartButton = observer(({ product }: { product: Product }) => {
       В корзину
     </button>
   );
-});
+};
