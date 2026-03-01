@@ -1,0 +1,234 @@
+/* src/modules/cart/ui/orderJourneyTimeline.module.css */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 32px 20px;
+  border: 1px solid var(--brand-border);
+  border-radius: 12px;
+  background: var(--brand-surface);
+}
+
+.header {
+  text-align: center;
+}
+
+.title {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--brand-text);
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--brand-text-secondary);
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.step {
+  display: flex;
+  gap: 16px;
+  position: relative;
+}
+
+.iconNode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.iconCircle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(156, 126, 74, 0.14) 0%, rgba(156, 126, 74, 0.05) 100%);
+  border: 1px solid rgba(156, 126, 74, 0.2);
+  color: var(--brand-gold);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.iconCircle svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.step:hover .iconCircle {
+  transform: scale(1.08);
+  box-shadow: 0 0 16px rgba(156, 126, 74, 0.2);
+}
+
+.content {
+  padding: 4px 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stepNumber {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--brand-gold);
+  opacity: 0.7;
+}
+
+.stepTitle {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--brand-text);
+  margin: 0;
+}
+
+.stepDescription {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--brand-text-secondary);
+  margin: 0;
+}
+
+@media (min-width: 600px) {
+  .section {
+    padding: 36px 28px;
+  }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px 24px;
+  }
+
+  .step {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .iconNode {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .content {
+    padding: 0;
+    align-items: center;
+  }
+
+  .stepDescription {
+    max-width: 180px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 40px;
+    border-radius: 16px;
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .step {
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .iconNode {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .iconCircle {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    min-height: 52px;
+  }
+
+  .iconCircle svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .content {
+    padding: 0;
+    align-items: center;
+  }
+
+  .stepTitle {
+    font-size: 13px;
+  }
+
+  .stepDescription {
+    font-size: 12px;
+    max-width: 150px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .iconCircle {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    min-height: 56px;
+  }
+
+  .iconCircle svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .stepTitle {
+    font-size: 15px;
+  }
+
+  .stepDescription {
+    font-size: 13px;
+    max-width: 180px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iconCircle {
+    transition: none;
+  }
+}

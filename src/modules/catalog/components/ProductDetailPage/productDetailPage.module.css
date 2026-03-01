@@ -1,0 +1,264 @@
+/* src/modules/catalog/components/ProductDetailPage/productDetailPage.module.css */
+
+.page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--brand-text-secondary);
+  flex-wrap: wrap;
+}
+
+.breadcrumbLink {
+  color: var(--brand-gold);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumbLink:hover {
+  color: var(--brand-gold-hover);
+  text-decoration: underline;
+}
+
+.breadcrumbSep {
+  opacity: 0.4;
+  user-select: none;
+}
+
+.breadcrumbCurrent {
+  color: var(--brand-text-muted);
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.gallerySection {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+}
+
+.infoSection {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.infoHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.title {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--brand-text);
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.priceLine {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.price {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--brand-text);
+  letter-spacing: -0.3px;
+}
+
+.metaBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.badge {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 14px;
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  border-radius: 8px;
+  min-width: 80px;
+}
+
+.badgeLabel {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--brand-text-secondary);
+  font-weight: 500;
+}
+
+.badgeValue {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-text);
+  letter-spacing: 0.3px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.actions > * {
+  flex: 1 1 auto;
+  max-width: 260px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.detailSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sectionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--brand-text);
+  margin: 0;
+}
+
+.sectionDivider {
+  width: 100%;
+  height: 1px;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--brand-gold) 0 8px,
+    transparent 8px 16px
+  );
+  opacity: 0.5;
+}
+
+.sectionText {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--brand-text-muted);
+  margin: 0;
+  white-space: pre-line;
+}
+
+.backRow {
+  padding-top: 8px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--brand-gold);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.backLink:hover {
+  color: var(--brand-gold-hover);
+  text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .page {
+    padding: 24px;
+    gap: 40px;
+  }
+
+  .grid {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .gallerySection {
+    flex: 1 1 55%;
+    position: sticky;
+    top: 100px;
+  }
+
+  .infoSection {
+    flex: 1 1 45%;
+    gap: 24px;
+  }
+
+  .details {
+    gap: 36px;
+  }
+
+  .actions > * {
+    max-width: 300px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page {
+    padding: 32px 40px;
+    gap: 48px;
+  }
+
+  .grid {
+    gap: 48px;
+  }
+
+  .gallerySection {
+    flex: 1 1 58%;
+    border-radius: 16px;
+  }
+
+  .infoSection {
+    flex: 1 1 42%;
+  }
+
+  .sectionText {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .page {
+    padding: 40px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .breadcrumbLink,
+  .backLink {
+    transition: none;
+  }
+}

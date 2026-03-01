@@ -76,19 +76,17 @@ const Header = function Header() {
 
           <div className={styles.actions}>
             <UserMenu />
-            <button
-              type="button"
+            <Link
+              href="/cart"
               className={styles.cartButton}
               aria-label="Открыть корзину"
-              onClick={() => {
-                menu.close();
-                openModal('cart');
-              }}
+              onClick={() => menu.close()}
+              prefetch={false}
             >
               <CartIcon ready={iconsReady} />
               {mounted && totalItems > 0 && <span className={styles.cartCount}>{totalItems}</span>}
               <span className={styles.srOnly}>Корзина</span>
-            </button>
+            </Link>
           </div>
         </div>
       </header>

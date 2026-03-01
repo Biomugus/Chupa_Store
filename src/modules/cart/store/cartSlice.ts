@@ -6,18 +6,12 @@ import { CartItem } from '../types/CartItem';
 
 interface CartState {
   items: CartItem[];
-  loading: boolean;
 }
 
 const initialState: CartState = {
   items: loadCart(),
-  loading: false,
 };
 
-/**
- * Сохраняет items в localStorage после каждого изменения.
- * Вызывается в конце каждого reducer'а, изменяющего items.
- */
 function persist(items: CartItem[]) {
   saveCart(items);
 }
@@ -66,15 +60,10 @@ const cartSlice = createSlice({
   },
 });
 
-// Actions
 export const { addItem, changeQuantity, removeItem, clearCart } = cartSlice.actions;
 
-// Selectors (используем локальный тип чтобы избежать circular dependency с store.ts)
 export const selectCartItems = (state: { cart: CartState }) => state.cart.items;
-export const selectCartLoading = (state: { cart: CartState }) => state.cart.loading;
 export const selectCartTotal = createSelector(selectCartItems, (items) =>
   items.reduce((sum, item) => sum + item.price * item.quantity, 0),
 );
-
-// Reducer
 export const cartReducer = cartSlice.reducer;

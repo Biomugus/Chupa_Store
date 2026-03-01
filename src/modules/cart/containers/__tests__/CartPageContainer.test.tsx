@@ -4,17 +4,26 @@ import { fireEvent, screen } from '@testing-library/react';
 import { mockItem, renderWithStore } from '../../testing/test-utils';
 import { CartPageContainer } from '../CartPageContainer';
 
-// Мокаем localStorage (не нужен в integration-тестах)
 jest.mock('../../dal/cartStorage', () => ({
   loadCart: () => [],
   saveCart: jest.fn(),
 }));
 
+jest.mock('../../../../shared/hooks/useIsGuest', () => ({
+  useIsGuest: () => true,
+}));
+
+jest.mock('../../../../shared/ui/modal/Modal', () => {
+  return function MockModal({ children, isOpen }: { children: React.ReactNode; isOpen: boolean }) {
+    return isOpen ? <div data-testid="mock-modal">{children}</div> : null;
+  };
+});
+
 describe('CartPageContainer — integration', () => {
   it('показывает пустую корзину если нет товаров', () => {
     renderWithStore(<CartPageContainer />);
 
-    expect(screen.getByText(/ваша корзина пуста/i)).toBeInTheDocument();
+    expect(screen.getByText(/корзина пуста/i)).toBeInTheDocument();
   });
 
   it('отображает названия товаров из store', () => {
@@ -46,11 +55,17 @@ describe('CartPageContainer — integration', () => {
       preloadedItems: [mockItem({ id: '1', title: 'Цевьё', quantity: 1, price: 1000 })],
     });
 
-    expect(screen.getByText('x1')).toBeInTheDocument();
+    const stepperButtons = screen.getAllByLabelText('Добавить количество');
+    expect(stepperButtons).toHaveLength(1);
 
-    fireEvent.click(screen.getByLabelText('Добавить количество'));
+    // Проверяем значение stepper через соседний элемент
+    const addBtn = stepperButtons[0];
+    const stepper = addBtn.parentElement!;
+    expect(stepper.textContent).toContain('1');
 
-    expect(screen.getByText('x2')).toBeInTheDocument();
+    fireEvent.click(addBtn);
+
+    expect(stepper.textContent).toContain('2');
   });
 
   it('удаляет товар при уменьшении количества до 0', () => {
@@ -63,6 +78,6 @@ describe('CartPageContainer — integration', () => {
     fireEvent.click(screen.getByLabelText('Уменьшить количество'));
 
     expect(screen.queryByText('Цевьё')).not.toBeInTheDocument();
-    expect(screen.getByText(/ваша корзина пуста/i)).toBeInTheDocument();
+    expect(screen.getByText(/корзина пуста/i)).toBeInTheDocument();
   });
 });

@@ -7,8 +7,8 @@ type CartSummaryProps = {
 
 export default function CartSummaryUi({ total }: CartSummaryProps) {
   return (
-    <aside className={styles.priceWrapper}>
+    <div className={styles.priceWrapper}>
       <span className={styles.price}>Итого: {formatPrice(total)}</span>
-    </aside>
+    </div>
   );
 }
