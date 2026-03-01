@@ -5,9 +5,8 @@ export type QuantityDelta = 1 | -1;
 export type CartPageUIProps = {
   items: CartItemType[];
   total: number;
-  loading: boolean;
+  mounted: boolean;
   onChangeQuantity: (id: string, delta: QuantityDelta) => void;
 
   onCheckout?: () => void;
-  footerSlot?: React.ReactNode;
 };

@@ -1,5 +1,7 @@
 // src/modules/checkout/types/checkoutTypes.ts
 
+import type { CartItem } from '@/modules/cart';
+
 export enum PaymentMethod {
   CARD_TRANSFER = 'card_transfer',
   LEGAL_ENTITY = 'legal_entity',
@@ -18,11 +20,7 @@ export enum ContactMethod {
   TELEGRAM = 'telegram',
 }
 
-export type OrderItem = {
-  quantity: number;
-  id: string;
-  title: string;
-  price: number;
+export type OrderItem = Pick<CartItem, 'id' | 'title' | 'price' | 'quantity'> & {
   image?: string;
 };
 
@@ -70,9 +68,7 @@ export type CreateOrderResponse =
 
 export type CheckoutFormContainerProps = {
   cartSnapshot: CartSnapshot;
-  onCloseCart: () => void;
   onOpenSuccessModal: () => void;
-  clearCart: () => void;
 };
 
 export type CheckoutFormUIProps = {

@@ -3,7 +3,7 @@
 // src/modules/cart/containers/CartPageContainer.tsx
 
 import CheckoutFormContainer from '@/modules/checkout/containers/CheckoutFormContainer';
-import { createClient } from '@/shared/api/supabase/client';
+import { useIsGuest } from '@/shared/hooks/useIsGuest';
 import Modal from '@/shared/ui/modal/Modal';
 import { useEffect, useState } from 'react';
 import { useCart } from '../hooks/useCart';
@@ -14,17 +14,13 @@ import { RegistrationNudge } from '../ui/RegistrationNudge';
 type CheckoutView = 'idle' | 'nudge' | 'checkout' | 'success';
 
 export const CartPageContainer = () => {
-  const { items, total, loading, clear, changeQuantity } = useCart();
+  const { items, total, clear, changeQuantity } = useCart();
+  const isGuest = useIsGuest();
 
   const [checkoutView, setCheckoutView] = useState<CheckoutView>('idle');
-  const [isGuest, setIsGuest] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setIsGuest(!user);
-    });
-  }, []);
+  useEffect(() => setMounted(true), []);
 
   const handleCheckout = () => {
     if (isGuest) {
@@ -50,7 +46,7 @@ export const CartPageContainer = () => {
       <CartPageUI
         items={items}
         total={total}
-        loading={loading}
+        mounted={mounted}
         onCheckout={handleCheckout}
         onChangeQuantity={changeQuantity}
       />
@@ -63,9 +59,7 @@ export const CartPageContainer = () => {
         {checkoutView === 'checkout' && (
           <CheckoutFormContainer
             cartSnapshot={{ items, total }}
-            onCloseCart={handleCloseModal}
             onOpenSuccessModal={handleCheckoutSuccess}
-            clearCart={clear}
           />
         )}
 

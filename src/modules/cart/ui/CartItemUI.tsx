@@ -2,9 +2,8 @@ import { formatPrice } from '@/shared/lib/formatPrice';
 import Image from 'next/image';
 
 import { CartItem as CartItemType } from '../types/CartItem';
+import { QuantityDelta } from '../types/CartPageUIProps';
 import styles from './cartItemUI.module.css';
-
-type QuantityDelta = -1 | 1;
 
 type CartItemProps = {
   item: CartItemType;

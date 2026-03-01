@@ -12,13 +12,13 @@ import styles from './cartPageUI.module.css';
 export function CartPageUI({
   items,
   total,
-  loading,
+  mounted,
   onCheckout,
   onChangeQuantity,
 }: CartPageUIProps) {
   const isEmpty = items.length === 0;
 
-  if (loading) {
+  if (!mounted) {
     return (
       <section className={styles.page}>
         <div className={styles.skeletonTitle} />

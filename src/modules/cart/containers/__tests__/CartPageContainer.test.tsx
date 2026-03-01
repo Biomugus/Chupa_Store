@@ -4,22 +4,15 @@ import { fireEvent, screen } from '@testing-library/react';
 import { mockItem, renderWithStore } from '../../testing/test-utils';
 import { CartPageContainer } from '../CartPageContainer';
 
-// Мокаем localStorage (не нужен в integration-тестах)
 jest.mock('../../dal/cartStorage', () => ({
   loadCart: () => [],
   saveCart: jest.fn(),
 }));
 
-// Мокаем Supabase client (auth check в CartPageContainer)
-jest.mock('../../../../shared/api/supabase/client', () => ({
-  createClient: () => ({
-    auth: {
-      getUser: () => Promise.resolve({ data: { user: null } }),
-    },
-  }),
+jest.mock('../../../../shared/hooks/useIsGuest', () => ({
+  useIsGuest: () => true,
 }));
 
-// Мокаем Modal (чтобы не рендерить checkout модалку в тестах)
 jest.mock('../../../../shared/ui/modal/Modal', () => {
   return function MockModal({ children, isOpen }: { children: React.ReactNode; isOpen: boolean }) {
     return isOpen ? <div data-testid="mock-modal">{children}</div> : null;
