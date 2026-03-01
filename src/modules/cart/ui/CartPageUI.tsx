@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { CartPageUIProps } from '../types/CartPageUIProps';
 import CartItemUI from './CartItemUI';
 import CartSummaryUI from './CartSummaryUI';
+import { OrderJourneyTimeline } from './OrderJourneyTimeline';
 import styles from './cartPageUI.module.css';
 
 export function CartPageUI({
@@ -69,41 +70,45 @@ export function CartPageUI({
       )}
 
       {!isEmpty && (
-        <div className={styles.cartLayout}>
-          {/* Items list */}
-          <div className={styles.itemsList}>
-            {items.map((item) => (
-              <CartItemUI key={item.id} item={item} onChangeQuantity={onChangeQuantity} />
-            ))}
+        <>
+          <div className={styles.cartLayout}>
+            {/* Items list */}
+            <div className={styles.itemsList}>
+              {items.map((item) => (
+                <CartItemUI key={item.id} item={item} onChangeQuantity={onChangeQuantity} />
+              ))}
+            </div>
+
+            {/* Summary sidebar */}
+            <aside className={styles.summarySection}>
+              <div className={styles.summaryCard}>
+                <CartSummaryUI total={total} />
+
+                <div className={styles.summaryMeta}>
+                  <span className={styles.summaryLabel}>Товаров в корзине</span>
+                  <span className={styles.summaryValue}>
+                    {items.reduce((sum, item) => sum + item.quantity, 0)}
+                  </span>
+                </div>
+
+                {onCheckout && total > 0 && (
+                  <button
+                    className={`${btnStyles.btnGradientPrimary} ${styles.checkoutButton}`}
+                    onClick={onCheckout}
+                  >
+                    Оформить заказ
+                  </button>
+                )}
+
+                <Link href="/catalog" className={styles.continueLink}>
+                  ← Продолжить покупки
+                </Link>
+              </div>
+            </aside>
           </div>
 
-          {/* Summary sidebar */}
-          <aside className={styles.summarySection}>
-            <div className={styles.summaryCard}>
-              <CartSummaryUI total={total} />
-
-              <div className={styles.summaryMeta}>
-                <span className={styles.summaryLabel}>Товаров в корзине</span>
-                <span className={styles.summaryValue}>
-                  {items.reduce((sum, item) => sum + item.quantity, 0)}
-                </span>
-              </div>
-
-              {onCheckout && total > 0 && (
-                <button
-                  className={`${btnStyles.btnGradientPrimary} ${styles.checkoutButton}`}
-                  onClick={onCheckout}
-                >
-                  Оформить заказ
-                </button>
-              )}
-
-              <Link href="/catalog" className={styles.continueLink}>
-                ← Продолжить покупки
-              </Link>
-            </div>
-          </aside>
-        </div>
+          <OrderJourneyTimeline />
+        </>
       )}
     </section>
   );

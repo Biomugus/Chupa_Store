@@ -4,8 +4,9 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 24px 16px;
-  min-height: 60vh;
+  min-height: 100vh;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   gap: 24px;
 }
