@@ -10,11 +10,27 @@ jest.mock('../../dal/cartStorage', () => ({
   saveCart: jest.fn(),
 }));
 
+// Мокаем Supabase client (auth check в CartPageContainer)
+jest.mock('../../../../shared/api/supabase/client', () => ({
+  createClient: () => ({
+    auth: {
+      getUser: () => Promise.resolve({ data: { user: null } }),
+    },
+  }),
+}));
+
+// Мокаем Modal (чтобы не рендерить checkout модалку в тестах)
+jest.mock('../../../../shared/ui/modal/Modal', () => {
+  return function MockModal({ children, isOpen }: { children: React.ReactNode; isOpen: boolean }) {
+    return isOpen ? <div data-testid="mock-modal">{children}</div> : null;
+  };
+});
+
 describe('CartPageContainer — integration', () => {
   it('показывает пустую корзину если нет товаров', () => {
     renderWithStore(<CartPageContainer />);
 
-    expect(screen.getByText(/ваша корзина пуста/i)).toBeInTheDocument();
+    expect(screen.getByText(/корзина пуста/i)).toBeInTheDocument();
   });
 
   it('отображает названия товаров из store', () => {
@@ -63,6 +79,6 @@ describe('CartPageContainer — integration', () => {
     fireEvent.click(screen.getByLabelText('Уменьшить количество'));
 
     expect(screen.queryByText('Цевьё')).not.toBeInTheDocument();
-    expect(screen.getByText(/ваша корзина пуста/i)).toBeInTheDocument();
+    expect(screen.getByText(/корзина пуста/i)).toBeInTheDocument();
   });
 });
