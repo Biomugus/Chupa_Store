@@ -2,7 +2,6 @@
 
 'use client';
 
-import { CartModalContainer } from '@/modules/cart/containers/CartModalContainer';
 import FiltersSidebar from '@/modules/catalog/components/FiltersSidebar/FiltersSidebar';
 import Modal from './Modal';
 import styles from './Modal.module.css';
@@ -13,8 +12,6 @@ export function ModalRoot() {
 
   return (
     <>
-      <CartModalContainer />
-
       <Modal isOpen={modal.type === 'nav'} onClose={closeModal}>
         <p
           style={{
