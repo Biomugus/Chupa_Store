@@ -21,9 +21,14 @@ export function CartPageUI({
   if (loading) {
     return (
       <section className={styles.page}>
-        <div className={styles.loadingState}>
-          <div className={styles.spinner} />
-          <p>Загрузка корзины...</p>
+        <div className={styles.skeletonTitle} />
+        <div className={styles.emptyState}>
+          <div className={styles.skeletonIcon} />
+          <div className={styles.skeletonLines}>
+            <div className={styles.skeletonLine} />
+            <div className={`${styles.skeletonLine} ${styles.skeletonLineShort}`} />
+          </div>
+          <div className={styles.skeletonButton} />
         </div>
       </section>
     );
