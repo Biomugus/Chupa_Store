@@ -3,7 +3,6 @@
 import CheckoutFormContainer from '@/modules/checkout/containers/CheckoutFormContainer';
 import { createClient } from '@/shared/api/supabase/client';
 import { useModal } from '@/shared/ui/modal/ModalContext';
-import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { useCart } from '../hooks/useCart';
 import { CartModalView } from '../types/CartModalContainerProps';
@@ -12,7 +11,7 @@ import { CartPageUI } from '../ui/CartPageUI';
 import { CartSuccessView } from '../ui/CartSuccessView';
 import { RegistrationNudge } from '../ui/RegistrationNudge';
 
-export const CartModalContainer = observer(() => {
+export const CartModalContainer = () => {
   const { modal, closeModal } = useModal();
   const { items, total, loading, clear, changeQuantity } = useCart();
 
@@ -79,4 +78,4 @@ export const CartModalContainer = observer(() => {
       </CartModalUi>
     </>
   );
-});
+};

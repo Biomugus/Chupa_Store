@@ -1,5 +1,6 @@
 // src/app/(main)/layout.tsx
 
+import { StoreProvider } from '@/lib/StoreProvider';
 import Footer from '@/shared/ui/footer/Footer';
 import Header from '@/shared/ui/header/Header';
 import { ModalProvider } from '@/shared/ui/modal/ModalContext';
@@ -12,11 +13,13 @@ import type { ReactNode } from 'react';
  */
 export default function MainLayout({ children }: { children: ReactNode }) {
   return (
-    <ModalProvider>
-      <Header />
-      {children}
-      <ModalRoot />
-      <Footer />
-    </ModalProvider>
+    <StoreProvider>
+      <ModalProvider>
+        <Header />
+        {children}
+        <ModalRoot />
+        <Footer />
+      </ModalProvider>
+    </StoreProvider>
   );
 }

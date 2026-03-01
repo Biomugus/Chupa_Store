@@ -1,8 +1,6 @@
 'use client';
 
-import { observer } from 'mobx-react-lite';
-
-import { useCart } from '@/modules/cart/hooks/useCart';
+import { useCart } from '@/modules/cart';
 import { useIconsReady } from '@/shared/hooks/useIconsReady';
 import { useMobileMenu } from '@/shared/hooks/useMobileMenu';
 import Link from 'next/link';
@@ -18,7 +16,7 @@ import { UserMenu } from './UserMenu';
 
 const NAVIGATION_ID = 'main-navigation';
 
-const Header = observer(function Header() {
+const Header = function Header() {
   const iconsReady = useIconsReady();
   const menu = useMobileMenu();
   const { openModal } = useModal();
@@ -96,6 +94,6 @@ const Header = observer(function Header() {
       </header>
     </>
   );
-});
+};
 
 export default Header;
