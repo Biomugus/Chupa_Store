@@ -2,6 +2,7 @@
 
 import { formatPrice } from '@/shared/lib/formatPrice';
 import Link from 'next/link';
+import { translateProductField } from '../../lib/translateProductField';
 import { Product } from '../../model/productsSchema';
 import { AddToCartButton } from '../ProductCard/AddToCartButton';
 import { CompatibilityBadge } from '../ProductCard/CompatibilityBadge';
@@ -15,7 +16,9 @@ interface ProductDetailPageProps {
 export default function ProductDetailPage({ product }: ProductDetailPageProps) {
   const images = product.images?.length ? product.images : ['/images/placeholders/placeholder.jpg'];
 
-  const breadcrumbLabel = product.productType ?? 'Каталог';
+  const breadcrumbLabel = product.productType
+    ? translateProductField(product.productType)
+    : 'Каталог';
 
   return (
     <article className={styles.page}>
@@ -55,19 +58,21 @@ export default function ProductDetailPage({ product }: ProductDetailPageProps) {
             {product.model && (
               <span className={styles.badge}>
                 <span className={styles.badgeLabel}>Модель</span>
-                <span className={styles.badgeValue}>{product.model}</span>
+                <span className={styles.badgeValue}>{translateProductField(product.model)}</span>
               </span>
             )}
             {product.material && (
               <span className={styles.badge}>
                 <span className={styles.badgeLabel}>Материал</span>
-                <span className={styles.badgeValue}>{product.material}</span>
+                <span className={styles.badgeValue}>{translateProductField(product.material)}</span>
               </span>
             )}
             {product.productType && (
               <span className={styles.badge}>
                 <span className={styles.badgeLabel}>Тип</span>
-                <span className={styles.badgeValue}>{product.productType}</span>
+                <span className={styles.badgeValue}>
+                  {translateProductField(product.productType)}
+                </span>
               </span>
             )}
           </div>

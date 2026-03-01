@@ -58,9 +58,7 @@ export function CartPageUI({
           <div className={styles.emptyContent}>
             <h2 className={styles.emptyTitle}>Корзина пуста</h2>
             <p className={styles.emptyDescription}>
-              Добавьте изделия из каталога, чтобы оформить заказ.
-              <br />
-              Каждое изделие мастерской — ручная работа, выполненная с вниманием к деталям.
+              Вернитесь в каталог и добавьте изделия, чтобы оформить заказ.
             </p>
           </div>
 
