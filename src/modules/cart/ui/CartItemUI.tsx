@@ -18,37 +18,56 @@ export default function CartItemUi({ item, onChangeQuantity }: CartItemProps) {
           src={item.image}
           alt={item.title}
           fill
-          sizes="(max-width: 768px) 50vw, 33vw"
+          sizes="(max-width: 768px) 80px, 100px"
           className={styles.image}
         />
       </div>
 
-      <div className={styles.content}>
-        <header className={styles.header}>
-          <span className={styles.title}>{item.title}</span>
-        </header>
+      <div className={styles.info}>
+        <span className={styles.title}>{item.title}</span>
+        <span className={styles.price}>{formatPrice(item.price * item.quantity)}</span>
+      </div>
 
-        <div className={styles.footer}>
-          <span className={styles.quantity}>x{item.quantity}</span>
-          <span className={styles.price}>{formatPrice(item.price * item.quantity)}</span>
-
-          <div className={styles.buttonsWrapper}>
-            <button
-              className={styles.removeButton}
-              onClick={() => onChangeQuantity(item.id, -1)}
-              aria-label="Уменьшить количество"
-            >
-              -
-            </button>
-            <button
-              className={styles.addButton}
-              onClick={() => onChangeQuantity(item.id, +1)}
-              aria-label="Добавить количество"
-            >
-              +
-            </button>
-          </div>
+      <div className={styles.actions}>
+        {/* Stepper: [− qty +] */}
+        <div className={styles.stepper}>
+          <button
+            className={styles.stepperBtn}
+            onClick={() => onChangeQuantity(item.id, -1)}
+            aria-label="Уменьшить количество"
+          >
+            −
+          </button>
+          <span className={styles.stepperValue}>{item.quantity}</span>
+          <button
+            className={styles.stepperBtn}
+            onClick={() => onChangeQuantity(item.id, +1)}
+            aria-label="Добавить количество"
+          >
+            +
+          </button>
         </div>
+
+        {/* Удалить всю позицию */}
+        <button
+          className={styles.removeBtn}
+          onClick={() => onChangeQuantity(item.id, -1)}
+          aria-label="Удалить товар"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+          </svg>
+        </button>
       </div>
     </article>
   );

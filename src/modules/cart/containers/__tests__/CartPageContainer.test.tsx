@@ -55,11 +55,17 @@ describe('CartPageContainer — integration', () => {
       preloadedItems: [mockItem({ id: '1', title: 'Цевьё', quantity: 1, price: 1000 })],
     });
 
-    expect(screen.getByText('x1')).toBeInTheDocument();
+    const stepperButtons = screen.getAllByLabelText('Добавить количество');
+    expect(stepperButtons).toHaveLength(1);
 
-    fireEvent.click(screen.getByLabelText('Добавить количество'));
+    // Проверяем значение stepper через соседний элемент
+    const addBtn = stepperButtons[0];
+    const stepper = addBtn.parentElement!;
+    expect(stepper.textContent).toContain('1');
 
-    expect(screen.getByText('x2')).toBeInTheDocument();
+    fireEvent.click(addBtn);
+
+    expect(stepper.textContent).toContain('2');
   });
 
   it('удаляет товар при уменьшении количества до 0', () => {

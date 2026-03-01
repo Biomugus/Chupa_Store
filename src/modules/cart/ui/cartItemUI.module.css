@@ -1,134 +1,225 @@
+/* src/modules/cart/ui/cartItemUI.module.css */
+/* Mobile-first — Variant A «Stepper Strip» */
+
+/* ─── Card row ─── */
 .item {
   display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  gap: 24px;
-
+  align-items: center;
+  gap: 12px;
   width: 100%;
-  max-width: 600px;
-  min-height: 0;
-
-  padding: 12px 16px;
-  margin-bottom: 12px;
-
-  background-color: rgb(246 245 243);
-  border: 1px solid black;
-  border-radius: 6px;
-
-  color: #ffffff;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--brand-border);
 }
 
+.item:last-child {
+  border-bottom: none;
+}
+
+/* ─── Image ─── */
 .imageWrapper {
-  flex: 0 0 120px;
+  flex: 0 0 72px;
   position: relative;
   aspect-ratio: 1 / 1;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
 }
 
 .image {
   object-fit: cover;
 }
 
-.imageWrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.buttonsWrapper {
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-}
-
-.content {
+/* ─── Info (title + price) ─── */
+.info {
   display: flex;
   flex: 1;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-
-.header {
-  display: flex;
-  align-items: center;
+  gap: 4px;
+  min-width: 0;
 }
 
 .title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
-  line-height: 1.4;
-
-  color: black;
-}
-
-.footer {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.quantity {
-  font-size: 16px;
-  line-height: 1;
-  color: black;
-  font-weight: 500;
-  white-space: nowrap;
+  line-height: 1.35;
+  color: var(--brand-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .price {
-  font-size: 16px;
-  font-weight: 600;
-  color: black;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--brand-text);
+  letter-spacing: -0.2px;
 }
 
-.addButton,
-.removeButton {
-  background: transparent;
-  color: black;
-  border: none;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 4px 8px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  outline: none;
+/* ─── Actions column (stepper + remove) ─── */
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ─── Stepper [− qty +] ─── */
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--brand-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.stepperBtn {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--brand-text);
+  transition: background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.addButton:hover {
-  color: #4ade80;
-  text-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
-  transform: scale(1.1);
+.stepperBtn:hover {
+  background: var(--brand-surface);
 }
 
-.removeButton:hover {
-  color: #f87171;
-  text-shadow: 0 0 8px rgba(248, 113, 113, 0.6);
-  transform: scale(1.1);
+.stepperBtn:active {
+  background: var(--brand-border);
 }
 
-.addButton:active,
-.removeButton:active {
-  transform: scale(0.95);
+.stepperValue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 36px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--brand-text);
+  border-left: 1px solid var(--brand-border);
+  border-right: 1px solid var(--brand-border);
+  user-select: none;
 }
 
-@media (max-width: 500px) {
+/* ─── Remove button ─── */
+.removeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--brand-text-secondary);
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.removeBtn:hover {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.06);
+}
+
+.removeBtn:active {
+  color: #b91c1c;
+}
+
+/* ═══════════════════════════════════════════════════
+   TABLET — 768px+
+   ═══════════════════════════════════════════════════ */
+@media (min-width: 768px) {
   .item {
-    flex-direction: column;
-    gap: 12px;
-    padding: 12px;
+    gap: 16px;
+    padding: 16px 0;
   }
 
   .imageWrapper {
-    flex: none;
-    width: 100%;
-    max-height: 200px;
+    flex: 0 0 88px;
+    border-radius: 10px;
+  }
+
+  .title {
+    font-size: 15px;
+  }
+
+  .price {
+    font-size: 15px;
+  }
+
+  .stepperBtn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .stepperValue {
+    min-width: 36px;
+    height: 40px;
+    font-size: 15px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   DESKTOP — 1024px+
+   ═══════════════════════════════════════════════════ */
+@media (min-width: 1024px) {
+  .item {
+    gap: 20px;
+    padding: 18px 0;
+  }
+
+  .imageWrapper {
+    flex: 0 0 100px;
+    border-radius: 12px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .price {
+    font-size: 16px;
+  }
+
+  .stepperBtn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .stepperValue {
+    min-width: 40px;
+    height: 44px;
+  }
+
+  .removeBtn {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .stepperBtn,
+  .removeBtn {
+    transition: none;
   }
 }
