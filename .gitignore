@@ -35,6 +35,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# --- Внутренние рабочие доки (не для репозитория) ---
+MVP_LAUNCH_PLAN.md
+
 # --- Инструменты и IDE ---
 .vercel
 .vscode/*
