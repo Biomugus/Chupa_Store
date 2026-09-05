@@ -24,6 +24,16 @@ export function ConfirmEmailForm({ initialEmail = '' }: ConfirmEmailFormProps) {
   const [otpState, otpAction, isOtpPending] = useActionState(verifySignupOtp, null);
   const [resendState, resendAction, isResendPending] = useActionState(resendSignupOtp, null);
 
+  // Move to the code-entry step once a code has actually been sent — either
+  // because we arrived here already knowing the email (register/login
+  // already triggered a send), or because the user just submitted the
+  // "which email" step below and resendSignupOtp succeeded. Without this,
+  // a direct/bookmarked visit to /confirm would show empty code boxes
+  // without ever having asked Supabase to send anything.
+  useEffect(() => {
+    if (resendState?.success) setEmailKnown(true);
+  }, [resendState]);
+
   // Clear the code after a failed attempt so the user retypes it fresh
   // instead of having to manually clear a wrong code from every box.
   useEffect(() => {
@@ -32,20 +42,14 @@ export function ConfirmEmailForm({ initialEmail = '' }: ConfirmEmailFormProps) {
 
   if (!emailKnown) {
     return (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (email.trim()) setEmailKnown(true);
-        }}
-        className={styles.authForm}
-        noValidate
-      >
+      <form action={resendAction} className={styles.authForm} noValidate>
         <div className={styles.fieldGroup}>
           <label htmlFor="confirm-email" className={styles.fieldLabel}>
             Email
           </label>
           <input
             id="confirm-email"
+            name="email"
             type="email"
             autoComplete="email"
             required
@@ -54,10 +58,11 @@ export function ConfirmEmailForm({ initialEmail = '' }: ConfirmEmailFormProps) {
             onChange={(e) => setEmail(e.target.value)}
             className={styles.fieldInput}
           />
+          {resendState?.error && <p className={styles.fieldError}>{resendState.error}</p>}
         </div>
 
-        <button type="submit" className={styles.submitButton}>
-          Продолжить
+        <button type="submit" disabled={isResendPending} className={styles.submitButton}>
+          {isResendPending ? <span className={styles.spinner} /> : 'Получить код'}
         </button>
       </form>
     );
