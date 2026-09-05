@@ -71,6 +71,13 @@ body {
     --btn-shadow-hover: 0 12px 26px rgba(0, 0, 0, 0.42);
     --btn-shadow-lg: 0 14px 30px rgba(0, 0, 0, 0.35);
     --btn-shadow-lg-hover: 0 18px 34px rgba(0, 0, 0, 0.45);
+
+    /* ── Dark button gradient ──
+       Было продублировано raw-значениями в buttons.module.css и
+       filtersSidebar.module.css (135deg, #161616, #222222 — один в один).
+       Теперь оба места ссылаются на один источник. */
+    --btn-gradient-dark: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+    --btn-gradient-dark-hover: linear-gradient(135deg, #161616, #222222);
   }
   .dark {
     --background: 20 14.3% 4.1%;

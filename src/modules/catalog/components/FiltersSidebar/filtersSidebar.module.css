@@ -1,3 +1,9 @@
+/* TODO(design): .sidebar/.select/.input/.resetButton/.applyButton всё ещё на
+   литеральных black/white, не на --brand-* токенах. Не заменил автоматически —
+   здесь жёсткий чёрный бордер похож на осознанный акцент (в отличие от
+   --brand-border: #e5e7eb, который везде используется как светлый разделитель),
+   а не забытый до-миграции цвет. Нужно решение: либо это утверждённый
+   отдельный "утилитарный" стиль формы фильтров, либо тоже пора на токены. */
 .sidebar {
   background: white;
   color: black;
@@ -53,7 +59,7 @@
 }
 
 .select option {
-  background: #1a1a1a;
+  background: var(--brand-text);
   color: white;
   padding: 10px 14px;
   font-size: 12px;
@@ -120,7 +126,7 @@
 .resetButton:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  background: linear-gradient(135deg, #161616, #222222);
+  background: var(--btn-gradient-dark-hover);
   border-color: rgba(255, 255, 255, 0.25);
   color: rgba(244, 245, 247, 0.9);
 }

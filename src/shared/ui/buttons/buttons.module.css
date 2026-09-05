@@ -99,7 +99,7 @@
 }
 
 .btnGradientPrimary {
-  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  background: var(--btn-gradient-dark);
   color: var(--brand-gold-light);
   box-shadow: var(--btn-shadow-lg);
 }
@@ -107,7 +107,7 @@
 .btnGradientPrimary:hover {
   transform: translateY(-2px);
   box-shadow: var(--btn-shadow-lg-hover);
-  background: linear-gradient(135deg, #161616, #222222);
+  background: var(--btn-gradient-dark-hover);
 }
 
 .btnGradientSecondary {
