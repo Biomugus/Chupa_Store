@@ -79,6 +79,11 @@ export async function login(
     // user closed the tab mid-signup and came back later) — send them to
     // finish that instead of a dead-end error message they can't act on.
     if (error.code === 'email_not_confirmed') {
+      // Unlike the register() flow (where signUp() already triggers the
+      // email), nothing has sent a code for this attempt yet — the user's
+      // original code, if any, may be long expired or lost with the
+      // closed tab. Request a fresh one before sending them to /confirm.
+      await supabase.auth.resend({ type: 'signup', email: result.data.email });
       redirect(`/confirm?email=${encodeURIComponent(result.data.email)}`);
     }
 
