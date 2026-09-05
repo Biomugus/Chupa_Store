@@ -1,4 +1,4 @@
-// src/app/(auth)/register/OtpCodeInput.tsx
+// src/app/(auth)/confirm/OtpCodeInput.tsx
 
 'use client';
 
