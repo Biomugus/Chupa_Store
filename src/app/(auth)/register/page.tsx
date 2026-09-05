@@ -3,15 +3,24 @@
 'use client';
 
 import Link from 'next/link';
-import { useActionState, useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { register, resendSignupOtp, verifySignupOtp } from '../actions';
 import styles from '../auth.module.css';
+import { SIGNUP_OTP_LENGTH } from '@/modules/auth/validation/authSchemas';
+import { OtpCodeInput } from './OtpCodeInput';
 
 export default function RegisterPage() {
   const [state, formAction, isPending] = useActionState(register, null);
   const [otpState, otpAction, isOtpPending] = useActionState(verifySignupOtp, null);
   const [resendState, resendAction, isResendPending] = useActionState(resendSignupOtp, null);
   const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
+
+  // Clear the code after a failed attempt so the user retypes it fresh
+  // instead of having to manually clear a wrong code from every box.
+  useEffect(() => {
+    if (otpState?.error) setCode('');
+  }, [otpState]);
 
   // If registration succeeded — ask for the confirmation code from the email
   if (state?.success) {
@@ -38,91 +47,33 @@ export default function RegisterPage() {
           <span>{state.success}</span>
         </div>
 
-        {otpState?.error && (
-          <div className={styles.alertError}>
-            <svg
-              className={styles.alertIcon}
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="8" x2="12" y2="12" />
-              <line x1="12" y1="16" x2="12.01" y2="16" />
-            </svg>
-            <span>{otpState.error}</span>
-          </div>
-        )}
-
-        {resendState?.success && (
-          <div className={styles.alertSuccess}>
-            <svg
-              className={styles.alertIcon}
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-              <polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
-            <span>{resendState.success}</span>
-          </div>
-        )}
-
-        {resendState?.error && (
-          <div className={styles.alertError}>
-            <svg
-              className={styles.alertIcon}
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="8" x2="12" y2="12" />
-              <line x1="12" y1="16" x2="12.01" y2="16" />
-            </svg>
-            <span>{resendState.error}</span>
-          </div>
-        )}
-
         <form action={otpAction} className={styles.authForm} noValidate>
           <input type="hidden" name="email" value={email} />
+          <input type="hidden" name="code" value={code} readOnly />
 
           <div className={styles.fieldGroup}>
-            <label htmlFor="otp-code" className={styles.fieldLabel}>
+            <label className={styles.fieldLabel} style={{ textAlign: 'center' }}>
               Код из письма
             </label>
-            <input
-              id="otp-code"
-              name="code"
-              type="text"
-              inputMode="numeric"
-              autoComplete="one-time-code"
-              maxLength={6}
-              required
-              placeholder="000000"
-              aria-describedby={otpState?.fieldErrors?.code ? 'otp-code-error' : undefined}
-              className={`${styles.fieldInput} ${styles.otpInput} ${
-                otpState?.fieldErrors?.code ? styles.fieldInputError : ''
-              }`}
+            <OtpCodeInput
+              length={SIGNUP_OTP_LENGTH}
+              value={code}
+              onChange={setCode}
+              hasError={!!otpState?.error || !!otpState?.fieldErrors?.code}
+              disabled={isOtpPending}
             />
-            {otpState?.fieldErrors?.code && (
-              <p id="otp-code-error" className={styles.fieldError}>
-                {otpState.fieldErrors.code[0]}
+            {(otpState?.error || otpState?.fieldErrors?.code) && (
+              <p className={styles.fieldError} style={{ textAlign: 'center' }}>
+                {otpState?.error ?? otpState?.fieldErrors?.code?.[0]}
               </p>
             )}
           </div>
 
-          <button type="submit" disabled={isOtpPending} className={styles.submitButton}>
+          <button
+            type="submit"
+            disabled={isOtpPending || code.length !== SIGNUP_OTP_LENGTH}
+            className={styles.submitButton}
+          >
             {isOtpPending ? <span className={styles.spinner} /> : 'Подтвердить'}
           </button>
         </form>
@@ -134,6 +85,14 @@ export default function RegisterPage() {
               {isResendPending ? 'Отправляем…' : 'Отправить код ещё раз'}
             </button>
           </form>
+          {resendState?.success && (
+            <p className={`${styles.inlineHint} ${styles.inlineHintSuccess}`}>
+              {resendState.success}
+            </p>
+          )}
+          {resendState?.error && (
+            <p className={`${styles.inlineHint} ${styles.inlineHintError}`}>{resendState.error}</p>
+          )}
         </div>
       </div>
     );
