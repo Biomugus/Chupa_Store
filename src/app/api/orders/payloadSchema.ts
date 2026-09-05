@@ -50,6 +50,10 @@ export const orderPayloadSchema = z.object({
   }),
   items: z.array(orderItemSchema),
   total: z.number(),
+
+  // Honeypot-поле для формы чекаута: у реальных пользователей всегда пустое
+  // (скрыто через CSS), боты, заполняющие все поля подряд, попадаются на нём.
+  website: z.string().optional(),
 });
 
 export type OrderPayloadSchema = z.infer<typeof orderPayloadSchema>;

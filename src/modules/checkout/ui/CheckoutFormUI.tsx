@@ -50,6 +50,22 @@ export function CheckoutFormUI({
         onSubmit();
       }}
     >
+      {/* Honeypot: скрыто от людей (не через display:none/hidden, чтобы
+          менее продвинутые боты не пропускали поле по атрибуту), реальные
+          пользователи никогда его не заполняют и не видят. */}
+      <div className={styles.honeypot} aria-hidden="true">
+        <label htmlFor="website">Website</label>
+        <input
+          id="website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={values.website}
+          onChange={(e) => onChange('website', e.target.value)}
+        />
+      </div>
+
       {/* Location */}
       <div className={styles.field}>
         <label htmlFor="location" className={styles.label}>

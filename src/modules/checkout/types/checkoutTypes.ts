@@ -37,6 +37,8 @@ export type CheckoutFormData = {
   phone: string;
   contactMethod: ContactMethod;
   contactValue: string;
+  /** Honeypot: скрытое от людей поле, боты его нередко заполняют. */
+  website: string;
 };
 
 export type OrderPayload = {
@@ -60,6 +62,9 @@ export type OrderPayload = {
 
   items: OrderItem[];
   total: number;
+
+  /** Honeypot: скрытое от людей поле, боты его нередко заполняют. */
+  website?: string;
 };
 
 export type CreateOrderResponse =

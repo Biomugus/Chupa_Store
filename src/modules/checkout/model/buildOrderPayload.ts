@@ -27,5 +27,7 @@ export function buildOrderPayload(cart: CartSnapshot, form: CheckoutFormData): O
       quantity: item.quantity, // на случай, если вдруг undefined
     })),
     total: cart.total,
+
+    website: form.website,
   };
 }

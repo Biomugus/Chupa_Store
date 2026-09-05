@@ -22,6 +22,7 @@ const INITIAL_VALUES: CheckoutFormData = {
   phone: '',
   contactMethod: ContactMethod.TELEGRAM,
   contactValue: '',
+  website: '',
 };
 
 export function useCheckoutForm() {
