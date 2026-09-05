@@ -75,6 +75,13 @@ export async function login(
   });
 
   if (error) {
+    // The account exists but never finished email confirmation (e.g. the
+    // user closed the tab mid-signup and came back later) — send them to
+    // finish that instead of a dead-end error message they can't act on.
+    if (error.code === 'email_not_confirmed') {
+      redirect(`/confirm?email=${encodeURIComponent(result.data.email)}`);
+    }
+
     return { error: getAuthErrorMessage(error.message) };
   }
 
@@ -126,10 +133,9 @@ export async function register(
     return { error: getAuthErrorMessage(error.message) };
   }
 
-  // 3. Supabase sends a confirmation email with a 6-digit code automatically
-  return {
-    success: 'Регистрация почти завершена! Введите код из письма, которое мы отправили на почту.',
-  };
+  // 3. Supabase sends a confirmation email with a code automatically —
+  // send the user straight to the code-entry step.
+  redirect(`/confirm?email=${encodeURIComponent(result.data.email)}`);
 }
 
 /**
