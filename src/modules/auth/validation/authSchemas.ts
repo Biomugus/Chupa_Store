@@ -55,14 +55,24 @@ export const registerSchema = z
   });
 
 /**
- * Signup OTP confirmation schema: email + 6-digit code from the email.
+ * Length of the signup confirmation code, as configured in Supabase
+ * (Dashboard → Authentication → Sign In / Providers → Email → Email OTP
+ * Length). Supabase's own default is 6, but this project's instance is
+ * set to 8 — keep this in sync with that setting.
+ */
+export const SIGNUP_OTP_LENGTH = 8;
+
+/**
+ * Signup OTP confirmation schema: email + confirmation code from the email.
  */
 export const otpSchema = z.object({
   email: emailField,
   code: z
     .string()
     .trim()
-    .regex(/^\d{6}$/, { message: 'Код должен содержать 6 цифр' }),
+    .regex(new RegExp(`^\\d{${SIGNUP_OTP_LENGTH}}$`), {
+      message: `Код должен содержать ${SIGNUP_OTP_LENGTH} цифр`,
+    }),
 });
 
 /**

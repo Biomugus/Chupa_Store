@@ -298,12 +298,68 @@
   cursor: not-allowed;
 }
 
-/* ── OTP code input: spaced-out digits ── */
-.otpInput {
+/* ── OTP code input: one box per digit ── */
+.otpBoxRow {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.otpBox {
+  width: 40px;
+  height: 52px;
   text-align: center;
-  font-size: 22px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 20px;
   font-weight: 600;
-  letter-spacing: 10px;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.otpBox:focus {
+  border-color: var(--brand-gold);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(156, 126, 74, 0.15);
+}
+
+.otpBoxError {
+  border-color: hsl(0, 84.2%, 60.2%);
+}
+
+.otpBoxError:focus {
+  border-color: hsl(0, 84.2%, 60.2%);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+@media (max-width: 380px) {
+  .otpBox {
+    width: 34px;
+    height: 46px;
+    font-size: 17px;
+  }
+}
+
+/* ── Small inline hint under an action (e.g. "code resent") ── */
+.inlineHint {
+  margin-top: 8px;
+  font-size: 12px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.inlineHintSuccess {
+  color: hsl(142, 71%, 65%);
+}
+
+.inlineHintError {
+  color: hsl(0, 84.2%, 70%);
 }
 
 /* ── Divider ── */
