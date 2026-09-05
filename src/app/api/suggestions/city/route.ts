@@ -1,3 +1,4 @@
+import { checkRateLimit, getClientIp } from '@/shared/lib/rateLimit';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { DadataResponse, DadataResponseSchema, DadataSuggestion } from './suggestionSchemas';
@@ -6,7 +7,20 @@ const RequestSchema = z.object({
   query: z.string().min(2),
 });
 
+// Автокомплит дёргается на каждое нажатие клавиши, поэтому лимит заметно
+// выше, чем у /api/orders, но всё же ограничивает злоупотребление
+// сторонним DaData-ключом.
+const RATE_LIMIT = 30;
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+
 export async function POST(req: Request) {
+  const ip = getClientIp(req);
+  const rateLimit = checkRateLimit(`suggestions:city:${ip}`, RATE_LIMIT, RATE_LIMIT_WINDOW_MS);
+
+  if (!rateLimit.ok) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+  }
+
   try {
     const body = await req.json();
     const { query } = RequestSchema.parse(body);

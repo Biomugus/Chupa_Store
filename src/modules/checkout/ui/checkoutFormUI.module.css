@@ -16,6 +16,18 @@
   padding: 24px 16px;
 }
 
+/* Honeypot-поле: спрятано визуально (не display:none/visibility:hidden),
+   чтобы простые боты, игнорирующие такие свойства, всё равно его заполняли. */
+.honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  left: -9999px;
+}
+
 .field {
   display: flex;
   flex-direction: column;
