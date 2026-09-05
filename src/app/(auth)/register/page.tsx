@@ -3,14 +3,17 @@
 'use client';
 
 import Link from 'next/link';
-import { useActionState } from 'react';
-import { register } from '../actions';
+import { useActionState, useState } from 'react';
+import { register, resendSignupOtp, verifySignupOtp } from '../actions';
 import styles from '../auth.module.css';
 
 export default function RegisterPage() {
   const [state, formAction, isPending] = useActionState(register, null);
+  const [otpState, otpAction, isOtpPending] = useActionState(verifySignupOtp, null);
+  const [resendState, resendAction, isResendPending] = useActionState(resendSignupOtp, null);
+  const [email, setEmail] = useState('');
 
-  // If registration succeeded — show success message
+  // If registration succeeded — ask for the confirmation code from the email
   if (state?.success) {
     return (
       <div className={styles.authCard}>
@@ -35,13 +38,102 @@ export default function RegisterPage() {
           <span>{state.success}</span>
         </div>
 
+        {otpState?.error && (
+          <div className={styles.alertError}>
+            <svg
+              className={styles.alertIcon}
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            <span>{otpState.error}</span>
+          </div>
+        )}
+
+        {resendState?.success && (
+          <div className={styles.alertSuccess}>
+            <svg
+              className={styles.alertIcon}
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+            <span>{resendState.success}</span>
+          </div>
+        )}
+
+        {resendState?.error && (
+          <div className={styles.alertError}>
+            <svg
+              className={styles.alertIcon}
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            <span>{resendState.error}</span>
+          </div>
+        )}
+
+        <form action={otpAction} className={styles.authForm} noValidate>
+          <input type="hidden" name="email" value={email} />
+
+          <div className={styles.fieldGroup}>
+            <label htmlFor="otp-code" className={styles.fieldLabel}>
+              Код из письма
+            </label>
+            <input
+              id="otp-code"
+              name="code"
+              type="text"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              maxLength={6}
+              required
+              placeholder="000000"
+              aria-describedby={otpState?.fieldErrors?.code ? 'otp-code-error' : undefined}
+              className={`${styles.fieldInput} ${styles.otpInput} ${
+                otpState?.fieldErrors?.code ? styles.fieldInputError : ''
+              }`}
+            />
+            {otpState?.fieldErrors?.code && (
+              <p id="otp-code-error" className={styles.fieldError}>
+                {otpState.fieldErrors.code[0]}
+              </p>
+            )}
+          </div>
+
+          <button type="submit" disabled={isOtpPending} className={styles.submitButton}>
+            {isOtpPending ? <span className={styles.spinner} /> : 'Подтвердить'}
+          </button>
+        </form>
+
         <div className={styles.authFooter}>
-          <p className={styles.authFooterText}>
-            Уже подтвердили?{' '}
-            <Link href="/login" className={styles.authFooterLink}>
-              Войти
-            </Link>
-          </p>
+          <form action={resendAction}>
+            <input type="hidden" name="email" value={email} />
+            <button type="submit" disabled={isResendPending} className={styles.linkButton}>
+              {isResendPending ? 'Отправляем…' : 'Отправить код ещё раз'}
+            </button>
+          </form>
         </div>
       </div>
     );
@@ -85,6 +177,8 @@ export default function RegisterPage() {
             autoComplete="email"
             required
             placeholder="your@email.com"
+            defaultValue={email}
+            onChange={(e) => setEmail(e.target.value)}
             aria-describedby={state?.fieldErrors?.email ? 'register-email-error' : undefined}
             className={`${styles.fieldInput} ${state?.fieldErrors?.email ? styles.fieldInputError : ''}`}
           />

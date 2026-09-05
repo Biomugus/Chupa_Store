@@ -54,5 +54,24 @@ export const registerSchema = z
     path: ['confirmPassword'],
   });
 
+/**
+ * Signup OTP confirmation schema: email + 6-digit code from the email.
+ */
+export const otpSchema = z.object({
+  email: emailField,
+  code: z
+    .string()
+    .trim()
+    .regex(/^\d{6}$/, { message: 'Код должен содержать 6 цифр' }),
+});
+
+/**
+ * Resend signup OTP schema: just the email to resend the code to.
+ */
+export const resendOtpSchema = z.object({
+  email: emailField,
+});
+
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type RegisterFormData = z.infer<typeof registerSchema>;
+export type OtpFormData = z.infer<typeof otpSchema>;

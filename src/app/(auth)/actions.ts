@@ -3,7 +3,12 @@
 // src/app/(auth)/actions.ts
 
 import { AuthActionResult } from '@/modules/auth/types/authTypes';
-import { loginSchema, registerSchema } from '@/modules/auth/validation/authSchemas';
+import {
+  loginSchema,
+  otpSchema,
+  registerSchema,
+  resendOtpSchema,
+} from '@/modules/auth/validation/authSchemas';
 import { createClient } from '@/shared/api/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -13,6 +18,8 @@ import { redirect } from 'next/navigation';
  * Keeps security in mind: no specific "user not found" messages.
  */
 function getAuthErrorMessage(error: string): string {
+  const message = error.toLowerCase();
+
   const errorMap: Record<string, string> = {
     'invalid login credentials':
       'Неверный email или пароль. Проверьте данные или зарегистрируйтесь, если у вас ещё нет аккаунта',
@@ -23,9 +30,19 @@ function getAuthErrorMessage(error: string): string {
     'email rate limit exceeded': 'Слишком много попыток. Попробуйте позже',
     'for security purposes, you can only request this after 60 seconds':
       'Подождите 60 секунд перед повторной попыткой',
+    'token has expired or is invalid': 'Код неверен или истёк. Запросите новый.',
+    'invalid otp': 'Код неверен. Проверьте и попробуйте снова.',
   };
 
-  return errorMap[error.toLowerCase()] ?? 'Произошла ошибка. Попробуйте позже';
+  if (errorMap[message]) return errorMap[message];
+
+  // Supabase returns a dynamic wait time ("...after N seconds") that won't
+  // match the map above verbatim — catch it separately.
+  if (message.includes('you can only request this after')) {
+    return 'Подождите немного перед повторной отправкой кода';
+  }
+
+  return 'Произошла ошибка. Попробуйте позже';
 }
 
 /**
@@ -91,12 +108,14 @@ export async function register(
   }
 
   // 2. Create user
+  // Note: no `emailRedirectTo` — confirmation is done via a 6-digit code
+  // (see verifySignupOtp below), not a magic link. The "Confirm signup"
+  // email template in Supabase Dashboard must show {{ .Token }}.
   const supabase = await createClient();
   const { error } = await supabase.auth.signUp({
     email: result.data.email,
     password: result.data.password,
     options: {
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'}/auth/callback`,
       data: {
         full_name: result.data.fullName,
       },
@@ -107,11 +126,77 @@ export async function register(
     return { error: getAuthErrorMessage(error.message) };
   }
 
-  // 3. Supabase sends confirmation email automatically
+  // 3. Supabase sends a confirmation email with a 6-digit code automatically
   return {
-    success:
-      'Регистрация почти завершена! Проверьте почту и перейдите по ссылке для подтверждения.',
+    success: 'Регистрация почти завершена! Введите код из письма, которое мы отправили на почту.',
   };
+}
+
+/**
+ * Verify Signup OTP Server Action.
+ * Confirms the 6-digit code sent by email → creates a session → redirects to /account.
+ */
+export async function verifySignupOtp(
+  _prevState: AuthActionResult | null,
+  formData: FormData,
+): Promise<AuthActionResult> {
+  const rawData = {
+    email: formData.get('email'),
+    code: formData.get('code'),
+  };
+
+  // 1. Validate & sanitize
+  const result = otpSchema.safeParse(rawData);
+  if (!result.success) {
+    return {
+      error: 'Проверьте введённые данные',
+      fieldErrors: result.error.flatten().fieldErrors as Record<string, string[]>,
+    };
+  }
+
+  // 2. Verify the code
+  const supabase = await createClient();
+  const { error } = await supabase.auth.verifyOtp({
+    email: result.data.email,
+    token: result.data.code,
+    type: 'signup',
+  });
+
+  if (error) {
+    return { error: getAuthErrorMessage(error.message) };
+  }
+
+  // 3. Success → session is set, redirect straight into the account
+  revalidatePath('/', 'layout');
+  redirect('/account');
+}
+
+/**
+ * Resend Signup OTP Server Action.
+ * Asks Supabase to send a fresh confirmation code to the given email.
+ */
+export async function resendSignupOtp(
+  _prevState: AuthActionResult | null,
+  formData: FormData,
+): Promise<AuthActionResult> {
+  const rawData = { email: formData.get('email') };
+
+  const result = resendOtpSchema.safeParse(rawData);
+  if (!result.success) {
+    return { error: 'Некорректный email' };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.resend({
+    type: 'signup',
+    email: result.data.email,
+  });
+
+  if (error) {
+    return { error: getAuthErrorMessage(error.message) };
+  }
+
+  return { success: 'Код отправлен повторно. Проверьте почту.' };
 }
 
 /**
