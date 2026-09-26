@@ -1,0 +1,80 @@
+/* src/modules/contacts/containers/contactsPage.module.css */
+/* Светлый контент на --brand-surface и заголовок секции — как home/Features */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 6vw, 64px);
+  padding: clamp(48px, 7vw, 80px) clamp(16px, 4vw, 60px);
+  background: var(--brand-surface);
+}
+
+.header {
+  max-width: 1024px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.kicker {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #cfcfcf99;
+  color: #000;
+  font-size: clamp(1rem, 2vw + 0.5rem, 1.375rem);
+  letter-spacing: clamp(2px, 0.8vw, 10px);
+  text-transform: uppercase;
+}
+
+.title {
+  margin-bottom: 10px;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 400;
+  letter-spacing: clamp(2px, 0.2vw, 10px);
+  color: black;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
+  line-height: 1.6;
+  color: black;
+}
+
+.grid,
+.content > ul {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(24px, 4vw, 48px);
+  align-items: start;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.formColumn {
+  scroll-margin-top: 24px;
+}
+
+.columnTitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--brand-text);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

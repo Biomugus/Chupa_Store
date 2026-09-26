@@ -20,6 +20,18 @@ export async function httpClient<T>(url: string, init?: RequestInit): Promise<T>
   }
 
   if (!response.ok) {
+    // JSON-тело в формате ADR 0002 ({ message, details }) — пробрасываем как есть,
+    // чтобы формы могли показать details по полям; иначе — текст ответа.
+    if (response.headers.get('content-type')?.includes('application/json')) {
+      const body = (await response.json().catch(() => null)) as Partial<ApiError> | null;
+
+      throw {
+        status: response.status,
+        message: body?.message ?? response.statusText,
+        details: body?.details,
+      } satisfies ApiError;
+    }
+
     const message = await response.text();
 
     throw {

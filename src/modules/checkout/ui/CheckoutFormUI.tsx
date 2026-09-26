@@ -10,6 +10,9 @@ import {
 } from '../types/checkoutTypes';
 
 import btnStyles from '@/shared/ui/buttons/buttons.module.css';
+import { fieldControlClassName } from '@/shared/ui/form/fieldControl';
+import formStyles from '@/shared/ui/form/form.module.css';
+import { Honeypot } from '@/shared/ui/form/Honeypot';
 import Spinner from '@/shared/ui/spinner/Spinner';
 import styles from './checkoutFormUI.module.css';
 
@@ -23,12 +26,6 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { CityAutocompleteUI } from './CityAutocompleteUI';
-
-const fieldControlClassName = cn(
-  'min-w-0 w-full bg-white border-black text-black',
-  'rounded-[6px] focus-visible:ring-white transition-all',
-  'md:min-w-[300px]',
-);
 
 export function CheckoutFormUI({
   values,
@@ -44,42 +41,28 @@ export function CheckoutFormUI({
 }: CheckoutFormUIProps) {
   return (
     <form
-      className={styles.form}
+      className={cn(formStyles.formCard, styles.form)}
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit();
       }}
     >
-      {/* Honeypot: скрыто от людей (не через display:none/hidden, чтобы
-          менее продвинутые боты не пропускали поле по атрибуту), реальные
-          пользователи никогда его не заполняют и не видят. */}
-      <div className={styles.honeypot} aria-hidden="true">
-        <label htmlFor="website">Website</label>
-        <input
-          id="website"
-          name="website"
-          type="text"
-          tabIndex={-1}
-          autoComplete="off"
-          value={values.website}
-          onChange={(e) => onChange('website', e.target.value)}
-        />
-      </div>
+      <Honeypot value={values.website} onChange={(val) => onChange('website', val)} />
 
       {/* Location */}
-      <div className={styles.field}>
-        <label htmlFor="location" className={styles.label}>
+      <div className={formStyles.field}>
+        <label htmlFor="location" className={formStyles.label}>
           Город
         </label>
         <div className="w-full">
           <CityAutocompleteUI {...cityAutocompleteProps} />
         </div>
-        {errors.location && <p className={styles.error}>{errors.location}</p>}
+        {errors.location && <p className={formStyles.error}>{errors.location}</p>}
       </div>
 
       {/* Surname + name */}
-      <div className={styles.field}>
-        <label htmlFor="fullName" className={styles.label}>
+      <div className={formStyles.field}>
+        <label htmlFor="fullName" className={formStyles.label}>
           ФИО
         </label>
         <Input
@@ -92,12 +75,12 @@ export function CheckoutFormUI({
             onChange('fullName', val);
           }}
         />
-        {errors.fullName && <p className={styles.error}>{errors.fullName}</p>}
+        {errors.fullName && <p className={formStyles.error}>{errors.fullName}</p>}
       </div>
 
       {/* tel */}
-      <div className={styles.field}>
-        <label htmlFor="phone" className={styles.label}>
+      <div className={formStyles.field}>
+        <label htmlFor="phone" className={formStyles.label}>
           Телефон
         </label>
         <Input
@@ -108,12 +91,12 @@ export function CheckoutFormUI({
           value={values.phone}
           onChange={(e) => onChange('phone', e.target.value)}
         />
-        {errors.phone && <p className={styles.error}>{errors.phone}</p>}
+        {errors.phone && <p className={formStyles.error}>{errors.phone}</p>}
       </div>
 
       {/* Payment method */}
-      <div className={styles.field}>
-        <label htmlFor="paymentMethod" className={styles.label}>
+      <div className={formStyles.field}>
+        <label htmlFor="paymentMethod" className={formStyles.label}>
           Способ оплаты
         </label>
         <Select
@@ -132,8 +115,8 @@ export function CheckoutFormUI({
       </div>
 
       {/* delivery service */}
-      <div className={styles.field}>
-        <label className={styles.label}>Служба доставки</label>
+      <div className={formStyles.field}>
+        <label className={formStyles.label}>Служба доставки</label>
         <Select
           value={values.deliveryService}
           onValueChange={(val) => onChange('deliveryService', val as DeliveryService)}
@@ -152,8 +135,8 @@ export function CheckoutFormUI({
       </div>
 
       {/* Communication method */}
-      <div className={styles.field}>
-        <label className={styles.label}>Способ связи</label>
+      <div className={formStyles.field}>
+        <label className={formStyles.label}>Способ связи</label>
         <Select
           value={values.contactMethod}
           onValueChange={(val) => onChange('contactMethod', val as ContactMethod)}
@@ -169,8 +152,8 @@ export function CheckoutFormUI({
       </div>
 
       {/* Contact */}
-      <div className={styles.field}>
-        <label htmlFor="contactValue" className={styles.label}>
+      <div className={formStyles.field}>
+        <label htmlFor="contactValue" className={formStyles.label}>
           {values.contactMethod === ContactMethod.VK ? 'Ссылка на VK' : 'Telegram username'}
         </label>
         <Input
@@ -181,15 +164,15 @@ export function CheckoutFormUI({
           aria-invalid={!!errors.contactValue}
           onChange={(e) => onChange('contactValue', e.target.value)}
         />
-        {errors.contactValue && <span className={styles.error}>{errors.contactValue}</span>}
+        {errors.contactValue && <span className={formStyles.error}>{errors.contactValue}</span>}
       </div>
 
       {/* Submit Error / Retry */}
       {submitError ? (
-        <div className={styles.submitErrorWrapper}>
-          <p className={styles.error}>{submitError}</p>
+        <div className={formStyles.submitErrorWrapper}>
+          <p className={formStyles.error}>{submitError}</p>
           <button
-            className={styles.submitError}
+            className={formStyles.submitError}
             type="button"
             onClick={onRetry}
             disabled={isLoading}
@@ -206,7 +189,7 @@ export function CheckoutFormUI({
         </div>
       ) : (
         <button
-          className={`${btnStyles.btnOutline} ${styles.submitButton}`}
+          className={`${btnStyles.btnOutline} ${formStyles.submitButton}`}
           type="submit"
           disabled={!isValid || isLoading}
         >

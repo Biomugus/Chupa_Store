@@ -2,6 +2,7 @@
 
 import { buildOrderData } from '@/modules/checkout/utils/orderTextBuilder';
 import { checkRateLimit, getClientIp } from '@/shared/lib/rateLimit';
+import { sendTelegramMessage } from '@/shared/lib/telegram';
 import { NextResponse } from 'next/server';
 import {
   contactMap,
@@ -43,13 +44,6 @@ export async function POST(req: Request) {
     });
   }
 
-  const token = process.env.TG_BOT_TOKEN;
-  const chatId = process.env.TG_CHAT_ID;
-
-  if (!token || !chatId) {
-    return new Response('Server misconfigured', { status: 500 });
-  }
-
   const { text, contactLink, contactMethodLabel } = buildOrderData({
     payload,
     paymentMap,
@@ -57,41 +51,26 @@ export async function POST(req: Request) {
     contactMap,
   });
 
-  const tgResponse = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: text,
-      link_preview_options: {
-        url: contactLink,
-        is_disabled: false,
-        prefer_large_media: true,
-      },
-      reply_markup: {
-        inline_keyboard: [
-          [
-            {
-              text: `💬 Написать в ${contactMethodLabel}`,
-              url: contactLink,
-            },
-          ],
-        ],
-      },
-    }),
+  const result = await sendTelegramMessage({
+    text,
+    linkPreviewUrl: contactLink,
+    button: { text: `💬 Написать в ${contactMethodLabel}`, url: contactLink },
   });
 
-  if (!tgResponse.ok) {
-    const error = await tgResponse.text();
+  if (!result.ok) {
+    if (result.reason === 'misconfigured') {
+      return new Response('Server misconfigured', { status: 500 });
+    }
+
     // Заказ прошёл валидацию, но не долетел до Telegram — логируем тело
     // заказа целиком, чтобы его можно было восстановить вручную из логов
     // (см. IT задачи pre MVP: "Console.error").
     console.error('Failed to send order to Telegram', {
-      error,
-      status: tgResponse.status,
+      error: result.error,
+      status: result.status,
       payload,
     });
-    return new Response(error, { status: 502 });
+    return new Response(result.error, { status: 502 });
   }
 
   return NextResponse.json({

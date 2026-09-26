@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
+import { DEVELOPER_CONTACTS, WORKSHOP_CONTACTS } from '../../config/contacts';
 import { BRAND_NAME } from '../../config/navigation';
 import { useIconsReady } from '../../hooks/useIconsReady';
 import { LogoMark } from '../../icons/LogoMark';
@@ -31,7 +32,7 @@ const FOOTER_SECTIONS: FooterSectionConfig[] = [
       { label: 'Рукоятки', href: '/catalog?productType=grip' },
       { label: 'Приклады', href: '/catalog?productType=stock' },
       { label: 'Mlok-комплектующие', href: '/catalog?productType=mlock' },
-      { label: 'Кастомные проекты', href: '/customs' },
+      { label: 'Кастомные проекты', href: '/contacts?topic=custom#contact-form' },
     ],
   },
   {
@@ -39,8 +40,8 @@ const FOOTER_SECTIONS: FooterSectionConfig[] = [
     title: 'Помощь',
     items: [
       { label: 'Связаться с нами', href: '/contacts' },
-      { label: 'Сообщить о браке', href: '/issues' },
-      { label: 'Для партнеров', href: '/forPartners' },
+      { label: 'Сообщить о браке', href: '/contacts?topic=defect#contact-form' },
+      { label: 'Для партнеров', href: '/contacts?topic=partnership#contact-form' },
     ],
   },
   {
@@ -151,28 +152,12 @@ export function Footer() {
 
               <div className={styles.devIcons}>
                 <a
-                  href="https://wa.me/+79017103886"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Написать в WhatsApp разработчику"
-                >
-                  <WhatsappIcon className={styles.devIcon} />
-                </a>
-                <a
-                  href="https://t.me/+79017103886"
+                  href={DEVELOPER_CONTACTS.telegram.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Написать в Telegram разработчику"
                 >
                   <TelegramIcon className={styles.devIcon} />
-                </a>
-                <a
-                  href="https://vk.com/chupakhincoach"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Профиль разработчика ВКонтакте"
-                >
-                  <VkIcon className={styles.devIcon} />
                 </a>
               </div>
             </div>
@@ -182,7 +167,7 @@ export function Footer() {
             <span>Контакты Мастерской</span>
             <div className={styles.badgeRow} aria-label="Мессенджеры">
               <a
-                href="https://wa.me/79997101148"
+                href={WORKSHOP_CONTACTS.whatsapp.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.badge}
@@ -191,7 +176,7 @@ export function Footer() {
                 <WhatsappIcon className={styles.badgeIcon} />
               </a>
               <a
-                href="https://t.me/chupa_workshop"
+                href={WORKSHOP_CONTACTS.telegram.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.badge}
@@ -200,7 +185,7 @@ export function Footer() {
                 <TelegramIcon className={styles.badgeIcon} />
               </a>
               <a
-                href="https://vk.com/starinachupa"
+                href={WORKSHOP_CONTACTS.vk.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.badge}

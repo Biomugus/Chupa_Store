@@ -1,0 +1,39 @@
+# Feedback API
+
+## Endpoint
+
+POST /api/feedback
+
+## Purpose
+
+Обращение с формы на `/contacts`. Сообщение отправляется в Telegram-бот мастерской (`TG_BOT_TOKEN` / `TG_CHAT_ID`) с шапкой `📩 ОБРАЩЕНИЕ С САЙТА · <тема>`, чтобы отличать его от заказов. Ничего не сохраняется.
+
+## Request
+
+`application/json`, схема — `src/modules/contacts/model/contactFormSchema.ts`:
+
+```json
+{
+  "name": "Иван",
+  "contact": "@ivan_petrov",
+  "topic": "custom",
+  "message": "Хочу приклад из ореха на АК-74",
+  "website": ""
+}
+```
+
+- `contact` — телефон, `@username`, email или ссылка на t.me / vk.com. Для Telegram/VK под сообщением появляется кнопка «Написать».
+- `website` — honeypot, у людей всегда пустой.
+
+## Responses
+
+Ошибки — в формате ADR 0002: `{ message, details? }`.
+
+| Status                   | Когда                                                          |
+| ------------------------ | -------------------------------------------------------------- |
+| 200 `{ "status": "ok" }` | Отправлено (или сработал honeypot — ответ такой же)            |
+| 400                      | Тело не JSON                                                   |
+| 422                      | Невалидные поля, `details` — ошибки по полям                   |
+| 429                      | Больше 3 обращений в минуту с одного IP                        |
+| 500                      | Не заданы `TG_BOT_TOKEN` / `TG_CHAT_ID`                        |
+| 502                      | Telegram не принял сообщение (обращение пишется в лог целиком) |
