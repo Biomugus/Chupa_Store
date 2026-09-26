@@ -4,6 +4,7 @@
 
 import { logout } from '@/app/(auth)/actions';
 import { createClient } from '@/shared/api/supabase/client';
+import { getAvatarInitial } from '@/shared/lib/getAvatarInitial';
 import type { User } from '@supabase/supabase-js';
 import { useEffect, useRef, useState } from 'react';
 import styles from './Header.module.css';
@@ -91,7 +92,7 @@ export function UserMenu() {
   }
 
   // Authenticated: show avatar + dropdown
-  const initials = user.email ? user.email.charAt(0).toUpperCase() : '?';
+  const initials = getAvatarInitial(user.user_metadata?.full_name, user.email);
 
   return (
     <div ref={menuRef} className={styles.userMenuWrapper}>
