@@ -29,6 +29,12 @@ Run a single Jest test file: `npx jest path/to/file.test.tsx`. Run a single Play
 
 Commits are enforced by commitlint + husky (`commit-msg` hook) and must follow Conventional Commits (`type(scope): subject`, see `docs/commit-convention.md`). `pre-commit` runs `lint-staged` (prettier) on staged files.
 
+**Language of commits and PRs:** titles stay in English, content is in Russian.
+
+- Commit header (`type(scope): subject`) and PR title: English, e.g. `feat(header): show name initial in user avatar`.
+- Commit body and PR description: Russian.
+- Code identifiers, file paths and commands stay as-is.
+
 ## Architecture
 
 ### Module structure (`src/modules/*`)
