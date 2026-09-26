@@ -1,5 +1,6 @@
 // src/app/(auth)/confirm/page.tsx
 
+import Link from 'next/link';
 import { ConfirmEmailForm } from './ConfirmEmailForm';
 import styles from '../auth.module.css';
 
@@ -28,6 +29,29 @@ export default async function ConfirmPage({ searchParams }: ConfirmPageProps) {
       </div>
 
       <ConfirmEmailForm initialEmail={email} />
+
+      <div className={styles.authFooter}>
+        <p className={styles.authFooterText}>
+          Уже подтвердили email?{' '}
+          <Link href="/login" className={styles.authFooterLink}>
+            Войти
+          </Link>
+        </p>
+      </div>
+
+      <Link href="/" className={styles.backLink}>
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        На главную
+      </Link>
     </div>
   );
 }

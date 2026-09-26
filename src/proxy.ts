@@ -13,7 +13,7 @@ const PROTECTED_ROUTES = ['/account', '/onboarding'];
  * Auth routes that authenticated users should NOT access.
  * They will be redirected to /account instead.
  */
-const AUTH_ROUTES = ['/login', '/register'];
+const AUTH_ROUTES = ['/login', '/register', '/confirm'];
 
 /**
  * Security headers to apply to all responses.
