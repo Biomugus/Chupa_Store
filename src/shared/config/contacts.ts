@@ -5,7 +5,7 @@
 
 export const WORKSHOP_CONTACTS = {
   whatsapp: {
-    url: 'https://wa.me/79997101148',
+    url: 'https://wa.me/79017103886',
   },
   telegram: {
     url: 'https://t.me/chupa_workshop',
@@ -15,18 +15,18 @@ export const WORKSHOP_CONTACTS = {
     url: 'https://vk.com/starinachupa',
   },
   phone: {
-    display: '+7 999 710-11-48',
-    href: 'tel:+79997101148',
+    display: '+7 901 710-38-86',
+    href: 'tel:+79017103886',
   },
-  // TODO: заменить на реальный адрес почты мастерской.
+
   email: {
-    display: 'master@chupa-workshop.ru',
-    href: 'mailto:master@chupa-workshop.ru',
+    display: 'chupa-workshop@mail.ru',
+    href: 'mailto:chupa-workshop@mail.ru',
   },
-  // TODO: уточнить реальный график работы мастерской.
+
   workingHours: {
     days: 'Пн–Пт',
-    time: '10:00–19:00',
+    time: '09:00–18:00',
     timezone: 'МСК',
   },
 } as const;
