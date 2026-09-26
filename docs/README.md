@@ -9,11 +9,13 @@
 ## API
 
 - api/create-order.md
+- api/feedback.md
 
 ## Modules
 
 - modules/cart.md
 - modules/checkout.md
+- modules/contacts.md
 
 ## Decisions
 
@@ -21,10 +23,12 @@
 - desicions/0002-api-error-format.md
 
 ### Commits
-Проект использует [Conventional Commits](https://www.conventionalcommits.org/). 
+
+Проект использует [Conventional Commits](https://www.conventionalcommits.org/).
 Формат: `<type>(<scope>): <subject>`
 
 **Основные типы:**
+
 - `feat`: новый функционал
 - `fix`: исправление ошибок
 - `refactor`: правки кода без изменения логики
