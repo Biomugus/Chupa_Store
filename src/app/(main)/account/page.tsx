@@ -5,6 +5,7 @@ import { getUserProfile } from '@/modules/armory/api/getUserProfile';
 import { getWeaponPlatforms } from '@/modules/armory/api/getWeaponPlatforms';
 import { WeaponSelector } from '@/modules/armory/components/WeaponSelector/WeaponSelector';
 import { createClient } from '@/shared/api/supabase/server';
+import { getAvatarInitial } from '@/shared/lib/getAvatarInitial';
 import { redirect } from 'next/navigation';
 import styles from './account.module.css';
 
@@ -50,9 +51,7 @@ export default async function AccountPage() {
             Профиль
           </h2>
           <div className={styles.profileInfo}>
-            <div className={styles.avatar}>
-              {(displayName ?? user.email ?? '?').charAt(0).toUpperCase()}
-            </div>
+            <div className={styles.avatar}>{getAvatarInitial(displayName, user.email)}</div>
             <div className={styles.profileDetails}>
               {displayName && <p className={styles.profileName}>{displayName}</p>}
               <p className={styles.profileEmail}>{user.email}</p>
