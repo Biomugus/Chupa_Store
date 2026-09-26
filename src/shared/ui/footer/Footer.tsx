@@ -152,28 +152,12 @@ export function Footer() {
 
               <div className={styles.devIcons}>
                 <a
-                  href={DEVELOPER_CONTACTS.whatsapp.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Написать в WhatsApp разработчику"
-                >
-                  <WhatsappIcon className={styles.devIcon} />
-                </a>
-                <a
                   href={DEVELOPER_CONTACTS.telegram.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Написать в Telegram разработчику"
                 >
                   <TelegramIcon className={styles.devIcon} />
-                </a>
-                <a
-                  href={DEVELOPER_CONTACTS.vk.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Профиль разработчика ВКонтакте"
-                >
-                  <VkIcon className={styles.devIcon} />
                 </a>
               </div>
             </div>

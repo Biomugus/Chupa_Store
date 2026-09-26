@@ -32,9 +32,7 @@ export const WORKSHOP_CONTACTS = {
 } as const;
 
 export const DEVELOPER_CONTACTS = {
-  whatsapp: { url: 'https://wa.me/+79017103886' },
   telegram: { url: 'https://t.me/+79017103886' },
-  vk: { url: 'https://vk.com/chupakhincoach' },
 } as const;
 
 export type WorkshopContacts = typeof WORKSHOP_CONTACTS;
