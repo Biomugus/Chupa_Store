@@ -97,6 +97,26 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
+.fieldLabelRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fieldLabelLink {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 12px;
+  color: var(--brand-gold);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.fieldLabelLink:hover {
+  color: var(--brand-gold-light);
+  text-decoration: underline;
+}
+
 .fieldInput {
   width: 100%;
   height: 48px;

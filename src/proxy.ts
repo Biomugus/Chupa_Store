@@ -7,13 +7,13 @@ import { NextResponse, type NextRequest } from 'next/server';
  * Routes that require authentication.
  * Unauthenticated users will be redirected to /login.
  */
-const PROTECTED_ROUTES = ['/account', '/onboarding'];
+const PROTECTED_ROUTES = ['/account', '/onboarding', '/reset-password'];
 
 /**
  * Auth routes that authenticated users should NOT access.
  * They will be redirected to /account instead.
  */
-const AUTH_ROUTES = ['/login', '/register', '/confirm'];
+const AUTH_ROUTES = ['/login', '/register', '/confirm', '/forgot-password'];
 
 /**
  * Security headers to apply to all responses.

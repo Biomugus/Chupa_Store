@@ -5,36 +5,66 @@
 import { AuthActionResult } from '@/modules/auth/types/authTypes';
 import {
   loginSchema,
+  newPasswordSchema,
   otpSchema,
   registerSchema,
   resendOtpSchema,
 } from '@/modules/auth/validation/authSchemas';
 import { createClient } from '@/shared/api/supabase/server';
+import { type AuthError, isAuthRetryableFetchError } from '@supabase/supabase-js';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 /**
- * Maps Supabase Auth error messages to user-friendly Russian strings.
- * Keeps security in mind: no specific "user not found" messages.
+ * Maps Supabase Auth errors to user-friendly Russian strings.
+ * Keeps security in mind: no specific "user not found" messages — Supabase
+ * deliberately returns the same `invalid_credentials` for a wrong password
+ * and a non-existent account, so we can't (and shouldn't) tell them apart.
  */
-function getAuthErrorMessage(error: string): string {
-  const message = error.toLowerCase();
+function getAuthErrorMessage(error: AuthError): string {
+  // The request never got a proper answer from Supabase: no internet, DNS
+  // failure, timeout (status 0) or the auth server is down (502/503/504).
+  // These carry raw messages like "fetch failed" that no map below matches.
+  if (isAuthRetryableFetchError(error)) {
+    return error.status === 0
+      ? 'Не удалось связаться с сервером. Проверьте подключение к интернету и попробуйте снова'
+      : 'Сервис авторизации временно недоступен. Попробуйте через несколько минут';
+  }
 
-  const errorMap: Record<string, string> = {
-    'invalid login credentials':
+  const byCode: Record<string, string> = {
+    invalid_credentials:
       'Неверный email или пароль. Проверьте данные или зарегистрируйтесь, если у вас ещё нет аккаунта',
-    'email not confirmed': 'Email не подтверждён. Проверьте почту',
-    'user already registered': 'Пользователь с таким email уже зарегистрирован',
-    'signup requires a valid password': 'Введите корректный пароль',
-    'password should be at least 6 characters': 'Пароль должен содержать минимум 8 символов',
+    email_not_confirmed: 'Email не подтверждён. Проверьте почту',
+    user_already_exists: 'Пользователь с таким email уже зарегистрирован',
+    email_exists: 'Пользователь с таким email уже зарегистрирован',
+    weak_password: 'Пароль слишком простой. Придумайте более надёжный',
+    same_password: 'Новый пароль должен отличаться от старого',
+    email_address_invalid: 'Некорректный email',
+    user_banned: 'Аккаунт заблокирован. Свяжитесь с поддержкой',
+    signup_disabled: 'Регистрация временно недоступна',
+    over_request_rate_limit: 'Слишком много попыток. Попробуйте позже',
+    over_email_send_rate_limit: 'Подождите немного перед повторной отправкой кода',
+    otp_expired: 'Код неверен или истёк. Запросите новый.',
+    request_timeout: 'Сервер не ответил вовремя. Попробуйте снова',
+  };
+
+  if (error.code && byCode[error.code]) {
+    return byCode[error.code];
+  }
+
+  // Fallback for responses without an error code (older GoTrue versions)
+  const message = error.message.toLowerCase();
+
+  const byMessage: Record<string, string> = {
+    'invalid login credentials': byCode.invalid_credentials,
+    'email not confirmed': byCode.email_not_confirmed,
+    'user already registered': byCode.user_already_exists,
     'email rate limit exceeded': 'Слишком много попыток. Попробуйте позже',
-    'for security purposes, you can only request this after 60 seconds':
-      'Подождите 60 секунд перед повторной попыткой',
-    'token has expired or is invalid': 'Код неверен или истёк. Запросите новый.',
+    'token has expired or is invalid': byCode.otp_expired,
     'invalid otp': 'Код неверен. Проверьте и попробуйте снова.',
   };
 
-  if (errorMap[message]) return errorMap[message];
+  if (byMessage[message]) return byMessage[message];
 
   // Supabase returns a dynamic wait time ("...after N seconds") that won't
   // match the map above verbatim — catch it separately.
@@ -42,6 +72,14 @@ function getAuthErrorMessage(error: string): string {
     return 'Подождите немного перед повторной отправкой кода';
   }
 
+  // Anything left is unexpected — log it so it's diagnosable from the
+  // server console instead of only surfacing as a generic message.
+  console.error('[auth] unmapped Supabase error', {
+    name: error.name,
+    code: error.code,
+    status: error.status,
+    message: error.message,
+  });
   return 'Произошла ошибка. Попробуйте позже';
 }
 
@@ -58,12 +96,16 @@ export async function login(
     password: formData.get('password'),
   };
 
+  // Echoed back on failure so the email survives React's post-action form reset
+  const values = { email: typeof rawData.email === 'string' ? rawData.email : '' };
+
   // 1. Validate & sanitize
   const result = loginSchema.safeParse(rawData);
   if (!result.success) {
     return {
       error: 'Проверьте введённые данные',
       fieldErrors: result.error.flatten().fieldErrors as Record<string, string[]>,
+      values,
     };
   }
 
@@ -87,7 +129,7 @@ export async function login(
       redirect(`/confirm?email=${encodeURIComponent(result.data.email)}`);
     }
 
-    return { error: getAuthErrorMessage(error.message) };
+    return { error: getAuthErrorMessage(error), values };
   }
 
   // 3. Success → redirect
@@ -110,12 +152,19 @@ export async function register(
     confirmPassword: formData.get('confirmPassword'),
   };
 
+  // Echoed back on failure so these survive React's post-action form reset
+  const values = {
+    email: typeof rawData.email === 'string' ? rawData.email : '',
+    fullName: typeof rawData.fullName === 'string' ? rawData.fullName : '',
+  };
+
   // 1. Validate & sanitize
   const result = registerSchema.safeParse(rawData);
   if (!result.success) {
     return {
       error: 'Проверьте введённые данные',
       fieldErrors: result.error.flatten().fieldErrors as Record<string, string[]>,
+      values,
     };
   }
 
@@ -135,7 +184,7 @@ export async function register(
   });
 
   if (error) {
-    return { error: getAuthErrorMessage(error.message) };
+    return { error: getAuthErrorMessage(error), values };
   }
 
   // 3. Supabase sends a confirmation email with a code automatically —
@@ -174,7 +223,7 @@ export async function verifySignupOtp(
   });
 
   if (error) {
-    return { error: getAuthErrorMessage(error.message) };
+    return { error: getAuthErrorMessage(error) };
   }
 
   // 3. Success → session is set, redirect straight into the account
@@ -204,10 +253,110 @@ export async function resendSignupOtp(
   });
 
   if (error) {
-    return { error: getAuthErrorMessage(error.message) };
+    return { error: getAuthErrorMessage(error) };
   }
 
   return { success: 'Код отправлен повторно. Проверьте почту.' };
+}
+
+/**
+ * Request Password Reset Server Action (step 1 of recovery).
+ * Asks Supabase to email a recovery code. The "Reset Password" email
+ * template in Supabase Dashboard must show {{ .Token }}, like "Confirm signup".
+ */
+export async function requestPasswordReset(
+  _prevState: AuthActionResult | null,
+  formData: FormData,
+): Promise<AuthActionResult> {
+  const result = resendOtpSchema.safeParse({ email: formData.get('email') });
+  if (!result.success) {
+    return { error: 'Некорректный email' };
+  }
+
+  // Supabase answers the same way whether or not the account exists, so
+  // this can't be used to probe which emails are registered.
+  const supabase = await createClient();
+  const { error } = await supabase.auth.resetPasswordForEmail(result.data.email);
+
+  if (error) {
+    return { error: getAuthErrorMessage(error) };
+  }
+
+  return { success: 'Код отправлен. Проверьте почту.' };
+}
+
+/**
+ * Verify Recovery OTP Server Action (step 2 of recovery).
+ * A valid code signs the user in, then they pick a new password on /reset-password.
+ */
+export async function verifyRecoveryOtp(
+  _prevState: AuthActionResult | null,
+  formData: FormData,
+): Promise<AuthActionResult> {
+  const result = otpSchema.safeParse({
+    email: formData.get('email'),
+    code: formData.get('code'),
+  });
+  if (!result.success) {
+    return {
+      error: 'Проверьте введённые данные',
+      fieldErrors: result.error.flatten().fieldErrors as Record<string, string[]>,
+    };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.verifyOtp({
+    email: result.data.email,
+    token: result.data.code,
+    type: 'recovery',
+  });
+
+  if (error) {
+    return { error: getAuthErrorMessage(error) };
+  }
+
+  revalidatePath('/', 'layout');
+  redirect('/reset-password');
+}
+
+/**
+ * Update Password Server Action (step 3 of recovery).
+ * Sets the new password for the signed-in user → redirects to /account.
+ */
+export async function updatePassword(
+  _prevState: AuthActionResult | null,
+  formData: FormData,
+): Promise<AuthActionResult> {
+  const result = newPasswordSchema.safeParse({
+    password: formData.get('password'),
+    confirmPassword: formData.get('confirmPassword'),
+  });
+  if (!result.success) {
+    return {
+      error: 'Проверьте введённые данные',
+      fieldErrors: result.error.flatten().fieldErrors as Record<string, string[]>,
+    };
+  }
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return { error: 'Сессия восстановления истекла. Запросите код заново' };
+  }
+
+  const { error } = await supabase.auth.updateUser({ password: result.data.password });
+  if (error) {
+    return { error: getAuthErrorMessage(error) };
+  }
+
+  // Whoever knew the old password shouldn't stay signed in elsewhere.
+  // Best-effort: the password is already changed even if this fails.
+  await supabase.auth.signOut({ scope: 'others' });
+
+  revalidatePath('/', 'layout');
+  redirect('/account');
 }
 
 /**

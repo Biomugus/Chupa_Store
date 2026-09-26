@@ -11,4 +11,9 @@ export interface AuthActionResult {
   success?: string;
   /** Per-field validation errors from Zod. */
   fieldErrors?: Record<string, string[]>;
+  /**
+   * Non-secret values the user submitted. React 19 resets a form after its
+   * action runs, so these are fed back as `defaultValue` to survive the reset.
+   */
+  values?: { email?: string; fullName?: string };
 }

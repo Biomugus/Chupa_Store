@@ -3,13 +3,24 @@
 'use client';
 
 import Link from 'next/link';
-import { useActionState, useState } from 'react';
+import { useActionState, useEffect, useRef } from 'react';
 import { register } from '../actions';
 import styles from '../auth.module.css';
 
 export default function RegisterPage() {
   const [state, formAction, isPending] = useActionState(register, null);
-  const [email, setEmail] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // Focus the first invalid field; a server-side error (e.g. the email is
+  // already taken) is almost always about the email
+  useEffect(() => {
+    if (!state?.error) return;
+    const firstInvalid = ['email', 'fullName', 'password', 'confirmPassword'].find(
+      (name) => state.fieldErrors?.[name],
+    );
+    const field = formRef.current?.elements.namedItem(firstInvalid ?? 'email');
+    if (field instanceof HTMLInputElement) field.focus();
+  }, [state]);
 
   return (
     <div className={styles.authCard}>
@@ -37,7 +48,7 @@ export default function RegisterPage() {
         </div>
       )}
 
-      <form action={formAction} className={styles.authForm} noValidate>
+      <form ref={formRef} action={formAction} className={styles.authForm} noValidate>
         <div className={styles.fieldGroup}>
           <label htmlFor="register-email" className={styles.fieldLabel}>
             Email
@@ -49,8 +60,7 @@ export default function RegisterPage() {
             autoComplete="email"
             required
             placeholder="your@email.com"
-            defaultValue={email}
-            onChange={(e) => setEmail(e.target.value)}
+            defaultValue={state?.values?.email}
             aria-describedby={state?.fieldErrors?.email ? 'register-email-error' : undefined}
             className={`${styles.fieldInput} ${state?.fieldErrors?.email ? styles.fieldInputError : ''}`}
           />
@@ -72,6 +82,7 @@ export default function RegisterPage() {
             autoComplete="name"
             required
             placeholder="Как к вам обращаться"
+            defaultValue={state?.values?.fullName}
             aria-describedby={state?.fieldErrors?.fullName ? 'register-fullname-error' : undefined}
             className={`${styles.fieldInput} ${state?.fieldErrors?.fullName ? styles.fieldInputError : ''}`}
           />
