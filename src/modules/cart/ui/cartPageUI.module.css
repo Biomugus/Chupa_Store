@@ -18,49 +18,31 @@
   margin: 0;
   letter-spacing: -0.5px;
 }
-.skeletonTitle {
-  height: clamp(1.5rem, 4vw, 2.5rem);
-  width: 160px;
-  border-radius: 6px;
-  background: var(--brand-border);
-  animation: shimmer 1.5s ease-in-out infinite;
-}
-
+/* ─── Skeleton: повторяет геометрию пустой корзины ─── */
 .skeletonIcon {
   width: 80px;
   height: 80px;
   border-radius: 50%;
   background: var(--brand-border);
-  opacity: 0.5;
   animation: shimmer 1.5s ease-in-out infinite;
 }
 
-.skeletonLines {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  max-width: 320px;
-}
-
-.skeletonLine {
-  height: 14px;
-  width: 100%;
+/* Текст остаётся в потоке (задаёт размеры), но невидим — поверх плашки по строкам */
+.skeletonText {
+  color: transparent;
+  background: var(--brand-border);
   border-radius: 4px;
-  background: var(--brand-border);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
   animation: shimmer 1.5s ease-in-out infinite;
 }
 
-.skeletonLineShort {
-  width: 65%;
-}
-
-.skeletonButton {
-  height: 44px;
-  width: 220px;
-  border-radius: 6px;
+/* Двойной класс — чтобы перебить фон/тень .btnGradientPrimary */
+.emptyState .skeletonButton {
   background: var(--brand-border);
+  color: transparent;
+  box-shadow: none;
+  pointer-events: none;
   animation: shimmer 1.5s ease-in-out infinite;
 }
 
@@ -259,10 +241,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .emptyIcon,
-  .skeletonTitle,
   .skeletonIcon,
-  .skeletonLine,
-  .skeletonButton,
+  .skeletonText,
+  .emptyState .skeletonButton,
   .continueLink {
     animation: none;
     transition: none;

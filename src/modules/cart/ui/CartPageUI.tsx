@@ -19,55 +19,20 @@ export function CartPageUI({
 }: CartPageUIProps) {
   const isEmpty = items.length === 0;
 
+  // До монтирования корзина из localStorage ещё не прочитана — показываем
+  // скелетон с той же разметкой, что и у пустой корзины, чтобы не было скачка.
   if (!mounted) {
     return (
-      <section className={styles.page}>
-        <div className={styles.skeletonTitle} />
-        <div className={styles.emptyState}>
-          <div className={styles.skeletonIcon} />
-          <div className={styles.skeletonLines}>
-            <div className={styles.skeletonLine} />
-            <div className={`${styles.skeletonLine} ${styles.skeletonLineShort}`} />
-          </div>
-          <div className={styles.skeletonButton} />
-        </div>
+      <section className={styles.page} aria-busy="true">
+        <span className="sr-only">Загрузка корзины</span>
+        <EmptyCart skeleton />
       </section>
     );
   }
 
   return (
     <section className={styles.page}>
-      {isEmpty && (
-        <div className={styles.emptyState}>
-          <div className={styles.emptyIcon}>
-            <svg
-              width="80"
-              height="80"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="9" cy="21" r="1" />
-              <circle cx="20" cy="21" r="1" />
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-            </svg>
-          </div>
-
-          <div className={styles.emptyContent}>
-            <h2 className={styles.emptyTitle}>Корзина пуста</h2>
-            <p className={styles.emptyDescription}>
-              Вернитесь в каталог и добавьте изделия, чтобы оформить заказ.
-            </p>
-          </div>
-
-          <Link href="/catalog" className={`${btnStyles.btnGradientPrimary} ${styles.emptyButton}`}>
-            Перейти в каталог
-          </Link>
-        </div>
-      )}
+      {isEmpty && <EmptyCart />}
 
       {!isEmpty && (
         <>
@@ -111,5 +76,57 @@ export function CartPageUI({
         </>
       )}
     </section>
+  );
+}
+
+function EmptyCart({ skeleton = false }: { skeleton?: boolean }) {
+  const text = skeleton ? styles.skeletonText : undefined;
+
+  return (
+    <div className={styles.emptyState} aria-hidden={skeleton || undefined}>
+      {skeleton ? (
+        <div className={styles.skeletonIcon} />
+      ) : (
+        <div className={styles.emptyIcon}>
+          <svg
+            width="80"
+            height="80"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+        </div>
+      )}
+
+      <div className={styles.emptyContent}>
+        <h2 className={styles.emptyTitle}>
+          <span className={text}>Корзина пуста</span>
+        </h2>
+        <p className={styles.emptyDescription}>
+          <span className={text}>
+            Вернитесь в каталог и добавьте изделия, чтобы оформить заказ.
+          </span>
+        </p>
+      </div>
+
+      {skeleton ? (
+        <span
+          className={`${btnStyles.btnGradientPrimary} ${styles.emptyButton} ${styles.skeletonButton}`}
+        >
+          Перейти в каталог
+        </span>
+      ) : (
+        <Link href="/catalog" className={`${btnStyles.btnGradientPrimary} ${styles.emptyButton}`}>
+          Перейти в каталог
+        </Link>
+      )}
+    </div>
   );
 }
