@@ -5,6 +5,7 @@
 import { AuthActionResult } from '@/modules/auth/types/authTypes';
 import {
   loginSchema,
+  newPasswordSchema,
   otpSchema,
   registerSchema,
   resendOtpSchema,
@@ -37,6 +38,7 @@ function getAuthErrorMessage(error: AuthError): string {
     user_already_exists: 'Пользователь с таким email уже зарегистрирован',
     email_exists: 'Пользователь с таким email уже зарегистрирован',
     weak_password: 'Пароль слишком простой. Придумайте более надёжный',
+    same_password: 'Новый пароль должен отличаться от старого',
     email_address_invalid: 'Некорректный email',
     user_banned: 'Аккаунт заблокирован. Свяжитесь с поддержкой',
     signup_disabled: 'Регистрация временно недоступна',
@@ -255,6 +257,106 @@ export async function resendSignupOtp(
   }
 
   return { success: 'Код отправлен повторно. Проверьте почту.' };
+}
+
+/**
+ * Request Password Reset Server Action (step 1 of recovery).
+ * Asks Supabase to email a recovery code. The "Reset Password" email
+ * template in Supabase Dashboard must show {{ .Token }}, like "Confirm signup".
+ */
+export async function requestPasswordReset(
+  _prevState: AuthActionResult | null,
+  formData: FormData,
+): Promise<AuthActionResult> {
+  const result = resendOtpSchema.safeParse({ email: formData.get('email') });
+  if (!result.success) {
+    return { error: 'Некорректный email' };
+  }
+
+  // Supabase answers the same way whether or not the account exists, so
+  // this can't be used to probe which emails are registered.
+  const supabase = await createClient();
+  const { error } = await supabase.auth.resetPasswordForEmail(result.data.email);
+
+  if (error) {
+    return { error: getAuthErrorMessage(error) };
+  }
+
+  return { success: 'Код отправлен. Проверьте почту.' };
+}
+
+/**
+ * Verify Recovery OTP Server Action (step 2 of recovery).
+ * A valid code signs the user in, then they pick a new password on /reset-password.
+ */
+export async function verifyRecoveryOtp(
+  _prevState: AuthActionResult | null,
+  formData: FormData,
+): Promise<AuthActionResult> {
+  const result = otpSchema.safeParse({
+    email: formData.get('email'),
+    code: formData.get('code'),
+  });
+  if (!result.success) {
+    return {
+      error: 'Проверьте введённые данные',
+      fieldErrors: result.error.flatten().fieldErrors as Record<string, string[]>,
+    };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.verifyOtp({
+    email: result.data.email,
+    token: result.data.code,
+    type: 'recovery',
+  });
+
+  if (error) {
+    return { error: getAuthErrorMessage(error) };
+  }
+
+  revalidatePath('/', 'layout');
+  redirect('/reset-password');
+}
+
+/**
+ * Update Password Server Action (step 3 of recovery).
+ * Sets the new password for the signed-in user → redirects to /account.
+ */
+export async function updatePassword(
+  _prevState: AuthActionResult | null,
+  formData: FormData,
+): Promise<AuthActionResult> {
+  const result = newPasswordSchema.safeParse({
+    password: formData.get('password'),
+    confirmPassword: formData.get('confirmPassword'),
+  });
+  if (!result.success) {
+    return {
+      error: 'Проверьте введённые данные',
+      fieldErrors: result.error.flatten().fieldErrors as Record<string, string[]>,
+    };
+  }
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return { error: 'Сессия восстановления истекла. Запросите код заново' };
+  }
+
+  const { error } = await supabase.auth.updateUser({ password: result.data.password });
+  if (error) {
+    return { error: getAuthErrorMessage(error) };
+  }
+
+  // Whoever knew the old password shouldn't stay signed in elsewhere.
+  // Best-effort: the password is already changed even if this fails.
+  await supabase.auth.signOut({ scope: 'others' });
+
+  revalidatePath('/', 'layout');
+  redirect('/account');
 }
 
 /**

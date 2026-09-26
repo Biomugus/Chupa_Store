@@ -70,9 +70,21 @@ export default function LoginPage() {
         </div>
 
         <div className={styles.fieldGroup}>
-          <label htmlFor="login-password" className={styles.fieldLabel}>
-            Пароль
-          </label>
+          <div className={styles.fieldLabelRow}>
+            <label htmlFor="login-password" className={styles.fieldLabel}>
+              Пароль
+            </label>
+            <Link
+              href={
+                state?.values?.email
+                  ? `/forgot-password?email=${encodeURIComponent(state.values.email)}`
+                  : '/forgot-password'
+              }
+              className={styles.fieldLabelLink}
+            >
+              Забыли пароль?
+            </Link>
+          </div>
           <input
             ref={passwordRef}
             id="login-password"

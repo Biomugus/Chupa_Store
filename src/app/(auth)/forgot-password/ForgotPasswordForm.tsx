@@ -1,68 +1,70 @@
-// src/app/(auth)/confirm/ConfirmEmailForm.tsx
+// src/app/(auth)/forgot-password/ForgotPasswordForm.tsx
 
 'use client';
 
 import { useActionState, useEffect, useState } from 'react';
-import { resendSignupOtp, verifySignupOtp } from '../actions';
+import { requestPasswordReset, verifyRecoveryOtp } from '../actions';
 import styles from '../auth.module.css';
 import { EMAIL_OTP_LENGTH } from '@/modules/auth/validation/authSchemas';
 import { OtpCodeInput } from '../_components/OtpCodeInput';
 
-type ConfirmEmailFormProps = {
-  /** Pre-filled when we arrive here from registration or a login attempt
-   * with an unconfirmed account. Missing only if the user opened this
-   * page directly (e.g. a bookmarked/typed URL). */
+type ForgotPasswordFormProps = {
+  /** Pre-filled when coming from a failed login attempt. Unlike /confirm,
+   * nothing has been sent yet, so we still start at the email step. */
   initialEmail?: string;
 };
 
-export function ConfirmEmailForm({ initialEmail = '' }: ConfirmEmailFormProps) {
+export function ForgotPasswordForm({ initialEmail = '' }: ForgotPasswordFormProps) {
   const [email, setEmail] = useState(initialEmail);
-  // Skip the "which email" step entirely when we already know it.
-  const [emailKnown, setEmailKnown] = useState(!!initialEmail);
+  const [codeSent, setCodeSent] = useState(false);
   const [code, setCode] = useState('');
 
-  const [otpState, otpAction, isOtpPending] = useActionState(verifySignupOtp, null);
-  const [resendState, resendAction, isResendPending] = useActionState(resendSignupOtp, null);
+  const [sendState, sendAction, isSendPending] = useActionState(requestPasswordReset, null);
+  const [resendState, resendAction, isResendPending] = useActionState(requestPasswordReset, null);
+  const [otpState, otpAction, isOtpPending] = useActionState(verifyRecoveryOtp, null);
 
-  // Move to the code-entry step once a code has actually been sent — either
-  // because we arrived here already knowing the email (register/login
-  // already triggered a send), or because the user just submitted the
-  // "which email" step below and resendSignupOtp succeeded. Without this,
-  // a direct/bookmarked visit to /confirm would show empty code boxes
-  // without ever having asked Supabase to send anything.
   useEffect(() => {
-    if (resendState?.success) setEmailKnown(true);
-  }, [resendState]);
+    if (sendState?.success) setCodeSent(true);
+  }, [sendState]);
 
   // Clear the code after a failed attempt so the user retypes it fresh
-  // instead of having to manually clear a wrong code from every box.
   useEffect(() => {
     if (otpState?.error) setCode('');
   }, [otpState]);
 
-  if (!emailKnown) {
+  if (!codeSent) {
     return (
-      <form action={resendAction} className={styles.authForm} noValidate>
+      <form action={sendAction} className={styles.authForm} noValidate>
+        <p className={styles.authFooterText} style={{ textAlign: 'center' }}>
+          Укажите email, привязанный к аккаунту — мы пришлём на него код для сброса пароля
+        </p>
+
         <div className={styles.fieldGroup}>
-          <label htmlFor="confirm-email" className={styles.fieldLabel}>
+          <label htmlFor="forgot-email" className={styles.fieldLabel}>
             Email
           </label>
           <input
-            id="confirm-email"
+            id="forgot-email"
             name="email"
             type="email"
-            autoComplete="email"
+            autoComplete="username"
             required
+            autoFocus
             placeholder="your@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={styles.fieldInput}
+            aria-describedby={sendState?.error ? 'forgot-email-error' : undefined}
+            className={`${styles.fieldInput} ${sendState?.error ? styles.fieldInputError : ''}`}
           />
-          {resendState?.error && <p className={styles.fieldError}>{resendState.error}</p>}
+          {sendState?.error && (
+            <p id="forgot-email-error" className={styles.fieldError}>
+              {sendState.error}
+            </p>
+          )}
         </div>
 
-        <button type="submit" disabled={isResendPending} className={styles.submitButton}>
-          {isResendPending ? <span className={styles.spinner} /> : 'Получить код'}
+        <button type="submit" disabled={isSendPending} className={styles.submitButton}>
+          {isSendPending ? <span className={styles.spinner} /> : 'Получить код'}
         </button>
       </form>
     );
@@ -70,8 +72,9 @@ export function ConfirmEmailForm({ initialEmail = '' }: ConfirmEmailFormProps) {
 
   return (
     <>
+      {/* Deliberately doesn't confirm the account exists — see requestPasswordReset */}
       <p className={styles.authFooterText} style={{ marginBottom: 20, textAlign: 'center' }}>
-        Мы отправили код на <strong>{email}</strong>
+        Если аккаунт с адресом <strong>{email}</strong> существует, мы отправили на него код
       </p>
 
       <form action={otpAction} className={styles.authForm} noValidate>
@@ -101,7 +104,7 @@ export function ConfirmEmailForm({ initialEmail = '' }: ConfirmEmailFormProps) {
           disabled={isOtpPending || code.length !== EMAIL_OTP_LENGTH}
           className={styles.submitButton}
         >
-          {isOtpPending ? <span className={styles.spinner} /> : 'Подтвердить'}
+          {isOtpPending ? <span className={styles.spinner} /> : 'Продолжить'}
         </button>
       </form>
 
@@ -120,6 +123,17 @@ export function ConfirmEmailForm({ initialEmail = '' }: ConfirmEmailFormProps) {
         {resendState?.error && (
           <p className={`${styles.inlineHint} ${styles.inlineHintError}`}>{resendState.error}</p>
         )}
+        <button
+          type="button"
+          onClick={() => {
+            setCodeSent(false);
+            setCode('');
+          }}
+          className={styles.linkButton}
+          style={{ marginTop: 12 }}
+        >
+          Изменить email
+        </button>
       </div>
     </>
   );

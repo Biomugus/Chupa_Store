@@ -55,23 +55,25 @@ export const registerSchema = z
   });
 
 /**
- * Length of the signup confirmation code, as configured in Supabase
- * (Dashboard → Authentication → Sign In / Providers → Email → Email OTP
- * Length). Supabase's own default is 6, but this project's instance is
- * set to 8 — keep this in sync with that setting.
+ * Length of the emailed one-time codes (signup confirmation and password
+ * recovery share it), as configured in Supabase (Dashboard → Authentication
+ * → Sign In / Providers → Email → Email OTP Length). Supabase's own default
+ * is 6, but this project's instance is set to 8 — keep this in sync with
+ * that setting.
  */
-export const SIGNUP_OTP_LENGTH = 8;
+export const EMAIL_OTP_LENGTH = 8;
 
 /**
- * Signup OTP confirmation schema: email + confirmation code from the email.
+ * Email OTP schema: email + code from the email. Used for both signup
+ * confirmation and password recovery.
  */
 export const otpSchema = z.object({
   email: emailField,
   code: z
     .string()
     .trim()
-    .regex(new RegExp(`^\\d{${SIGNUP_OTP_LENGTH}}$`), {
-      message: `Код должен содержать ${SIGNUP_OTP_LENGTH} цифр`,
+    .regex(new RegExp(`^\\d{${EMAIL_OTP_LENGTH}}$`), {
+      message: `Код должен содержать ${EMAIL_OTP_LENGTH} цифр`,
     }),
 });
 
@@ -81,6 +83,19 @@ export const otpSchema = z.object({
 export const resendOtpSchema = z.object({
   email: emailField,
 });
+
+/**
+ * Set-new-password schema (last step of password recovery).
+ */
+export const newPasswordSchema = z
+  .object({
+    password: passwordField,
+    confirmPassword: z.string().min(1, { message: 'Подтвердите пароль' }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Пароли не совпадают',
+    path: ['confirmPassword'],
+  });
 
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type RegisterFormData = z.infer<typeof registerSchema>;
