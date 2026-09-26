@@ -18,7 +18,7 @@
 
 `question` (по умолчанию), `order`, `custom`, `partnership`, `defect`, `other`.
 
-Тема подставляется из `?topic=`: `/contacts?topic=partnership#contact-form`. Так работают карточки сценариев на странице и ссылки футера «Сообщить о браке» / «Для партнеров». Неизвестное значение → `question`.
+Тема подставляется из `?topic=`: `/contacts?topic=partnership#contact-form`. Так работают карточки сценариев на странице и ссылки футера «Кастомные проекты», «Сообщить о браке» и «Для партнеров». Неизвестное значение → `question`.
 
 Подсказка (placeholder) в поле «Сообщение» зависит от темы — `CONTACT_TOPIC_PLACEHOLDERS`.
 

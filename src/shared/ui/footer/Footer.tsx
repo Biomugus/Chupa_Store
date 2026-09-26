@@ -32,7 +32,7 @@ const FOOTER_SECTIONS: FooterSectionConfig[] = [
       { label: 'Рукоятки', href: '/catalog?productType=grip' },
       { label: 'Приклады', href: '/catalog?productType=stock' },
       { label: 'Mlok-комплектующие', href: '/catalog?productType=mlock' },
-      { label: 'Кастомные проекты', href: '/customs' },
+      { label: 'Кастомные проекты', href: '/contacts?topic=custom#contact-form' },
     ],
   },
   {
