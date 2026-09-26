@@ -3,12 +3,21 @@
 'use client';
 
 import Link from 'next/link';
-import { useActionState } from 'react';
+import { useActionState, useEffect, useRef } from 'react';
 import { login } from '../actions';
 import styles from '../auth.module.css';
 
 export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(login, null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  // After a failed attempt the email is restored but the password is cleared,
+  // so put the cursor where the user has to act next
+  useEffect(() => {
+    if (!state?.error) return;
+    (state.fieldErrors?.email ? emailRef : passwordRef).current?.focus();
+  }, [state]);
 
   return (
     <div className={styles.authCard}>
@@ -42,11 +51,13 @@ export default function LoginPage() {
             Email
           </label>
           <input
+            ref={emailRef}
             id="login-email"
             name="email"
             type="email"
-            autoComplete="email"
+            autoComplete="username"
             required
+            defaultValue={state?.values?.email}
             placeholder="your@email.com"
             aria-describedby={state?.fieldErrors?.email ? 'login-email-error' : undefined}
             className={`${styles.fieldInput} ${state?.fieldErrors?.email ? styles.fieldInputError : ''}`}
@@ -63,6 +74,7 @@ export default function LoginPage() {
             Пароль
           </label>
           <input
+            ref={passwordRef}
             id="login-password"
             name="password"
             type="password"

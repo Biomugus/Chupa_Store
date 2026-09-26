@@ -94,12 +94,16 @@ export async function login(
     password: formData.get('password'),
   };
 
+  // Echoed back on failure so the email survives React's post-action form reset
+  const values = { email: typeof rawData.email === 'string' ? rawData.email : '' };
+
   // 1. Validate & sanitize
   const result = loginSchema.safeParse(rawData);
   if (!result.success) {
     return {
       error: 'Проверьте введённые данные',
       fieldErrors: result.error.flatten().fieldErrors as Record<string, string[]>,
+      values,
     };
   }
 
@@ -123,7 +127,7 @@ export async function login(
       redirect(`/confirm?email=${encodeURIComponent(result.data.email)}`);
     }
 
-    return { error: getAuthErrorMessage(error) };
+    return { error: getAuthErrorMessage(error), values };
   }
 
   // 3. Success → redirect
@@ -146,12 +150,19 @@ export async function register(
     confirmPassword: formData.get('confirmPassword'),
   };
 
+  // Echoed back on failure so these survive React's post-action form reset
+  const values = {
+    email: typeof rawData.email === 'string' ? rawData.email : '',
+    fullName: typeof rawData.fullName === 'string' ? rawData.fullName : '',
+  };
+
   // 1. Validate & sanitize
   const result = registerSchema.safeParse(rawData);
   if (!result.success) {
     return {
       error: 'Проверьте введённые данные',
       fieldErrors: result.error.flatten().fieldErrors as Record<string, string[]>,
+      values,
     };
   }
 
@@ -171,7 +182,7 @@ export async function register(
   });
 
   if (error) {
-    return { error: getAuthErrorMessage(error) };
+    return { error: getAuthErrorMessage(error), values };
   }
 
   // 3. Supabase sends a confirmation email with a code automatically —
