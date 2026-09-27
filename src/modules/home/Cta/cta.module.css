@@ -71,8 +71,9 @@
   width: 100%;
 }
 
-.primary,
-.secondary {
+/* Двойной класс — чтобы перебить width/padding/font-size .btnGradient* независимо от порядка CSS-чанков */
+.actions .primary,
+.actions .secondary {
   width: 100%;
   font-size: 14px;
   padding: 14px;
@@ -86,8 +87,8 @@
     width: auto;
   }
 
-  .primary,
-  .secondary {
+  .actions .primary,
+  .actions .secondary {
     width: auto;
     font-size: inherit;
   }
