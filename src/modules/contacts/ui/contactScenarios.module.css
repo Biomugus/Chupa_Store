@@ -71,7 +71,8 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
-.cta {
+/* Двойной класс — чтобы перебить width/border-color .btnGradientPrimary независимо от порядка CSS-чанков */
+.content .cta {
   width: auto;
   min-width: 220px;
   margin-top: auto;
@@ -88,7 +89,7 @@
     padding: 24px 20px;
   }
 
-  .cta {
+  .content .cta {
     width: 100%;
   }
 }
