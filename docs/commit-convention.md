@@ -1,20 +1,20 @@
-# Commit Convention
+# Соглашение о коммитах
 
-This project uses [Conventional Commits](https://www.conventionalcommits.org/) enforced by **commitlint** + **husky**.
+Проект использует [Conventional Commits](https://www.conventionalcommits.org/), формат проверяется **commitlint** + **husky**.
 
 ---
 
-## How to commit
+## Как коммитить
 
-### Recommended: interactive wizard
+### Рекомендуется: интерактивный мастер
 
 ```bash
 npm run commit
 ```
 
-This runs **Commitizen** — it asks you questions step by step and builds a valid commit message automatically.
+Запускает **Commitizen** — он по шагам задаёт вопросы и сам собирает корректное сообщение коммита.
 
-### Manual commit
+### Вручную
 
 ```bash
 git commit -m "type(scope): short description"
@@ -22,73 +22,86 @@ git commit -m "type(scope): short description"
 
 ---
 
-## Format
+## Формат
 
 ```
 type(scope): subject
 
-[optional body]
+[необязательное тело]
 
-[optional footer]
+[необязательный футер]
 ```
 
-### Rules
-| Rule | Value |
-|------|-------|
-| Header max length | **72 characters** |
-| Subject case | **lower-case** |
-| Subject ending | **no period `.`** |
-| Type case | **lower-case** |
+### Правила
+
+| Правило                     | Значение                   |
+| --------------------------- | -------------------------- |
+| Длина заголовка             | **не больше 72 символов**  |
+| Регистр `subject`           | **строчные буквы**         |
+| Конец `subject`             | **без точки `.`**          |
+| Регистр `type`              | **строчные буквы**         |
+| `subject`                   | **не пустой**              |
+| Длина строки в теле коммита | **не больше 150 символов** |
+
+### Язык
+
+- Заголовок коммита (`type(scope): subject`) и заголовок PR — на английском.
+- Тело коммита и описание PR — на русском.
+- Идентификаторы, пути к файлам и команды — как в коде.
 
 ---
 
-## Allowed types
+## Допустимые типы
 
-| Type | When to use |
-|------|-------------|
-| `feat` | New feature for the user |
-| `fix` | Bug fix |
-| `docs` | Documentation only |
-| `style` | Formatting, whitespace — no logic change |
-| `refactor` | Code restructure, no feature/fix |
-| `perf` | Performance improvement |
-| `test` | Adding or fixing tests |
-| `build` | Build system or dependency changes |
-| `ci` | CI/CD configuration |
-| `chore` | Misc tasks (configs, scripts) |
-| `revert` | Revert a previous commit |
+| Тип        | Когда использовать                               |
+| ---------- | ------------------------------------------------ |
+| `feat`     | Новая функциональность для пользователя          |
+| `fix`      | Исправление ошибки                               |
+| `docs`     | Только документация                              |
+| `style`    | Форматирование, пробелы — без изменения логики   |
+| `refactor` | Перестройка кода без новой функции и исправлений |
+| `perf`     | Улучшение производительности                     |
+| `test`     | Добавление или исправление тестов                |
+| `build`    | Сборка или зависимости                           |
+| `ci`       | Настройка CI/CD                                  |
+| `chore`    | Прочее (конфиги, скрипты)                        |
+| `revert`   | Откат предыдущего коммита                        |
 
 ---
 
-## Examples
+## Примеры
 
 ```bash
-# Good
+# Хорошо
 feat(auth): add google oauth login
 fix(cart): prevent duplicate items on add
 refactor(ui): centralize button styles with css variables
 docs: update readme with setup instructions
 chore: upgrade eslint to v9
 
-# Bad — header too long (> 72 chars)
+# Плохо — заголовок длиннее 72 символов
 refactor: Centralize button styles and implement CSS variables for a consistent design system.
 
-# Bad — uppercase subject
+# Плохо — subject с заглавной буквы
 feat(auth): Add Google OAuth Login
 
-# Bad — period at the end
+# Плохо — точка в конце
 fix(cart): prevent duplicate items.
 ```
 
 ---
 
-## How it works under the hood
+## Как это работает
 
-1. **`npm run commit`** → runs `git add -A && cz` (Commitizen wizard)
-2. You answer the prompts → Commitizen builds the message
-3. **`commit-msg` hook** → runs `commitlint` to validate the message
-4. If validation fails → commit is rejected with a clear error
+1. **`npm run commit`** → выполняет `git add -A` (добавляет в коммит **всё**, включая неотслеживаемые файлы), затем `cz` (мастер Commitizen)
+2. Вы отвечаете на вопросы → Commitizen собирает сообщение
+3. **Хук `pre-commit`** → запускает `lint-staged` (prettier для файлов в индексе)
+4. **Хук `commit-msg`** → запускает `commitlint` для проверки сообщения
+5. Если проверка не прошла → коммит отклоняется с понятной ошибкой
 
-Config files:
-- `commitlint.config.js` — validation rules
-- `.husky/commit-msg` — git hook that triggers commitlint
+Файлы конфигурации:
+
+- `commitlint.config.js` — правила проверки
+- `.husky/pre-commit` — git-хук, запускающий lint-staged
+- `.husky/commit-msg` — git-хук, запускающий commitlint
+- `package.json` → `lint-staged` — какие файлы форматирует prettier

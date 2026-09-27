@@ -1,23 +1,40 @@
-# Architecture Overview
+# Обзор архитектуры
 
-## Purpose
+## Назначение
 
 Описание общих принципов архитектуры проекта.
 
-## Layers
+## Слои
 
-- UI (components, presentation)
-- Containers (state & orchestration)
-- Domain (business logic)
-- Services (API, side effects)
-- Shared (utils, api client, types)
+Бизнес-логика живёт в `src/modules/*`. Слой = папка внутри модуля:
 
-## Data flow
+| Слой       | Папки                          | Что внутри                                               |
+| ---------- | ------------------------------ | -------------------------------------------------------- |
+| UI         | `ui/`, `components/`           | Презентационные компоненты, получают данные через props  |
+| Контейнеры | `containers/`                  | Связывают хуки и UI, держат состояние сценария           |
+| Хуки       | `hooks/`                       | Состояние формы, отправка, доступ к store                |
+| Домен      | `model/`, `utils/`, `mappers/` | zod-схемы, сборка payload, построение текста — без React |
+| Сервисы    | `services/`, `api/`, `dal/`    | HTTP-запросы, Supabase-запросы, localStorage             |
+| Состояние  | `store/`                       | slice Redux Toolkit (только `cart`)                      |
+| Типы       | `types/`                       | Типы модуля                                              |
 
-User → UI → Container → Domain → Service → API
+Общий код — в `src/shared/*` (API-клиент, Supabase-клиенты, конфиги, UI-примитивы, утилиты).
 
-## Boundaries
+Не каждый модуль содержит все слои: полный набор есть у `cart`, `checkout`, `contacts`. У `catalog` и `armory` серверные функции в `api/` вызываются напрямую из server components / server actions. `home`, `history`, `mission`, `process` — только UI.
+
+## Поток данных
+
+Клиентские сценарии (корзина, чекаут, обращения):
+
+Пользователь → UI → контейнер → хук → домен → сервис → API Route
+
+Серверные данные (каталог, профиль, платформы):
+
+Server Component / Server Action → `modules/*/api` → Supabase (серверный клиент)
+
+## Границы
 
 - UI не знает про API
-- Domain не знает про React
-- Services не содержат бизнес-логики
+- Доменная логика не знает про React
+- Сервисы не содержат бизнес-логики
+- Снаружи модуль импортируется через `index.ts`, если он есть (`cart`, `contacts`)

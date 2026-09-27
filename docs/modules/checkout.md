@@ -1,21 +1,37 @@
-# Checkout Module
+# Модуль checkout
 
-## Responsibility
+## Зона ответственности
 
-Оформление заказа.
+Форма оформления заказа в модалке корзины и отправка заказа в `POST /api/orders`.
 
-## Flow
+## Структура
 
-1. Cart snapshot
-2. Form fill
-3. Submit
-4. Success / Retry / Exit
+- `containers/CheckoutFormContainer` — связывает форму, автокомплит города и отправку
+- `hooks/useCheckoutForm` — значения, тронутые поля, клиентская валидация
+- `hooks/useCitySuggestions` — подсказки городов через `POST /api/suggestions/city` (DaData)
+- `hooks/useSubmitOrder` — отправка, статус, повтор
+- `shemas/checkoutShema`, `shemas/validationRules` — zod-правила; `validationRules` переиспользуется в серверной схеме `/api/orders`
+- `model/buildOrderPayload` — сборка `OrderPayload` с `clientRequestId = crypto.randomUUID()`
+- `services/sendOrder` — `httpClient` → `/api/orders`
+- `utils/orderTextBuilder`, `mappers/orderMappers` — текст сообщения для Telegram (используются на сервере)
 
-## Payload
+## Форма
 
-OrderPayload фиксируется при первом submit.
+Поля: город, способ доставки (Почта России, СДЭК, Яндекс.Доставка, DPD, ПониЭкспресс), оплата (перевод на карту, юр. лицо), ФИО, телефон, способ связи (Telegram, VK) и контакт, скрытое поле-ловушка для ботов (honeypot) `website`.
 
-## Error handling
+## Сценарий
 
-- Validation errors → form fields
-- System errors → retry state
+1. Снимок корзины (`{ items, total }`) передаётся из `cart`
+2. Заполнение формы: ошибки показываются только у тронутых полей, с задержкой 800 мс
+3. Отправка: все поля помечаются тронутыми; при ошибках отправки нет
+4. `POST /api/orders`
+5. Успех → форма сбрасывается, `cart` очищает корзину и показывает экран успеха / Ошибка → баннер с ошибкой и «Повторить попытку»
+
+## Payload заказа
+
+`OrderPayload` фиксируется при первой отправке и переиспользуется при повторе — `clientRequestId` не меняется. Сбрасывается после успешной отправки.
+
+## Обработка ошибок
+
+- Ошибки валидации → под полями (только клиентская zod-валидация)
+- Ошибки сервера и сети → `message` в баннере с повтором; `/api/orders` отвечает обычным текстом без `details`, поэтому серверные ошибки по полям не раскладываются

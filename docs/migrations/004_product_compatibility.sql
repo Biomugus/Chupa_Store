@@ -1,5 +1,5 @@
 -- ============================================================
--- Migration 004: Create product_compatibility table + enum
+-- Миграция 004: таблица product_compatibility + enum
 -- Зависимости: 003_weapon_platforms.sql
 -- ============================================================
 

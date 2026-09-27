@@ -1,5 +1,5 @@
 -- ============================================================
--- Migration 007: Seed product_compatibility for testing
+-- Миграция 007: тестовые данные product_compatibility
 -- Зависимости: 004_product_compatibility.sql, 006_seed_platforms.sql
 -- ============================================================
 
