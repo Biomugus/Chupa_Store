@@ -1,14 +1,22 @@
-# 0001 Use localStorage for Cart
+# 0001 Хранить корзину в localStorage
 
-## Context
+## Статус
 
-Backend пока отсутствует.
+Действует.
 
-## Decision
+## Контекст
 
-Cart state хранится в localStorage.
+Бэкенда пока нет.
 
-## Consequences
+## Решение
+
+Состояние корзины хранится в localStorage.
+
+## Последствия
 
 - Быстрый старт
-- Возможна миграция на backend позже
+- Позже корзину можно перенести на сервер
+
+## Текущее состояние
+
+Позже в проекте появился Supabase (авторизация, каталог), но корзина по-прежнему только клиентская: slice Redux Toolkit (`modules/cart/store/cartSlice.ts`) с сохранением в localStorage под ключом `cart_items` (`modules/cart/dal/cartStorage.ts`). Серверной корзины нет, между устройствами корзина не синхронизируется.

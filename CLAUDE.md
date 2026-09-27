@@ -1,47 +1,49 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Этот файл — инструкции для Claude Code (claude.ai/code) по работе с кодом в этом репозитории.
 
-## Project
+## Проект
 
-Chupa Workshop — storefront for a custom weapon-parts/armory shop.
+Chupa Workshop — интернет-магазин мастерской кастомных деталей для оружия.
 
-## Commands
+## Команды
 
-`npm run commit` runs `git add -A && cz` — it stages everything before the Commitizen wizard.
+`npm run commit` выполняет `git add -A && cz` — перед мастером Commitizen в коммит добавляется всё, включая неотслеживаемые файлы.
 
-Commits are enforced by commitlint + husky (`commit-msg` hook) and must follow Conventional Commits (`type(scope): subject`, see `docs/commit-convention.md`). `pre-commit` runs `lint-staged` (prettier) on staged files.
+Коммиты проверяются commitlint + husky (хук `commit-msg`) и должны следовать Conventional Commits (`type(scope): subject`, см. `docs/commit-convention.md`). Хук `pre-commit` запускает `lint-staged` (prettier) для файлов в индексе.
 
-**Language of commits and PRs:** titles stay in English, content is in Russian.
+**Язык коммитов и PR:** заголовки — на английском, содержание — на русском.
 
-- Commit header (`type(scope): subject`) and PR title: English, e.g. `feat(header): show name initial in user avatar`.
-- Commit body and PR description: Russian.
-- Code identifiers, file paths and commands stay as-is.
+- Заголовок коммита (`type(scope): subject`) и заголовок PR — на английском, например `feat(header): show name initial in user avatar`.
+- Тело коммита и описание PR — на русском.
+- Идентификаторы, пути к файлам и команды — как в коде.
 
-## Architecture
+## Архитектура
 
-### Module structure (`src/modules/*`)
+### Структура модулей (`src/modules/*`)
 
-Business logic lives in feature modules under `src/modules/*`, each internally layered per `docs/architecture/*`.
+Бизнес-логика живёт в модулях `src/modules/*`, внутри каждого — слои по `docs/architecture/*`.
 
-Declared boundary rule (`docs/architecture/overview.md`): UI must not know about the API directly; domain logic must not import React; services hold no business logic. Data flow is `UI → Container → Domain → Service → API`.
+Правило границ (`docs/architecture/overview.md`): UI не обращается к API напрямую; доменная логика не импортирует React; сервисы не содержат бизнес-логики. Поток данных: `UI → Container → Domain → Service → API`.
 
-A module exposes its public surface via `index.ts` (see `src/modules/cart/index.ts`) — prefer importing through that barrel from outside the module rather than reaching into internal files.
+Публичный API модуля — его `index.ts` (см. `src/modules/cart/index.ts`). Снаружи импортируйте через него, а не из внутренних файлов модуля.
 
-### State & data
+### Состояние и данные
 
-- **Cart**: Redux Toolkit (`src/lib/store.ts` registers only the `cart` reducer), persisted to `localStorage` via `modules/cart/dal/cartStorage.ts` per ADR `docs/decisions/0001-use-localstorage-for-cart.md`. There is no server-side cart.
-- **Catalog/products**: fetched server-side from Supabase (`modules/catalog/api/getCatalog.ts`), including a per-user compatibility join against `product_compatibility` keyed by the user's selected weapon platform (see armory module and `docs/migrations/003_weapon_platforms.sql`–`007_seed_compatibility.sql`).
-- **Auth**: Supabase, split into a browser client (`shared/api/supabase/client.ts`, `createBrowserClient`) and a server client (`shared/api/supabase/server.ts`, `createServerClient` bound to Next.js `cookies()`). Never mix these — server components/actions use the server client, client components use the browser client.
-- **Order submission**: `checkout` module builds an `OrderPayload` client-side (`model/buildOrderPayload.ts`, includes a `crypto.randomUUID()` `clientRequestId`) and posts it to `POST /api/orders`. `docs/api/create-order.md` documents this endpoint as idempotent-by-`clientRequestId` with persisted orders and 409/422 responses, but the current implementation in `src/app/api/orders/route.ts` only validates the payload with zod and forwards it as a Telegram message (`TG_BOT_TOKEN`/`TG_CHAT_ID` env vars) — there is no persistence or idempotency check yet. Treat the docs as the target contract, not the current behavior, when working on this endpoint.
-- **Errors**: normalized to `{ message: string, details?: Record<string,string> }` (`ApiError` in `shared/api/apiTypes.ts`, ADR `docs/decisions/0002-api-error-format.md`); `shared/api/httpClient.ts` throws this shape on non-OK responses so hooks can surface `details` as per-field form errors.
+- **Корзина**: Redux Toolkit (`src/lib/store.ts` регистрирует только reducer `cart`), сохраняется в `localStorage` через `modules/cart/dal/cartStorage.ts` по ADR `docs/decisions/0001-use-localstorage-for-cart.md`. Серверной корзины нет.
+- **Каталог и товары**: загружаются на сервере из Supabase (`modules/catalog/api/getCatalog.ts`) вместе с совместимостью из `product_compatibility` для выбранной пользователем платформы оружия (см. модуль `armory` и `docs/migrations/003_weapon_platforms.sql`–`007_seed_compatibility.sql`).
+- **Авторизация**: Supabase, два клиента — браузерный (`shared/api/supabase/client.ts`, `createBrowserClient`) и серверный (`shared/api/supabase/server.ts`, `createServerClient` поверх `cookies()` из Next.js). Не смешивайте их: server components и server actions используют серверный клиент, клиентские компоненты — браузерный.
+- **Оформление заказа**: модуль `checkout` собирает `OrderPayload` на клиенте (`model/buildOrderPayload.ts`, с `clientRequestId` из `crypto.randomUUID()`) и отправляет в `POST /api/orders`. Эндпоинт валидирует его через zod и пересылает сообщением в Telegram (env `TG_BOT_TOKEN`/`TG_CHAT_ID`) — без сохранения, без идемпотентности, ошибки отдаются обычным текстом. `docs/api/create-order.md` описывает текущее поведение; целевой контракт (сохранение, идемпотентность по `clientRequestId`, 409/422 в формате ADR 0002) — в его разделе «Планы».
+- **Ошибки**: целевой формат — `{ message: string, details?: Record<string,string> }` (`ApiError` в `shared/api/apiTypes.ts`, ADR `docs/decisions/0002-api-error-format.md`). `shared/api/httpClient.ts` бросает эту структуру при не-OK ответе, чтобы хуки могли показать `details` под полями формы. Сейчас так отвечает только `/api/feedback`, `/api/orders` отвечает обычным текстом.
 
-### CSS budget
+### Бюджет CSS
 
-- `npm run build` enforces a CSS size budget via `scripts/check-css-size.mjs`; a regression here fails the build script (not `next build` itself).
+- `npm run build` после `next build` запускает `scripts/check-css-size.mjs`. Скрипт падает только с флагом `--max-total-kb <N>`, а `package.json` его пока не передаёт — поэтому сейчас он лишь печатает отчёт о размере CSS, лимит не проверяется.
 
-### Docs
+### Документация
 
-`docs/README.md` indexes: architecture (`docs/architecture/`), API contracts (`docs/api/`), per-module specs (`docs/modules/`), and ADRs (`docs/decisions/`). Check the relevant doc before changing cross-cutting behavior in `cart`, `checkout`, or the orders API — and update it if the change makes the doc stale (see the orders-endpoint drift noted above).
+`docs/README.md` — оглавление: архитектура (`docs/architecture/`), контракты API (`docs/api/`), описания модулей (`docs/modules/`), ADR (`docs/decisions/`). Перед изменением сквозного поведения в `cart`, `checkout` или API заказов сверьтесь с нужным документом и обновите его, если изменение делает его неактуальным.
 
-Supabase schema evolves via numbered SQL files in `docs/migrations/` (001–007 so far: profiles, weapon platforms, product compatibility, seed data) — treat these as the source of truth for DB shape (`src/types/supabase.ts` is the generated types file).
+Документация пишется на русском. На английском остаются только названия технологий, идентификаторы, пути, команды и термины без устоявшегося перевода.
+
+Изменения схемы Supabase записываются нумерованными SQL-файлами в `docs/migrations/` (пока 001–007: профили, платформы оружия, совместимость товаров, тестовые данные) и накатываются вручную через SQL Editor — Supabase CLI для миграций не используется. Журнал неполный: таблица `products` создана в Dashboard и файла миграции не имеет (см. `docs/audits/2026-09-01-supabase-audit.md`). Самое полное описание схемы, включая `products`, — сгенерированные типы `src/types/supabase.ts`. На каждое изменение схемы добавляйте новый нумерованный файл.

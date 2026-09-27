@@ -1,14 +1,14 @@
-# Feedback API
+# API обращений
 
-## Endpoint
+## Эндпоинт
 
 POST /api/feedback
 
-## Purpose
+## Назначение
 
 Обращение с формы на `/contacts`. Сообщение отправляется в Telegram-бот мастерской (`TG_BOT_TOKEN` / `TG_CHAT_ID`) с шапкой `📩 ОБРАЩЕНИЕ С САЙТА · <тема>`, чтобы отличать его от заказов. Ничего не сохраняется.
 
-## Request
+## Запрос
 
 `application/json`, схема — `src/modules/contacts/model/contactFormSchema.ts`:
 
@@ -23,13 +23,13 @@ POST /api/feedback
 ```
 
 - `contact` — телефон, `@username`, email или ссылка на t.me / vk.com. Для Telegram/VK под сообщением появляется кнопка «Написать».
-- `website` — honeypot, у людей всегда пустой.
+- `website` — скрытое поле-ловушка для ботов (honeypot), у людей всегда пустое.
 
-## Responses
+## Ответы
 
 Ошибки — в формате ADR 0002: `{ message, details? }`.
 
-| Status                   | Когда                                                          |
+| Статус                   | Когда                                                          |
 | ------------------------ | -------------------------------------------------------------- |
 | 200 `{ "status": "ok" }` | Отправлено (или сработал honeypot — ответ такой же)            |
 | 400                      | Тело не JSON                                                   |

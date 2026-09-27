@@ -1,5 +1,5 @@
 -- ============================================================
--- Migration 002: Update trigger to save full_name from user metadata
+-- Миграция 002: триггер сохраняет full_name из метаданных пользователя
 -- ============================================================
 
 CREATE OR REPLACE FUNCTION public.handle_new_user()

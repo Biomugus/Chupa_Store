@@ -1,5 +1,5 @@
 -- ============================================================
--- Migration 005: Add selected_platform_id to profiles
+-- Миграция 005: поле selected_platform_id в profiles
 -- Зависимости: 003_weapon_platforms.sql
 -- ============================================================
 

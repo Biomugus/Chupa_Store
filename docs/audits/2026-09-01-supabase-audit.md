@@ -1,11 +1,11 @@
-# Full Supabase Project Audit — Chupa Workshop
+# Полный аудит Supabase-проекта — Chupa Workshop
 
 **Дата:** 2026-09-01
 **Метод:** аудит репозитория (`docs/migrations/*.sql`, `src/types/supabase.ts`, клиентский/серверный код, `.env.local`) + прямая live-проверка через Supabase Dashboard (`supabase.com/dashboard/project/yqrzyclyresdrbiwnfsx`) через SQL Editor (read-only `SELECT` по `information_schema`, `pg_constraint`, `pg_indexes`, `pg_policies`, `pg_proc`/`pg_trigger`), страницы Database → Policies, Auth → Sign In/Providers, Auth → Attack Protection, Auth → Rate Limits. Никаких изменений в схеме/RLS/Auth/коде в ходе аудита не вносилось.
 
 ---
 
-## Executive Summary
+## Краткое резюме
 
 Архитектура компактная и для текущего масштаба (небольшой каталог, простая авторизация, «арсенал» пользователя) сделана аккуратно: разделение browser/server клиентов, `getUser()` вместо `getSession()` в middleware, RLS с `auth.uid()` на всех пользовательских таблицах, отсутствие `service_role` на клиенте. Живая проверка это подтвердила: политики RLS в БД дословно совпадают с тем, что описано в миграциях репозитория — дрифта в самих политиках нет.
 
@@ -17,31 +17,31 @@ RLS для `products` при этом жива и корректна (`SELECT` �
 
 Оценки:
 
-| Критерий             | Оценка | Обоснование                                                                                                                                                                                                                                                                                                                                    |
-| -------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Architecture         | 6/10   | Модульная граница `UI → Container → Domain → Service → API` соблюдается для того, что реализовано, но заказы — не Supabase-flow, хотя должны быть                                                                                                                                                                                              |
-| Database design      | 5/10   | То, что есть (`profiles`, `weapon_platforms`, `product_compatibility`) — нормализовано и корректно; но `products` не отслеживается миграциями, и это подтверждено live: "No migrations" на Dashboard                                                                                                                                           |
-| Security             | 6/10   | Нет service_role на клиенте, RLS есть везде и корректна (подтверждено live). Но `orders` endpoint доверяет клиентским `price`/`total`, CAPTCHA на auth-эндпоинтах выключена (подтверждено live), "leaked password protection" выключена                                                                                                        |
-| RLS                  | 7/10   | Live-проверка подтвердила: все 4 таблицы имеют RLS, политики точно совпадают с репозиторием, лишних mutating-policy на `products` нет. Снижение с 8 до 7 — за вводящее в заблуждение название INSERT-policy `profiles` и за то, что защита `products` держится на недокументированном платформенном event trigger, а не на осознанном процессе |
-| Performance          | 6/10   | `select('*')` почти везде, раздельные запросы вместо join в `getProducts`, нет `.limit()`/пагинации в каталоге                                                                                                                                                                                                                                 |
-| Maintainability      | 5/10   | Код чистый, но `docs/api/create-order.md` и `docs/architecture/backend.md` описывают несуществующую реализацию; процесс миграций документирован (`docs/migrations/`), но реально не используется — live-подтверждено ("No migrations")                                                                                                         |
-| Production readiness | 4/10   | Нет персистентности заказов, нет бэкапов (Dashboard: "No backups", Free tier), нет CAPTCHA на auth, нет rate limiting на `/api/orders`                                                                                                                                                                                                         |
+| Критерий           | Оценка | Обоснование                                                                                                                                                                                                                                                                                                                                    |
+| ------------------ | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Архитектура        | 6/10   | Модульная граница `UI → Container → Domain → Service → API` соблюдается для того, что реализовано, но заказы — не Supabase-flow, хотя должны быть                                                                                                                                                                                              |
+| Проектирование БД  | 5/10   | То, что есть (`profiles`, `weapon_platforms`, `product_compatibility`) — нормализовано и корректно; но `products` не отслеживается миграциями, и это подтверждено live: "No migrations" на Dashboard                                                                                                                                           |
+| Безопасность       | 6/10   | Нет service_role на клиенте, RLS есть везде и корректна (подтверждено live). Но `orders` endpoint доверяет клиентским `price`/`total`, CAPTCHA на auth-эндпоинтах выключена (подтверждено live), "leaked password protection" выключена                                                                                                        |
+| RLS                | 7/10   | Live-проверка подтвердила: все 4 таблицы имеют RLS, политики точно совпадают с репозиторием, лишних mutating-policy на `products` нет. Снижение с 8 до 7 — за вводящее в заблуждение название INSERT-policy `profiles` и за то, что защита `products` держится на недокументированном платформенном event trigger, а не на осознанном процессе |
+| Производительность | 6/10   | `select('*')` почти везде, раздельные запросы вместо join в `getProducts`, нет `.limit()`/пагинации в каталоге                                                                                                                                                                                                                                 |
+| Сопровождаемость   | 5/10   | Код чистый, но `docs/api/create-order.md` и `docs/architecture/backend.md` описывают несуществующую реализацию; процесс миграций документирован (`docs/migrations/`), но реально не используется — live-подтверждено ("No migrations")                                                                                                         |
+| Готовность к проду | 4/10   | Нет персистентности заказов, нет бэкапов (Dashboard: "No backups", Free tier), нет CAPTCHA на auth, нет rate limiting на `/api/orders`                                                                                                                                                                                                         |
 
 ---
 
-## Current Architecture
+## Текущая архитектура
 
-| Component                                                                  | Purpose                                                                                            | Used by                                                                                 |
+| Компонент                                                                  | Назначение                                                                                         | Где используется                                                                        |
 | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | `profiles`                                                                 | Расширение `auth.users`: email, full_name, выбранная платформа                                     | `getUserProfile`, `updateUserPlatform`, `account/page.tsx`, trigger `handle_new_user`   |
 | `weapon_platforms`                                                         | Справочник подплатформ оружия (АК/AR/HK/…)                                                         | `getWeaponPlatforms`, `getCatalog` (совместимость), `WeaponSelector`                    |
 | `product_compatibility`                                                    | M2M `products ↔ weapon_platforms` со статусом совместимости                                        | `getCatalog.getProducts`                                                                |
 | `products`                                                                 | Каталог товаров (title, price, slug, category, images…)                                            | `getCatalog`, `getProduct` — **нет migration-файла**, RLS и структура live-подтверждены |
 | Supabase Auth (`auth.users`)                                               | Регистрация/логин/сессии                                                                           | `(auth)/actions.ts`, `proxy.ts`, `UserMenu`, `useIsGuest`, `account/page.tsx`           |
-| Trigger `handle_new_user` (`SECURITY DEFINER`, `search_path=public`)       | Авто-создание `profiles` при регистрации                                                           | `auth.users AFTER INSERT` — live-подтверждено через `pg_proc`/`pg_trigger`              |
+| Триггер `handle_new_user` (`SECURITY DEFINER`, `search_path=public`)       | Авто-создание `profiles` при регистрации                                                           | `auth.users AFTER INSERT` — live-подтверждено через `pg_proc`/`pg_trigger`              |
 | Функция `rls_auto_enable()` (`SECURITY DEFINER`, `search_path=pg_catalog`) | Platform event trigger: автоматически `ENABLE ROW LEVEL SECURITY` на каждой новой таблице `public` | Не задокументирована нигде в репозитории; обнаружена только live-проверкой              |
 
-**Data flows:**
+**Потоки данных:**
 
 1. **Login:** `LoginForm → login() server action → supabase.auth.signInWithPassword → session cookie (SSR) → redirect /account`
 2. **Register:** `RegisterForm → register() server action → supabase.auth.signUp → confirmation email (Confirm email = ON, live-подтверждено) → /auth/callback → exchangeCodeForSession → session`
@@ -53,9 +53,9 @@ RLS для `products` при этом жива и корректна (`SELECT` �
 
 ---
 
-## Findings
+## Находки
 
-### [HIGH] Заказы не персистентны и не идемпотентны, хотя контракт это обещает
+### [ВЫСОКИЙ] Заказы не персистентны и не идемпотентны, хотя контракт это обещает
 
 **Где:** `src/app/api/orders/route.ts`, `docs/api/create-order.md`.
 **Что происходит сейчас:** эндпоинт валидирует payload через zod и просто пересылает текст в Telegram. Нет таблицы `orders` в БД (live-подтверждено — в `information_schema.columns` для `public` только 4 таблицы: `products`, `profiles`, `weapon_platforms`, `product_compatibility`), нет проверки `clientRequestId` на дубликаты, нет кода `201`/`409`/`422` — всегда `200`/`400`/`500`/`502`.
@@ -64,7 +64,7 @@ RLS для `products` при этом жива и корректна (`SELECT` �
 **Как исправить:** создать таблицу `orders` (+ `order_items`) с `clientRequestId` как unique constraint, писать в БД первым шагом внутри транзакции, потом уже нотифицировать Telegram (best-effort, с ретраями/очередью). Реализовать `409` по несовпадению payload для существующего `clientRequestId`.
 **Приоритет:** P1.
 
-### [HIGH] Цена и сумма заказа полностью доверяются клиенту
+### [ВЫСОКИЙ] Цена и сумма заказа полностью доверяются клиенту
 
 **Где:** `src/modules/checkout/model/buildOrderPayload.ts`, `src/app/api/orders/payloadSchema.ts` (`price: z.number()`, `total: z.number()` — только тип проверяется, не значение).
 **Что происходит сейчас:** `price` и `total` берутся из `cart.total` (localStorage-состояние Redux-корзины), клиент может отправить любые числа — сервер не сверяет их с `products.price` в Supabase.
@@ -73,7 +73,7 @@ RLS для `products` при этом жива и корректна (`SELECT` �
 **Как исправить:** на сервере, перед отправкой в Telegram, подтягивать актуальные `price` из `products` по `id` и пересчитывать `total`; расхождение — не блокирующая, но логируемая аномалия.
 **Приоритет:** P1.
 
-### [HIGH] Процесс миграций сломан: schema drift подтверждён live, не только по репозиторию
+### [ВЫСОКИЙ] Процесс миграций сломан: расхождение схемы подтверждено на живой БД, не только по репозиторию
 
 **Где:** Supabase Dashboard → Project Overview (`Last migration: No migrations`, `Last backup: No backups`); SQL Editor → история сохранённых запросов (`Products table with public read access`, `Auto-create profiles on user insert`, `AK handguard product inserts` и др. — 12 приватных сниппетов, ни один не оформлен как файл в `docs/migrations/`); `docs/migrations/004_product_compatibility.sql:16` и `007_seed_compatibility.sql` ссылаются на `public.products`, которую ни один файл в репозитории не создаёт.
 **Что происходит сейчас:** реальная схема БД собрана вручную через SQL Editor Dashboard, а не через `supabase db push`/migration workflow. `docs/migrations/` в репозитории — это неполный и не примененный через tooling журнал того, что было сделано вручную.
@@ -82,7 +82,7 @@ RLS для `products` при этом жива и корректна (`SELECT` �
 **Как исправить:** сделать `supabase db pull` (или `pg_dump --schema-only`) и завести это как настоящий baseline в `supabase/migrations/` через `supabase migration` tooling, дальше — только миграции через CLI, без прямых правок в SQL Editor Dashboard для DDL.
 **Приоритет:** P0.
 
-### [MEDIUM] CAPTCHA и защита от leaked passwords выключены на auth-эндпоинтах
+### [СРЕДНИЙ] CAPTCHA и защита от leaked passwords выключены на auth-эндпоинтах
 
 **Где:** Supabase Dashboard → Authentication → Attack Protection (live-проверено).
 **Что происходит сейчас:** "Enable Captcha protection" — **DISABLED**; "Prevent use of leaked passwords" — **DISABLED** (требует настройки email-провайдера, которая не выполнена). Из положительного: платформенный rate limit на sign-in/sign-up (360 запросов/5 мин на IP) и token verification (360/5 мин на IP) — включён по умолчанию и работает без дополнительной настройки.
@@ -91,7 +91,7 @@ RLS для `products` при этом жива и корректна (`SELECT` �
 **Как исправить:** включить hCaptcha/Turnstile в Attack Protection (Supabase поддерживает "из коробки"), передать капчу токеном через `options.captchaToken` в `signInWithPassword`/`signUp` на клиенте.
 **Приоритет:** P2.
 
-### [MEDIUM] Скрытый platform-level `SECURITY DEFINER` event trigger `rls_auto_enable()` не задокументирован
+### [СРЕДНИЙ] Скрытый платформенный `SECURITY DEFINER` event trigger `rls_auto_enable()` не задокументирован
 
 **Где:** `pg_proc`/`pg_trigger` (live-проверено); отсутствует в `docs/migrations/` и во всей документации проекта.
 **Что происходит сейчас:** функция `public.rls_auto_enable()` (event trigger на `CREATE TABLE` в схеме `public`, `SECURITY DEFINER`, `search_path = pg_catalog`) автоматически включает RLS на каждой новой таблице публичной схемы. Именно она объясняет, почему у `products` — созданной вручную, в обход миграций — всё равно оказался включён RLS.
@@ -100,7 +100,7 @@ RLS для `products` при этом жива и корректна (`SELECT` �
 **Как исправить:** задокументировать существование `rls_auto_enable()` в `docs/architecture/backend.md` или отдельном ADR; не полагаться на него как на единственную линию защиты — добавить проверку RLS-статуса всех таблиц в CI/чеклист перед релизом.
 **Приоритет:** P2.
 
-### [MEDIUM] INSERT-политика `profiles` разрешает юзеру вставить себе профиль напрямую, в обход триггера
+### [СРЕДНИЙ] INSERT-политика `profiles` разрешает юзеру вставить себе профиль напрямую, в обход триггера
 
 **Где:** `docs/migrations/001_create_profiles.sql:26-29` (live-подтверждено — `pg_policies`: `profiles`, `Service role can insert profiles`, `INSERT`, `with_check = (auth.uid() = id)`):
 
@@ -116,7 +116,7 @@ CREATE POLICY "Service role can insert profiles"
 **Как исправить:** либо убрать policy (полагаясь только на `SECURITY DEFINER`-триггер), либо явно задокументировать разрешение и добавить `ON CONFLICT (id) DO NOTHING` в триггер.
 **Приоритет:** P2.
 
-### [MEDIUM] `getProducts` делает два раздельных запроса вместо одного join
+### [СРЕДНИЙ] `getProducts` делает два раздельных запроса вместо одного join
 
 **Где:** `src/modules/catalog/api/getCatalog.ts:16-75`.
 **Что происходит сейчас:** сначала `select('*')` из `products`, затем второй запрос `product_compatibility` по массиву `productIds` (`.in('product_id', productIds)`), затем merge в JS через `Map`.
@@ -125,7 +125,7 @@ CREATE POLICY "Service role can insert profiles"
 **Как исправить:** переписать на один embedded select через FK-relationship (`product_compatibility!inner(status)` с фильтром по `platform_id`), либо RPC-функция.
 **Приоритет:** P2.
 
-### [LOW] `select('*')` без ограничения колонок и без пагинации во всех Supabase-запросах
+### [НИЗКИЙ] `select('*')` без ограничения колонок и без пагинации во всех Supabase-запросах
 
 **Где:** `getCatalog.ts:16`, `getProduct.ts:9`, `getWeaponPlatforms.ts:9`, `getUserProfile.ts:15`.
 **Что происходит сейчас:** каждый запрос тянет все столбцы, каталог не имеет `.limit()`/`.range()` — при росте `products` `getProducts()` выкачивает всю таблицу на каждый рендер.
@@ -134,7 +134,7 @@ CREATE POLICY "Service role can insert profiles"
 **Как исправить:** явные списки колонок под каждый use case, `.range()`-пагинация в каталоге.
 **Приоритет:** P2 (сейчас) / P1 (при заметном росте каталога).
 
-### [LOW] Отсутствуют DB-level CHECK constraints на критичных инвариантах
+### [НИЗКИЙ] Нет CHECK-ограничений на уровне БД для критичных инвариантов
 
 **Где:** `products.price` (live-подтверждено через `pg_constraint`: у `products` только `PRIMARY KEY (id)` и `UNIQUE (slug)`, никаких `CHECK`).
 **Что происходит сейчас:** ничто на уровне БД не запрещает отрицательную или нулевую цену, пустой `title`/`slug` через прямой insert (сейчас это не эксплуатируется, т.к. INSERT в `products` не открыт клиенту, но это единственный слой защиты, если он когда-то появится).
@@ -142,7 +142,7 @@ CREATE POLICY "Service role can insert profiles"
 **Как исправить:** `ALTER TABLE products ADD CONSTRAINT price_positive CHECK (price > 0)`; при появлении админ-панели — обязательно.
 **Приоритет:** P3.
 
-### [LOW] Auth error-message policy: часть сообщений раскрывает существование email
+### [НИЗКИЙ] Сообщения об ошибках авторизации: часть из них раскрывает существование email
 
 **Где:** `src/app/(auth)/actions.ts:20` — `'user already registered': 'Пользователь с таким email уже зарегистрирован'`.
 **Что происходит сейчас:** комментарий над функцией говорит «no specific "user not found" messages» (для логина верно), но для регистрации отдельно раскрывается, что email уже занят.
@@ -151,12 +151,12 @@ CREATE POLICY "Service role can insert profiles"
 **Как исправить:** нейтральное сообщение на форме + email-уведомление «уже есть аккаунт» вместо явного разоблачения в UI.
 **Приоритет:** P3.
 
-### [INFO] Индекс есть только там, где явно нужен join — это правильно
+### [ИНФО] Индекс есть только там, где явно нужен join — это правильно
 
 **Где:** `idx_compatibility_platform ON product_compatibility(platform_id)` — live-подтверждено, единственный «ручной» индекс сверх PK/UNIQUE, и он под реальный запрос (`getCatalog.ts:59-63`).
 Хорошее, целевое решение. Live-проверка также подтвердила отсутствие лишних/дублирующих индексов — все 7 индексов в БД происходят либо из PK/UNIQUE constraints, либо из этого одного целевого индекса.
 
-### [INFO] `contactMethod: 'vk'` в API-документации отсутствует, но в схеме есть
+### [ИНФО] `contactMethod: 'vk'` в API-документации отсутствует, но в схеме есть
 
 **Где:** `src/app/api/orders/payloadSchema.ts` использует `ContactMethod.VK`, но `docs/api/create-order.md` описывает `contactMethod: 'phone' | 'telegram'` без `vk`.
 **Как исправить:** обновить `docs/api/create-order.md`.
@@ -164,13 +164,13 @@ CREATE POLICY "Service role can insert profiles"
 
 ---
 
-## Improvement Roadmap
+## План улучшений
 
 ### P0 — исправить немедленно
 
 - Восстановить реальный migration workflow: `supabase db pull` → baseline в `supabase/migrations/`, дальше только через CLI/migration tooling, без прямых DDL-правок в SQL Editor Dashboard — **M**
 
-### P1 — исправить до production
+### P1 — исправить до запуска
 
 - Персистентность заказов: таблица `orders`/`order_items`, реальная идемпотентность по `clientRequestId`, коды ответа по контракту — **L**
 - Server-side пересчёт `price`/`total` заказа по данным из `products` перед отправкой в Telegram — **S**
@@ -184,7 +184,7 @@ CREATE POLICY "Service role can insert profiles"
 - Явные списки колонок + `.range()`-пагинация для `products` — **M**
 - Убрать вводящее в заблуждение название/комментарий у INSERT-policy `profiles`, добавить `ON CONFLICT` в триггер — **XS**
 
-### P3 — future improvements
+### P3 — улучшения на будущее
 
 - CHECK-constraint на `products.price > 0` — **XS**
 - Rate limiting на `/api/orders` (сейчас ничего не защищает от спама заказов, в отличие от Auth-эндпоинтов, где есть дефолтный лимит Supabase) — **S**
@@ -194,9 +194,9 @@ CREATE POLICY "Service role can insert profiles"
 
 ---
 
-## What is already done well
+## Что уже сделано хорошо
 
-- **`getUser()` вместо `getSession()` в middleware** (`src/proxy.ts:79-84`) — частая ошибка Supabase+Next.js проектов explicit avoided с грамотным комментарием в коде.
+- **`getUser()` вместо `getSession()` в middleware** (`src/proxy.ts:79-84`) — частую ошибку Supabase + Next.js проектов удалось избежать, в коде есть грамотный комментарий.
 - **Чёткое разделение browser/server клиентов**, нет `service_role` ни в одном клиентском файле, нет утечки privileged credentials в бандл — подтверждено и статически, и по факту отсутствия таких ключей в `.env.local`.
 - **RLS-политики корректны и live-подтверждены**: `auth.uid() = id` для `profiles`, `USING (true)` для публичных read-only справочников — политики в БД дословно совпадают с репозиторием, никакого дрифта.
 - **`SECURITY DEFINER` с явным `SET search_path`** — и в триггере `handle_new_user` (`search_path=public`), и в платформенной `rls_auto_enable()` (`search_path=pg_catalog`) — оба защищены от search_path injection, это нередко пропускают.
@@ -208,7 +208,7 @@ CREATE POLICY "Service role can insert profiles"
 
 ---
 
-## Финальный verdict
+## Итоговый вердикт
 
 1. **Что уже сделано правильно:** аутентификация и session-handling через `@supabase/ssr`, RLS на пользовательских таблицах с корректным `auth.uid()` (live-подтверждено дословное совпадение с репозиторием), отсутствие privileged credentials на клиенте, security headers, серверная zod-валидация, "Confirm email" включён.
 2. **Что сделано неправильно:** заказы не проходят через Supabase вообще; цена заказа не перепроверяется на сервере; реальный migration workflow не используется — Dashboard прямо показывает "No migrations", схема собрана вручную через SQL Editor; CAPTCHA и leaked-password protection выключены; каталожные запросы неоптимальны.
@@ -219,4 +219,4 @@ CREATE POLICY "Service role can insert profiles"
 7. **Есть ли проблемы с database architecture:** да, главная — реальный migration workflow не используется (live-подтверждено: "No migrations", "No backups"), схема собрана вручную; заказы вообще не в БД.
 8. **Есть ли проблемы с производительностью:** да, но не критичные при текущем масштабе — overfetching и раздельные запросы в каталоге станут первым узким местом при росте числа товаров.
 9. **Что сейчас будет первым bottleneck при росте:** каталог — `select('*')` без пагинации и раздельные запросы `products`/`product_compatibility` на каждый рендер; второе по значимости — отсутствие персистентного слоя заказов.
-10. **Вердикт:** **NOT READY — FIX P0/P1 FIRST.** Причина: часть, что реализована (auth, RLS для всех 4 таблиц), сделана достаточно грамотно и live-проверка это подтвердила. Но ключевой бизнес-процесс (заказы) не персистентен, не идемпотентен и не перепроверяет цену на сервере, а сам процесс изменения схемы БД по факту не отслеживается (нет migration history, нет backups на Free tier) — это конкретные, live-подтверждённые проблемы, а не гипотезы, и их нужно закрыть до реального запуска продаж.
+10. **Вердикт:** **НЕ ГОТОВО — СНАЧАЛА ИСПРАВИТЬ P0/P1.** Причина: часть, что реализована (auth, RLS для всех 4 таблиц), сделана достаточно грамотно и live-проверка это подтвердила. Но ключевой бизнес-процесс (заказы) не персистентен, не идемпотентен и не перепроверяет цену на сервере, а сам процесс изменения схемы БД по факту не отслеживается (нет migration history, нет backups на Free tier) — это конкретные, live-подтверждённые проблемы, а не гипотезы, и их нужно закрыть до реального запуска продаж.

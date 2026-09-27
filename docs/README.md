@@ -1,35 +1,36 @@
-# Project Documentation
+# Документация проекта
 
-## Architecture
+## Архитектура
 
-- architecture/overview.md
-- architecture/frontend.md
-- architecture/backend.md
+- [architecture/overview.md](architecture/overview.md) — слои модулей и границы между ними
+- [architecture/frontend.md](architecture/frontend.md) — стек, маршруты, модули, состояние
+- [architecture/backend.md](architecture/backend.md) — Route Handlers, server actions, `proxy.ts`, внешние сервисы
 
 ## API
 
-- api/create-order.md
-- api/feedback.md
+- [api/create-order.md](api/create-order.md) — `POST /api/orders`
+- [api/feedback.md](api/feedback.md) — `POST /api/feedback`
 
-## Modules
+## Модули
 
-- modules/cart.md
-- modules/checkout.md
-- modules/contacts.md
+- [modules/cart.md](modules/cart.md)
+- [modules/checkout.md](modules/checkout.md)
+- [modules/contacts.md](modules/contacts.md)
 
-## Decisions
+## Решения (ADR)
 
-- decisions/0001-use-react.md
-- desicions/0002-api-error-format.md
+- [decisions/0001-use-localstorage-for-cart.md](decisions/0001-use-localstorage-for-cart.md)
+- [decisions/0002-api-error-format.md](decisions/0002-api-error-format.md)
 
-### Commits
+## База данных
 
-Проект использует [Conventional Commits](https://www.conventionalcommits.org/).
-Формат: `<type>(<scope>): <subject>`
+- [migrations/](migrations/) — SQL-миграции Supabase `001`–`007` (накатываются вручную через SQL Editor). Таблица `products` в них не создаётся — см. аудит ниже.
 
-**Основные типы:**
+## Аудиты и тестирование
 
-- `feat`: новый функционал
-- `fix`: исправление ошибок
-- `refactor`: правки кода без изменения логики
-- `docs`: обновление документации
+- [audits/2026-09-01-supabase-audit.md](audits/2026-09-01-supabase-audit.md) — аудит Supabase-проекта (срез на 2026-09-01)
+- [test-plan-armory.md](test-plan-armory.md) — ручной тест-план «Виртуальной Оружейки»
+
+## Коммиты
+
+Conventional Commits с проверкой через commitlint — см. [commit-convention.md](commit-convention.md).
