@@ -13,6 +13,7 @@ const customJestConfig = {
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.tsx'],
   moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
     '^react$': require.resolve('react'),
     '^react-dom$': require.resolve('react-dom'),
     '^react-dom/client$': require.resolve('react-dom/client'),
