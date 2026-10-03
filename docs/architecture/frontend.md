@@ -39,7 +39,7 @@
 
 ## Обработка ошибок
 
-- `shared/api/httpClient.ts` при не-OK ответе бросает `ApiError` (`{ status, message, details? }`); JSON-тело в формате ADR 0002 пробрасывается как есть, иначе `message` = текст ответа
+- `shared/api/httpClient.ts` при не-OK ответе бросает `ApiError` (`{ status, message, details? }`); JSON-тело в формате ADR 0002 пробрасывается как есть, иначе `message` = текст ответа. Запрос ограничен таймаутом 15 с (если вызывающий код не передал свой `signal`); сетевая ошибка и таймаут — `ApiError` со `status: 0`
 - `contacts`: `details` с сервера раскладываются по полям формы
 - `checkout`: показывается только `message` в баннере с повтором, серверные `details` в поля не попадают
 

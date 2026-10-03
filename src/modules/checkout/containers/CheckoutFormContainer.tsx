@@ -23,7 +23,10 @@ export default function CheckoutFormContainer({
 
   const selectedCity = values.location;
   const submitError = error;
-  const isRetry = isLoading && error !== null;
+  // Отправка заказа и загрузка подсказок городов — разные состояния: первое
+  // блокирует кнопку и показывает спиннер, второе — только в автокомплите.
+  const isSubmitting = status === 'loading';
+  const isRetry = isSubmitting && error !== null;
 
   const handleCitySelect = useCallback(
     (city: string) => {
@@ -55,7 +58,7 @@ export default function CheckoutFormContainer({
       errors={errors}
       isValid={isValid}
       isRetry={isRetry}
-      isLoading={isLoading}
+      isLoading={isSubmitting}
       submitError={submitError}
       onChange={handleChange}
       onSubmit={() => handleSubmit(submitOrder)}

@@ -6,9 +6,24 @@ import { CartSnapshot, CheckoutFormData, OrderPayload } from '../types/checkoutT
 
 import sendOrder from '../services/sendOrder';
 
-import { ApiError } from '@/shared/api/apiTypes';
+import type { ApiError } from '@/shared/api/apiTypes';
 
 type SubmitStatus = 'idle' | 'loading' | 'success' | 'error';
+
+const FALLBACK_MESSAGE = 'Не удалось отправить заказ. Попробуйте ещё раз';
+
+// /api/orders отвечает техническим текстом (`Invalid payload`, ответ Telegram API),
+// показывать его покупателю нельзя — подбираем сообщение по статусу.
+function normalizeError(err: unknown): string {
+  const apiErr = err as Partial<ApiError> | null;
+
+  if (apiErr && typeof apiErr.status === 'number') {
+    if (apiErr.status === 0) return 'Нет соединения. Проверьте интернет и попробуйте ещё раз';
+    if (apiErr.status === 429) return 'Слишком много попыток. Подождите минуту и попробуйте снова';
+  }
+
+  return FALLBACK_MESSAGE;
+}
 
 export function useSubmitOrder(cart: CartSnapshot) {
   const [status, setStatus] = useState<SubmitStatus>('idle');
@@ -29,9 +44,8 @@ export function useSubmitOrder(cart: CartSnapshot) {
         await sendOrder(lastPayloadRef.current);
         setStatus('success');
       } catch (err) {
-        const normalized = normalizeError(err);
         setStatus('error');
-        setError(normalized.message);
+        setError(normalizeError(err));
       }
     },
     [cart],
@@ -47,9 +61,8 @@ export function useSubmitOrder(cart: CartSnapshot) {
       setStatus('success');
       setError(null);
     } catch (err) {
-      const normalized = normalizeError(err);
       setStatus('error');
-      setError(normalized.message);
+      setError(normalizeError(err));
     }
   }, []);
 
@@ -58,22 +71,6 @@ export function useSubmitOrder(cart: CartSnapshot) {
     setError(null);
     lastPayloadRef.current = null;
   }, []);
-
-  const normalizeError = (err: unknown): { message: string; details?: Record<string, string> } => {
-    if (!err) return { message: 'Неизвестная ошибка' };
-
-    if ((err as ApiError).status) {
-      const apiErr = err as ApiError;
-
-      return { message: apiErr.message, details: apiErr.details };
-    }
-
-    if (err instanceof Error) {
-      return { message: err.message };
-    }
-
-    return { message: String(err) };
-  };
 
   return {
     submitOrder,

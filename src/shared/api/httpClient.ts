@@ -1,5 +1,10 @@
 import type { ApiError } from './apiTypes';
 
+// Без таймаута зависшее соединение (блокировка, обрыв сети) оставляет форму в
+// «отправке» навсегда. Больше серверных таймаутов (Telegram — 10 с), чтобы при
+// живой сети клиент успел получить ответ сервера с ошибкой.
+const REQUEST_TIMEOUT_MS = 15 * 1000;
+
 export async function httpClient<T>(url: string, init?: RequestInit): Promise<T> {
   let response: Response;
 
@@ -9,12 +14,16 @@ export async function httpClient<T>(url: string, init?: RequestInit): Promise<T>
         'Content-Type': 'application/json',
         ...(init?.headers ?? {}),
       },
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
       ...init,
     });
   } catch (networkError) {
     throw {
       status: 0,
-      message: 'Network error',
+      message:
+        (networkError as { name?: string } | null)?.name === 'TimeoutError'
+          ? 'Request timeout'
+          : 'Network error',
       cause: networkError,
     } satisfies ApiError;
   }
