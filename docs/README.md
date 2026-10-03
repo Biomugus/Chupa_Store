@@ -16,15 +16,17 @@
 - [modules/cart.md](modules/cart.md)
 - [modules/checkout.md](modules/checkout.md)
 - [modules/contacts.md](modules/contacts.md)
+- [modules/notifications.md](modules/notifications.md) — уведомления о заказах и обращениях, настройка каналов
 
 ## Решения (ADR)
 
 - [decisions/0001-use-localstorage-for-cart.md](decisions/0001-use-localstorage-for-cart.md)
 - [decisions/0002-api-error-format.md](decisions/0002-api-error-format.md)
+- [decisions/0003-store-orders-in-supabase.md](decisions/0003-store-orders-in-supabase.md)
 
 ## База данных
 
-- [migrations/](migrations/) — SQL-миграции Supabase `001`–`007` (накатываются вручную через SQL Editor). Таблица `products` в них не создаётся — см. аудит ниже.
+- [migrations/](migrations/) — SQL-миграции Supabase `001`–`008` (накатываются вручную через SQL Editor). Таблица `products` в них не создаётся — см. аудит ниже.
 
 ## Аудиты и тестирование
 

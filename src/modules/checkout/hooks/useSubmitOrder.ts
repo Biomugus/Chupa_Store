@@ -12,7 +12,7 @@ type SubmitStatus = 'idle' | 'loading' | 'success' | 'error';
 
 const FALLBACK_MESSAGE = 'Не удалось отправить заказ. Попробуйте ещё раз';
 
-// /api/orders отвечает техническим текстом (`Invalid payload`, ответ Telegram API),
+// /api/orders отвечает техническим текстом (`Invalid payload`, `Failed to save order`),
 // показывать его покупателю нельзя — подбираем сообщение по статусу.
 function normalizeError(err: unknown): string {
   const apiErr = err as Partial<ApiError> | null;

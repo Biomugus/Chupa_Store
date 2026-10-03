@@ -23,7 +23,7 @@ const baseForm: CheckoutFormData = {
 function isValidVk(contactValue: string) {
   const client = checkoutSchema.safeParse({ ...baseForm, contactValue }).success;
   const server = orderPayloadSchema.safeParse({
-    clientRequestId: '1',
+    clientRequestId: '3f1c2b7e-4a5d-4e6f-8a9b-0c1d2e3f4a5b',
     customer: { ...baseForm, contactValue },
     delivery: { service: baseForm.deliveryService },
     payment: { method: baseForm.paymentMethod },

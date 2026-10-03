@@ -1,14 +1,15 @@
 // src/modules/contacts/utils/feedbackTextBuilder.ts
 //
-// Текст обращения для Telegram. Сообщение уходит без parse_mode, поэтому
-// пользовательский ввод не интерпретируется как разметка.
+// Текст обращения для уведомлений (Telegram, VK, почта). Plain text: в Telegram
+// сообщение уходит без parse_mode, поэтому пользовательский ввод не
+// интерпретируется как разметка.
 
 import { CONTACT_TOPIC_LABELS } from '../model/contactTopics';
 import type { ContactFormSchema } from '../model/contactFormSchema';
 
 type ContactLink = { url: string; label: string };
 
-/** Ссылка для inline-кнопки: только для Telegram и VK (tel:/mailto: Telegram не принимает). */
+/** Ссылка «Написать» (inline-кнопка в Telegram, строка в письме): только для Telegram и VK (tel:/mailto: Telegram не принимает). */
 export function getContactLink(contact: string): ContactLink | null {
   const value = contact.trim();
 

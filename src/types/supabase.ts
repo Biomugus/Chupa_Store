@@ -140,6 +140,78 @@ export type Database = {
           },
         ];
       };
+      orders: {
+        Row: {
+          id: string;
+          client_request_id: string;
+          created_at: string;
+          status: Database['public']['Enums']['request_status'];
+          customer: Json;
+          delivery_service: string;
+          payment_method: string;
+          items: Json;
+          total: number;
+          notifications: Json;
+        };
+        Insert: {
+          id?: string;
+          client_request_id: string;
+          created_at?: string;
+          status?: Database['public']['Enums']['request_status'];
+          customer: Json;
+          delivery_service: string;
+          payment_method: string;
+          items: Json;
+          total: number;
+          notifications?: Json;
+        };
+        Update: {
+          id?: string;
+          client_request_id?: string;
+          created_at?: string;
+          status?: Database['public']['Enums']['request_status'];
+          customer?: Json;
+          delivery_service?: string;
+          payment_method?: string;
+          items?: Json;
+          total?: number;
+          notifications?: Json;
+        };
+        Relationships: [];
+      };
+      feedback_requests: {
+        Row: {
+          id: string;
+          created_at: string;
+          status: Database['public']['Enums']['request_status'];
+          name: string;
+          contact: string;
+          topic: string;
+          message: string;
+          notifications: Json;
+        };
+        Insert: {
+          id?: string;
+          created_at?: string;
+          status?: Database['public']['Enums']['request_status'];
+          name: string;
+          contact: string;
+          topic: string;
+          message: string;
+          notifications?: Json;
+        };
+        Update: {
+          id?: string;
+          created_at?: string;
+          status?: Database['public']['Enums']['request_status'];
+          name?: string;
+          contact?: string;
+          topic?: string;
+          message?: string;
+          notifications?: Json;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
@@ -149,6 +221,7 @@ export type Database = {
     };
     Enums: {
       compatibility_status: 'perfect' | 'modification_required' | 'incompatible';
+      request_status: 'new' | 'in_progress' | 'done' | 'cancelled';
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -275,6 +348,7 @@ export const Constants = {
   public: {
     Enums: {
       compatibility_status: ['perfect', 'modification_required', 'incompatible'],
+      request_status: ['new', 'in_progress', 'done', 'cancelled'],
     },
   },
 } as const;

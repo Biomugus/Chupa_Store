@@ -2,11 +2,12 @@
  * @jest-environment node
  */
 
-// src/shared/lib/__tests__/telegram.test.ts
+// src/shared/lib/notifications/__tests__/telegram.test.ts
 
 import { sendTelegramMessage } from '../telegram';
 
 const fetchMock = jest.fn();
+const notification = { subject: 'Заказ', text: 'Заказ' };
 
 beforeEach(() => {
   process.env.TG_BOT_TOKEN = 'test-token';
@@ -18,14 +19,37 @@ describe('sendTelegramMessage', () => {
   it('ограничивает запрос к Telegram таймаутом', async () => {
     fetchMock.mockResolvedValue(new Response('{"ok":true}'));
 
-    await expect(sendTelegramMessage({ text: 'Заказ' })).resolves.toEqual({ ok: true });
+    await expect(sendTelegramMessage(notification)).resolves.toEqual({ ok: true });
     expect(fetchMock.mock.calls[0][1].signal).toBeInstanceOf(AbortSignal);
+  });
+
+  it('строит inline-кнопку «Написать в …» из link', async () => {
+    fetchMock.mockResolvedValue(new Response('{"ok":true}'));
+
+    await sendTelegramMessage({
+      ...notification,
+      link: { label: 'VK', url: 'https://vk.com/id1' },
+    });
+
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body).reply_markup).toEqual({
+      inline_keyboard: [[{ text: '💬 Написать в VK', url: 'https://vk.com/id1' }]],
+    });
+  });
+
+  it('без TG_BOT_TOKEN / TG_CHAT_ID канал выключен и запрос не делается', async () => {
+    delete process.env.TG_CHAT_ID;
+
+    await expect(sendTelegramMessage(notification)).resolves.toEqual({
+      ok: false,
+      reason: 'misconfigured',
+    });
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it('при недоступном Telegram возвращает failed со status 0, а не бросает', async () => {
     fetchMock.mockRejectedValue(new DOMException('The operation was aborted', 'TimeoutError'));
 
-    await expect(sendTelegramMessage({ text: 'Заказ' })).resolves.toEqual({
+    await expect(sendTelegramMessage(notification)).resolves.toEqual({
       ok: false,
       reason: 'failed',
       status: 0,
@@ -36,7 +60,7 @@ describe('sendTelegramMessage', () => {
   it('при ответе Telegram с ошибкой возвращает его статус и текст', async () => {
     fetchMock.mockResolvedValue(new Response('Bad Request', { status: 400 }));
 
-    await expect(sendTelegramMessage({ text: 'Заказ' })).resolves.toEqual({
+    await expect(sendTelegramMessage(notification)).resolves.toEqual({
       ok: false,
       reason: 'failed',
       status: 400,

@@ -2,7 +2,7 @@
 
 ## Зона ответственности
 
-Форма оформления заказа в модалке корзины и отправка заказа в `POST /api/orders`.
+Форма оформления заказа в модалке корзины и отправка заказа в `POST /api/orders`. Сервер сохраняет заказ в Supabase и уведомляет основателей — см. [notifications.md](notifications.md).
 
 ## Структура
 
@@ -13,7 +13,8 @@
 - `shemas/checkoutShema`, `shemas/validationRules` — zod-правила; `validationRules` переиспользуется в серверной схеме `/api/orders`
 - `model/buildOrderPayload` — сборка `OrderPayload` с `clientRequestId = crypto.randomUUID()`
 - `services/sendOrder` — `httpClient` → `/api/orders`
-- `utils/orderTextBuilder`, `mappers/orderMappers` — текст сообщения для Telegram (используются на сервере)
+- `utils/orderTextBuilder`, `mappers/orderMappers` — текст уведомления о заказе для Telegram, VK и почты (используются на сервере)
+- `api/orderStorage` — запись заказа в таблицу `orders` и статуса уведомлений (только сервер)
 
 ## Форма
 
