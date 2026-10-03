@@ -40,7 +40,8 @@ const customerSchema = z
   );
 
 export const orderPayloadSchema = z.object({
-  clientRequestId: z.string(),
+  // uuid: колонка orders.client_request_id — UUID, по ней работает идемпотентность.
+  clientRequestId: z.string().uuid(),
   customer: customerSchema,
   delivery: z.object({
     service: z.nativeEnum(DeliveryService),

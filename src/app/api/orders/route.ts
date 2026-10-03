@@ -1,9 +1,10 @@
 // src/app/api/orders/route.ts
 
+import { saveOrder, setOrderNotifications } from '@/modules/checkout/api/orderStorage';
 import { buildOrderData } from '@/modules/checkout/utils/orderTextBuilder';
+import { notifyOwner } from '@/shared/lib/notifications';
 import { checkRateLimit, getClientIp } from '@/shared/lib/rateLimit';
-import { sendTelegramMessage } from '@/shared/lib/telegram';
-import { NextResponse } from 'next/server';
+import { after, NextResponse } from 'next/server';
 import {
   contactMap,
   deliveryMap,
@@ -35,46 +36,43 @@ export async function POST(req: Request) {
 
   // Honeypot: скрытое поле, которое реальный пользователь никогда не
   // заполнит. Если оно непустое — запрос почти наверняка от бота. Отвечаем
-  // так, будто заказ принят, но никуда его не отправляем — это не даёт
-  // ботам понять, что их отфильтровали, и подстраиваться.
+  // так, будто заказ принят, но никуда его не сохраняем и не отправляем — это
+  // не даёт ботам понять, что их отфильтровали, и подстраиваться.
   if (payload.website) {
-    return NextResponse.json({
-      status: 'ok',
-      orderId: payload.clientRequestId,
-    });
+    return NextResponse.json({ status: 'ok', orderId: payload.clientRequestId }, { status: 201 });
   }
 
-  const { text, contactLink, contactMethodLabel } = buildOrderData({
-    payload,
-    paymentMap,
-    deliveryMap,
-    contactMap,
-  });
+  // Сначала сохраняем: заказ в БД — источник правды, уведомления — best-effort.
+  const saved = await saveOrder(payload);
 
-  const result = await sendTelegramMessage({
-    text,
-    linkPreviewUrl: contactLink,
-    button: { text: `💬 Написать в ${contactMethodLabel}`, url: contactLink },
-  });
+  if (!saved.ok) {
+    // Заказ не сохранился — логируем целиком, чтобы его можно было
+    // восстановить вручную из логов.
+    console.error('Failed to save order', { error: saved.error, payload });
+    return new Response('Failed to save order', { status: 500 });
+  }
 
-  if (!result.ok) {
-    if (result.reason === 'misconfigured') {
-      return new Response('Server misconfigured', { status: 500 });
-    }
-
-    // Заказ прошёл валидацию, но не долетел до Telegram — логируем тело
-    // заказа целиком, чтобы его можно было восстановить вручную из логов
-    // (см. IT задачи pre MVP: "Console.error").
-    console.error('Failed to send order to Telegram', {
-      error: result.error,
-      status: result.status,
+  // Повтор того же заказа («Повторить попытку» после обрыва сети): уведомления
+  // уже ушли с первого запроса, второй раз не шлём.
+  if (saved.created) {
+    const { text, contactLink, contactMethodLabel } = buildOrderData({
       payload,
+      paymentMap,
+      deliveryMap,
+      contactMap,
     });
-    return new Response(result.error, { status: 502 });
+
+    // after(): покупатель получает ответ сразу, не дожидаясь Telegram, VK и SMTP.
+    after(async () => {
+      const summary = await notifyOwner({
+        subject: `Заказ · ${payload.customer.fullName} · ${payload.total} ₽`,
+        text,
+        link: { label: contactMethodLabel, url: contactLink },
+        linkPreviewUrl: contactLink,
+      });
+      await setOrderNotifications(saved.id, summary);
+    });
   }
 
-  return NextResponse.json({
-    status: 'ok',
-    orderId: payload.clientRequestId,
-  });
+  return NextResponse.json({ status: 'ok', orderId: payload.clientRequestId }, { status: 201 });
 }
