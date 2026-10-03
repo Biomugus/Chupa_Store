@@ -2,7 +2,7 @@
 
 ## Зона ответственности
 
-Страница `/contacts`: каналы связи с мастерской и форма обращения, которая уходит в Telegram-бот (тот же, что и заказы).
+Страница `/contacts`: каналы связи с мастерской и форма обращения. Обращение сохраняется в Supabase (`feedback_requests`) и рассылается по тем же каналам, что и заказы, — см. [notifications.md](notifications.md).
 
 ## Структура
 
@@ -10,7 +10,8 @@
 - `containers/ContactFormContainer` — клиентская форма: `useContactForm` + `useSubmitFeedback`
 - `model/contactFormSchema` — zod-схема, общая для клиента и `POST /api/feedback`
 - `model/contactTopics` — темы обращения, `parseTopic()` для `?topic=`
-- `utils/feedbackTextBuilder` — текст сообщения для Telegram
+- `utils/feedbackTextBuilder` — текст уведомления об обращении
+- `api/feedbackStorage` — запись обращения в `feedback_requests` (только сервер)
 
 Контакты мастерской берутся из `src/shared/config/contacts.ts` (им же пользуется футер).
 
