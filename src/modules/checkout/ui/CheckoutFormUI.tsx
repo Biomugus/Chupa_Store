@@ -169,7 +169,7 @@ export function CheckoutFormUI({
 
       {/* Submit Error / Retry */}
       {submitError ? (
-        <div className={formStyles.submitErrorWrapper}>
+        <div className={formStyles.submitErrorWrapper} role="alert">
           <p className={formStyles.error}>{submitError}</p>
           <button
             className={formStyles.submitError}

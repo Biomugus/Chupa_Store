@@ -30,7 +30,7 @@ type OrderPayload = {
     fullName: string; // минимум 5 символов, только буквы, пробел и дефис
     phone: string; // формат `+7 (999) 999-99-99`
     contactMethod: 'telegram' | 'vk';
-    contactValue: string; // telegram: `@?[a-zA-Z0-9_]{5,32}`, vk: ссылка `vk.com/...`
+    contactValue: string; // telegram: `@?[a-zA-Z0-9_]{5,32}`, vk: ссылка `vk.com/...` или `vk.ru/...`
     location: string; // город, обязателен
   };
 
@@ -74,7 +74,7 @@ type OrderPayload = {
 
 ## Ошибки
 
-Ошибки отдаются **обычным текстом** (plain text), не в формате ADR 0002.
+Ошибки отдаются **обычным текстом** (plain text), не в формате ADR 0002. Текст технический — покупателю его не показывают, `useSubmitOrder` подбирает сообщение по статусу.
 
 | Статус | Тело                   | Когда                                                                  |
 | ------ | ---------------------- | ---------------------------------------------------------------------- |
@@ -82,6 +82,7 @@ type OrderPayload = {
 | 429    | `Too many requests`    | Больше 5 заказов в минуту с одного IP                                  |
 | 500    | `Server misconfigured` | Не заданы `TG_BOT_TOKEN` / `TG_CHAT_ID`                                |
 | 502    | Ответ Telegram API     | Telegram не принял сообщение; заказ целиком пишется в `console.error`  |
+| 502    | Текст сетевой ошибки   | Telegram недоступен или не ответил за 10 с (`TELEGRAM_TIMEOUT_MS`)     |
 
 ## Идемпотентность
 
