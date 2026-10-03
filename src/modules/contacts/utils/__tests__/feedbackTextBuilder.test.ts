@@ -26,6 +26,17 @@ describe('getContactLink', () => {
     });
   });
 
+  it('нормализует ссылки на vk.ru и мобильный m.vk.com', () => {
+    expect(getContactLink('https://vk.ru/chupaold')).toEqual({
+      url: 'https://vk.ru/chupaold',
+      label: 'VK',
+    });
+    expect(getContactLink('m.vk.com/chupaold')).toEqual({
+      url: 'https://m.vk.com/chupaold',
+      label: 'VK',
+    });
+  });
+
   it('нормализует ссылки на t.me и vk.com', () => {
     expect(getContactLink('t.me/ivan_petrov')?.url).toBe('https://t.me/ivan_petrov');
     expect(getContactLink('http://VK.com/id123')).toEqual({

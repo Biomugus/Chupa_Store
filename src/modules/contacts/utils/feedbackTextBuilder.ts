@@ -16,7 +16,9 @@ export function getContactLink(contact: string): ContactLink | null {
     return { url: `https://t.me/${value.slice(1)}`, label: 'Telegram' };
   }
 
-  const profile = value.match(/^(?:https?:\/\/)?(?:www\.)?(t\.me|vk\.com)\/([\w.]+)\/?$/i);
+  const profile = value.match(
+    /^(?:https?:\/\/)?(?:www\.)?(t\.me|(?:m\.)?vk\.(?:com|ru))\/([\w.]+)\/?$/i,
+  );
   if (profile) {
     const [, host, path] = profile;
     const isTelegram = host.toLowerCase() === 't.me';

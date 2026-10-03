@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 import { ContactMethod, DeliveryService, PaymentMethod } from '../types/checkoutTypes';
-import { commonValidation } from './validationRules';
+import { commonValidation, vkProfileRegex } from './validationRules';
 
 export const checkoutSchema = z
   .object({
@@ -26,10 +26,10 @@ export const checkoutSchema = z
     }
 
     if (data.contactMethod === ContactMethod.VK) {
-      if (!/vk\.com\/[\w.]+/.test(data.contactValue)) {
+      if (!vkProfileRegex.test(data.contactValue.trim())) {
         ctx.addIssue({
           code: 'custom',
-          message: 'Введите ссылку на профиль VK (vk.com/...)',
+          message: 'Введите ссылку на профиль VK (vk.com/... или vk.ru/...)',
           path: ['contactValue'],
         });
       }

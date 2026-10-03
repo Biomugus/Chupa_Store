@@ -1,6 +1,6 @@
 // src/app/api/orders/payloadSchema.ts
 
-import { commonValidation } from '@/modules/checkout/shemas/validationRules';
+import { commonValidation, vkProfileRegex } from '@/modules/checkout/shemas/validationRules';
 import {
   ContactMethod,
   DeliveryService,
@@ -29,7 +29,7 @@ const customerSchema = z
         return /^@?[a-zA-Z0-9_]{5,32}$/.test(data.contactValue);
       }
       if (data.contactMethod === ContactMethod.VK) {
-        return /vk\.com\/[\w.]+/.test(data.contactValue);
+        return vkProfileRegex.test(data.contactValue.trim());
       }
       return true;
     },

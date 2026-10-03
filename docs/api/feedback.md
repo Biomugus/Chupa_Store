@@ -22,7 +22,7 @@ POST /api/feedback
 }
 ```
 
-- `contact` — телефон, `@username`, email или ссылка на t.me / vk.com. Для Telegram/VK под сообщением появляется кнопка «Написать».
+- `contact` — телефон, `@username`, email или ссылка на t.me / vk.com / vk.ru. Для Telegram/VK под сообщением появляется кнопка «Написать».
 - `website` — скрытое поле-ловушка для ботов (honeypot), у людей всегда пустое.
 
 ## Ответы

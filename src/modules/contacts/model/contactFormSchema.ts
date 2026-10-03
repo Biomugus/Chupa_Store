@@ -10,9 +10,10 @@ export const MESSAGE_MAX_LENGTH = 2000;
 const phoneRegex = /^\+?[\d\s()-]{10,20}$/;
 const telegramRegex = /^@[a-zA-Z0-9_]{5,32}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const profileLinkRegex = /^(https?:\/\/)?(www\.)?(t\.me|vk\.com)\/[\w.]+\/?$/i;
+// VK — и vk.com, и vk.ru (приложение VK копирует ссылки уже на vk.ru), в том числе мобильные m.vk.*.
+const profileLinkRegex = /^(https?:\/\/)?(www\.)?(t\.me|(m\.)?vk\.(com|ru))\/[\w.]+\/?$/i;
 
-/** Телефон, @username, email или ссылка на t.me / vk.com. */
+/** Телефон, @username, email или ссылка на t.me / vk.com / vk.ru. */
 export function isValidContact(value: string): boolean {
   if (phoneRegex.test(value)) {
     return value.replace(/\D/g, '').length >= 10;

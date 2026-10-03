@@ -43,6 +43,8 @@ describe('isValidContact', () => {
     'master@example.ru',
     't.me/chupa_workshop',
     'https://vk.com/id123',
+    'https://vk.ru/chupaold',
+    'm.vk.com/chupa.old',
   ])('принимает %s', (value) => {
     expect(isValidContact(value)).toBe(true);
   });

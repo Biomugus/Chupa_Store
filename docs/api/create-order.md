@@ -30,7 +30,7 @@ type OrderPayload = {
     fullName: string; // минимум 5 символов, только буквы, пробел и дефис
     phone: string; // формат `+7 (999) 999-99-99`
     contactMethod: 'telegram' | 'vk';
-    contactValue: string; // telegram: `@?[a-zA-Z0-9_]{5,32}`, vk: ссылка `vk.com/...`
+    contactValue: string; // telegram: `@?[a-zA-Z0-9_]{5,32}`, vk: ссылка `vk.com/...` или `vk.ru/...`
     location: string; // город, обязателен
   };
 

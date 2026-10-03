@@ -34,10 +34,10 @@ function formatContactLink(method: ContactMethod, value: string): string {
   }
 
   if (method === ContactMethod.VK) {
-    return cleanValue.includes('vk.com')
-      ? cleanValue.startsWith('http')
-        ? cleanValue
-        : `https://${cleanValue}`
+    if (/^https?:\/\//i.test(cleanValue)) return cleanValue;
+
+    return /^(?:(?:www|m)\.)?vk\.(?:com|ru)\//i.test(cleanValue)
+      ? `https://${cleanValue}`
       : `https://vk.com/${cleanValue}`;
   }
 
